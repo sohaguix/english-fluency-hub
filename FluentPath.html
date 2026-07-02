@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FluentPath — English Learning Platform</title>
+<style>
+:root{
+  --i1:#6366F1; --i2:#8B5CF6; --i3:#D946EF; --cy:#22D3EE; --em:#10B981; --am:#F59E0B; --rd:#F43F5E;
+  --r:20px; --r-sm:13px; --r-lg:28px; --tap:46px; --sp:clamp(15px,3.5vw,28px);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,.7,.24,1);
+  --grad:linear-gradient(135deg,var(--i1),var(--i3));
+}
+:root[data-theme="dark"]{
+  --bg:#0A0A16; --text:#F1F2FA; --muted:#A7A9C4; --faint:#6C6E8F;
+  --glass:rgba(30,31,54,.55); --glass-2:rgba(40,42,70,.5); --glass-hi:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.1); --line-2:rgba(255,255,255,.16);
+  --shadow:0 8px 32px -12px rgba(0,0,0,.6); --shadow-lg:0 30px 80px -30px rgba(0,0,0,.85);
+  --blob-o:.5;
+}
+:root[data-theme="light"]{
+  --bg:#EEF0FB; --text:#181A2E; --muted:#565A78; --faint:#9598B5;
+  --glass:rgba(255,255,255,.62); --glass-2:rgba(255,255,255,.5); --glass-hi:rgba(255,255,255,.7);
+  --line:rgba(20,22,50,.09); --line-2:rgba(20,22,50,.15);
+  --shadow:0 8px 30px -14px rgba(30,34,90,.28); --shadow-lg:0 30px 70px -28px rgba(30,34,90,.4);
+  --blob-o:.4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font-family:inherit;font-size:1rem}
+:focus-visible{outline:2px solid var(--i2);outline-offset:2px;border-radius:8px}
+h1,h2,h3,h4{margin:0;line-height:1.18;letter-spacing:-.02em;font-weight:800}
+p{margin:0}.muted{color:var(--muted)}.mono{font-family:var(--mono)}
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:9px}
+
+/* animated gradient blobs */
+.bg-fx{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:var(--blob-o);animation:float 22s var(--ease) infinite}
+.blob.b1{width:520px;height:520px;background:var(--i1);top:-140px;left:-120px}
+.blob.b2{width:480px;height:480px;background:var(--i3);bottom:-160px;right:-100px;animation-delay:-7s}
+.blob.b3{width:400px;height:400px;background:var(--cy);top:40%;left:55%;animation-delay:-14s}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.1)}66%{transform:translate(-30px,40px) scale(.95)}}
+
+.glass{background:var(--glass);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
+  border:1px solid var(--line);box-shadow:var(--shadow)}
+
+/* shell */
+.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+@media(max-width:940px){.app{grid-template-columns:1fr}}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;padding:20px 14px;display:flex;flex-direction:column;gap:2px;
+  z-index:60;border-right:1px solid var(--line);background:var(--glass);backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px)}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 8px 16px}
+.brand .logo{width:44px;height:44px;border-radius:13px;background:var(--grad);display:grid;place-items:center;font-size:22px;
+  box-shadow:0 8px 20px -6px var(--i2)}
+.brand b{font-size:1.16rem;font-weight:900;display:block;line-height:1;letter-spacing:-.03em;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.brand span{font-size:.68rem;color:var(--faint);font-weight:700;letter-spacing:.08em}
+.nav-group{font-size:.65rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);padding:14px 12px 5px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;font-weight:600;font-size:.9rem;
+  color:var(--muted);min-height:44px;width:100%;text-align:left;transition:.15s}
+.nav-item:hover{background:var(--glass-hi);color:var(--text)}
+.nav-item.active{background:var(--grad);color:#fff;font-weight:700;box-shadow:0 8px 18px -8px var(--i2)}
+.nav-item .ic{font-size:1.08rem;width:22px;text-align:center;flex:none}
+.nav-item .cnt{margin-left:auto;font-size:.64rem;font-weight:800;background:var(--glass-hi);border-radius:999px;padding:2px 8px}
+.nav-item.active .cnt{background:rgba(255,255,255,.25)}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:11px var(--sp);
+  border-bottom:1px solid var(--line);background:var(--glass);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px)}
+.hamb{display:none;width:44px;height:44px;border-radius:12px;font-size:1.2rem;place-items:center;background:var(--glass-2);border:1px solid var(--line)}
+@media(max-width:940px){.hamb{display:grid}}
+.search{flex:1;max-width:440px;display:flex;align-items:center;gap:9px;background:var(--glass-2);border:1px solid var(--line);
+  border-radius:13px;padding:0 14px;height:44px}
+.search input{background:none;border:none;outline:none;color:var(--text);width:100%;font-weight:600}
+.search .si{color:var(--faint)}
+.pills{display:flex;gap:8px;margin-left:auto;align-items:center;flex-wrap:wrap}
+.pill{display:flex;align-items:center;gap:6px;background:var(--glass-2);border:1px solid var(--line);padding:7px 12px;border-radius:999px;font-weight:800;font-size:.82rem}
+.pill.streak{color:#FB923C}.pill.xp{color:var(--i2)}
+:root[data-theme="dark"] .pill.xp{color:#C4B5FD}
+.icon-btn{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.1rem;background:var(--glass-2);border:1px solid var(--line)}
+.view{padding:var(--sp);max-width:1180px;width:100%;margin:0 auto;animation:vin .4s var(--ease)}
+@keyframes vin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.scrim{position:fixed;inset:0;background:rgba(5,5,15,.6);z-index:59;display:none;opacity:0;transition:.25s;backdrop-filter:blur(3px)}
+.scrim.show{display:block;opacity:1}
+@media(max-width:940px){.sidebar{position:fixed;left:0;top:0;width:280px;transform:translateX(-104%);transition:transform .28s var(--ease)}.sidebar.open{transform:none}}
+
+.page-head{margin-bottom:20px}
+.page-head .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.page-head h1{font-size:clamp(1.7rem,4.6vw,2.5rem);margin-top:7px}
+.page-head p{color:var(--muted);margin-top:8px;max-width:64ch}
+.grid{display:grid;gap:15px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(146px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.skills{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.lessons{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.card{border-radius:var(--r);padding:20px;background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:var(--shadow)}
+
+.btn{background:var(--grad);color:#fff;font-weight:800;border-radius:14px;padding:13px 22px;min-height:var(--tap);
+  box-shadow:0 10px 24px -10px var(--i2);transition:transform .12s,filter .15s;font-size:.94rem;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--glass-2);color:var(--text);border:1px solid var(--line-2);box-shadow:none}
+.btn.green{background:linear-gradient(135deg,var(--em),#34d399);box-shadow:0 10px 24px -10px var(--em)}
+.btn.block{width:100%}.btn.sm{padding:9px 15px;font-size:.85rem;min-height:40px;border-radius:11px}
+.btn[disabled]{opacity:.5;pointer-events:none}
+
+/* hero */
+.hero{border-radius:var(--r-lg);padding:28px;position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(135deg,var(--i1),var(--i2) 45%,var(--i3));box-shadow:var(--shadow-lg)}
+.hero::after{content:"";position:absolute;right:-50px;top:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero h2{font-size:clamp(1.5rem,4vw,2.1rem);position:relative;z-index:1;max-width:22ch}
+.hero p{opacity:.92;margin-top:8px;position:relative;z-index:1}
+.hero .row{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px;position:relative;z-index:1}
+.hero .m b{font-size:1.6rem;display:block;font-weight:900}.hero .m span{font-size:.74rem;opacity:.85;font-weight:700}
+.hero .cta-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;position:relative;z-index:1}
+.hero .btn.wht{background:#fff;color:var(--i1)}
+.hero .btn.gh{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3)}
+
+.stat{border-radius:var(--r);padding:16px;background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.stat .em{font-size:1.3rem}.stat b{font-size:1.55rem;font-weight:900;display:block;margin-top:5px;letter-spacing:-.03em}
+.stat span{color:var(--muted);font-size:.78rem;font-weight:600}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:26px 0 14px;gap:12px;flex-wrap:wrap}
+.section-title h2{font-size:1.28rem}
+.ring-wrap{position:relative;width:120px;height:120px;flex:none}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{stroke:rgba(255,255,255,.22)}.ring-fg{stroke:#fff;stroke-linecap:round;transition:stroke-dashoffset 1s var(--ease)}
+.ring-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center;color:#fff}
+.ring-center .big{font-size:1.6rem;font-weight:900}.ring-center small{font-size:.62rem;opacity:.85;font-weight:700}
+
+.diff{font-size:.64rem;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.diff.d1{background:rgba(16,185,129,.18);color:#34d399}
+.diff.d2{background:rgba(245,158,11,.18);color:#fbbf24}
+.diff.d3{background:rgba(244,63,94,.18);color:#fb7185}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip-f{background:var(--glass-2);border:1px solid var(--line-2);border-radius:999px;padding:8px 15px;font-weight:700;font-size:.83rem;min-height:40px}
+.chip-f.on{background:var(--grad);color:#fff;border-color:transparent}
+
+.skill-card{border-radius:var(--r);padding:18px;text-align:left;display:flex;flex-direction:column;gap:9px;
+  background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:transform .15s var(--ease),box-shadow .15s}
+.skill-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.skill-card .s-ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.4rem}
+.skill-card h3{font-size:1.05rem}.skill-card .s-meta{font-size:.76rem;color:var(--faint);font-weight:700}
+.mini-bar{height:7px;background:var(--glass-hi);border-radius:999px;overflow:hidden;margin-top:auto}
+.mini-bar i{display:block;height:100%;background:var(--grad);border-radius:999px;width:0;transition:width .6s var(--ease)}
+
+.lesson-card{border-radius:var(--r);padding:18px;text-align:left;display:flex;flex-direction:column;gap:10px;position:relative;
+  background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:transform .15s var(--ease),box-shadow .15s}
+.lesson-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.lesson-card .lc-top{display:flex;align-items:center;gap:8px;font-size:.72rem;font-weight:800}
+.lesson-card .lc-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem;flex:none}
+.lesson-card h3{font-size:1.05rem;line-height:1.25}
+.lesson-card .lc-foot{display:flex;align-items:center;gap:8px;margin-top:auto}
+.star{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:1rem;background:var(--glass-2);border:1px solid var(--line);flex:none}
+.star.on{background:rgba(245,158,11,.2);color:var(--am);border-color:var(--am)}
+.done-badge{font-size:.68rem;font-weight:800;color:var(--em);background:rgba(16,185,129,.16);padding:3px 9px;border-radius:999px}
+
+/* missions / goals */
+.mission{display:flex;align-items:center;gap:13px;padding:14px 16px;border-radius:14px;background:var(--glass-2);border:1px solid var(--line);margin-bottom:10px}
+.mission .m-ic{width:42px;height:42px;border-radius:12px;background:var(--grad);display:grid;place-items:center;font-size:1.2rem;flex:none;color:#fff}
+.mission.done .m-ic{background:linear-gradient(135deg,var(--em),#34d399)}
+.mission .m-body{flex:1;min-width:0}
+.mission .m-body b{font-size:.92rem}.mission .m-prog{font-size:.76rem;color:var(--muted)}
+.mission .mbar{height:6px;background:var(--glass-hi);border-radius:999px;overflow:hidden;margin-top:5px}
+.mission .mbar i{display:block;height:100%;background:var(--grad);border-radius:999px;transition:width .5s}
+.mission .rew{font-size:.72rem;font-weight:800;color:var(--am);white-space:nowrap}
+.mission.done .rew{color:var(--em)}
+
+/* badges */
+.badge{display:flex;gap:12px;align-items:center;border-radius:16px;padding:15px;background:var(--glass-2);border:1px solid var(--line);opacity:.5;filter:grayscale(.7);transition:.3s}
+.badge.on{opacity:1;filter:none}
+.badge .b-ic{width:48px;height:48px;border-radius:14px;background:var(--glass-hi);display:grid;place-items:center;font-size:1.5rem;flex:none}
+.badge.on .b-ic{background:linear-gradient(135deg,#FDE68A,#F59E0B)}
+.badge b{display:block;font-size:.92rem}.badge span{font-size:.76rem;color:var(--muted)}
+
+/* chart */
+.chart{display:flex;align-items:flex-end;gap:min(3vw,14px);height:150px;padding-top:8px}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
+.chart .col .b{width:100%;max-width:34px;background:var(--grad);border-radius:7px 7px 3px 3px;min-height:4px;transition:height .7s var(--ease)}
+.chart .col.today .b{background:linear-gradient(180deg,#FBBF24,#FB923C)}
+.chart .col small{font-size:.66rem;color:var(--muted);font-weight:700}.chart .col .v{font-size:.64rem;color:var(--faint);font-weight:800}
+
+/* LESSON PLAYER */
+.player{position:fixed;inset:0;z-index:100;display:none;flex-direction:column;background:var(--bg)}
+.player.show{display:flex}
+.player .bg-fx{z-index:0}
+.pl-top{display:flex;align-items:center;gap:13px;padding:13px var(--sp);border-bottom:1px solid var(--line);background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:2}
+.pl-close{width:40px;height:40px;border-radius:12px;font-size:1.3rem;color:var(--muted);flex:none}
+.pl-prog{flex:1;height:12px;background:var(--glass-hi);border-radius:999px;overflow:hidden}
+.pl-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--em),#34d399);border-radius:999px;width:0;transition:width .4s var(--ease)}
+.pl-info{font-weight:800;font-size:.82rem;white-space:nowrap;display:flex;gap:10px;align-items:center}
+.timer{color:#FB923C}.timer.low{color:var(--rd);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.4}}
+.pl-scroll{flex:1;overflow-y:auto;padding:var(--sp);z-index:1}
+.pl-inner{max-width:660px;margin:0 auto;padding-bottom:120px}
+.pl-foot{border-top:1px solid var(--line);padding:15px var(--sp);background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:2}
+.pl-foot .in{max-width:660px;margin:0 auto;display:flex;gap:12px}
+.stage-tag{display:inline-flex;align-items:center;gap:7px;font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--grad);color:#fff;padding:5px 12px;border-radius:999px;margin-bottom:14px}
+.q-title{font-size:1.32rem;font-weight:800;margin-bottom:18px;letter-spacing:-.02em}
+.q-title.sm{font-size:1.08rem}
+.learn-card{border-radius:var(--r);padding:22px;background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow);margin-bottom:16px;line-height:1.7;font-size:1.05rem;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.learn-card .hl{color:var(--i2);font-weight:800}
+:root[data-theme="dark"] .learn-card .hl{color:#C4B5FD}
+.eg{display:flex;gap:10px;align-items:flex-start;background:var(--glass-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px}
+
+/* video placeholder */
+.video{border-radius:var(--r-lg);overflow:hidden;position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#1a1a3a,#2a1a4a);border:1px solid var(--line);box-shadow:var(--shadow-lg);margin-bottom:8px;display:grid;place-items:center}
+.video .grid-o{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:34px 34px}
+.video .vplay{width:82px;height:82px;border-radius:50%;background:rgba(255,255,255,.16);backdrop-filter:blur(8px);display:grid;place-items:center;font-size:2rem;color:#fff;border:1px solid rgba(255,255,255,.3);z-index:1;transition:transform .15s}
+.video .vplay:active{transform:scale(.92)}
+.video .vlabel{position:absolute;bottom:14px;left:16px;color:rgba(255,255,255,.85);font-size:.78rem;font-weight:700;z-index:1}
+.video .vtime{position:absolute;bottom:14px;right:16px;color:rgba(255,255,255,.7);font-size:.74rem;font-weight:700;font-family:var(--mono);z-index:1}
+.transcript{background:var(--glass-2);border:1px solid var(--line);border-radius:14px;padding:16px;font-size:.95rem;color:var(--muted);line-height:1.7}
+
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--glass);border:2px solid var(--line-2);border-radius:var(--r-sm);
+  padding:15px 18px;margin-bottom:10px;font-weight:600;min-height:var(--tap);transition:.14s;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.opt:hover{border-color:var(--i2)}.opt:active{transform:scale(.99)}
+.opt .key{width:27px;height:27px;border-radius:8px;background:var(--glass-hi);display:grid;place-items:center;font-size:.78rem;font-weight:800;flex:none;color:var(--muted)}
+.opt.correct{border-color:var(--em);background:rgba(16,185,129,.14)}.opt.correct .key{background:var(--em);color:#fff}
+.opt.wrong{border-color:var(--rd);background:rgba(244,63,94,.14)}.opt.wrong .key{background:var(--rd);color:#fff}
+.opt[disabled]{pointer-events:none}
+.text-in{width:100%;background:var(--glass);border:2px solid var(--line-2);border-radius:var(--r-sm);padding:15px 18px;color:var(--text);transition:.15s;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.text-in:focus{border-color:var(--i2);outline:none}
+.text-in.big{font-size:1.25rem;text-align:center;font-weight:700}
+textarea.text-in{min-height:120px;resize:vertical;line-height:1.6}
+
+.build-line{min-height:56px;border-bottom:2px dashed var(--line-2);display:flex;flex-wrap:wrap;gap:8px;padding:10px 4px;margin-bottom:20px;align-content:flex-start}
+.bank{display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:var(--glass);border:2px solid var(--line-2);border-radius:12px;padding:9px 15px;font-weight:700;box-shadow:var(--shadow);transition:.1s}
+.chip:active{transform:scale(.94)}.chip.used{opacity:0;pointer-events:none;width:0;padding:0;margin:0;border:0}
+.chip.placed{background:rgba(139,92,246,.2);border-color:var(--i2)}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.mcol{display:flex;flex-direction:column;gap:10px}
+.mtile{background:var(--glass);border:2px solid var(--line-2);border-radius:12px;padding:12px 14px;font-weight:600;text-align:center;min-height:var(--tap);transition:.14s;font-size:.9rem}
+.mtile.sel{border-color:var(--i2);background:rgba(139,92,246,.16)}
+.mtile.matched{border-color:var(--em);background:rgba(16,185,129,.14);pointer-events:none;opacity:.7}
+.mtile.miss{border-color:var(--rd);animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.flash{perspective:1500px;height:250px;margin-bottom:14px}
+.flash-in{position:relative;width:100%;height:100%;transition:transform .6s var(--ease);transform-style:preserve-3d;cursor:pointer}
+.flash.flip .flash-in{transform:rotateY(180deg)}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r-lg);display:flex;flex-direction:column;justify-content:center;text-align:center;gap:8px;padding:24px;border:1px solid var(--line);box-shadow:var(--shadow-lg)}
+.flash-front{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.flash-back{background:var(--grad);color:#fff;transform:rotateY(180deg)}
+.flash-face .big{font-size:2rem;font-weight:900}.flash-face .sub{opacity:.85;font-size:.9rem}
+.audio-card{border-radius:var(--r-lg);padding:24px;text-align:center;margin-bottom:18px;background:var(--glass);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.play-btn{width:80px;height:80px;border-radius:50%;background:var(--grad);color:#fff;font-size:1.9rem;display:grid;place-items:center;margin:0 auto 8px;box-shadow:0 14px 30px -12px var(--i2);transition:.12s}
+.play-btn:active{transform:scale(.92)}.play-btn.playing{animation:pr 1.2s infinite}
+@keyframes pr{0%{box-shadow:0 0 0 0 rgba(139,92,246,.5)}70%{box-shadow:0 0 0 20px rgba(139,92,246,0)}100%{box-shadow:0 0 0 0 rgba(139,92,246,0)}}
+.speak-word{font-size:1.6rem;font-weight:900;margin-top:6px}
+.correct-orig{background:rgba(244,63,94,.12);border:1px solid var(--rd);border-radius:12px;padding:13px 16px;margin-bottom:16px;font-size:1.05rem}
+.correct-orig .lbl{font-size:.7rem;font-weight:800;color:var(--rd);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px}
+
+.feedback{border-radius:var(--r);padding:15px 17px;margin-bottom:8px;font-weight:600;display:none;animation:fin .3s var(--ease);border:1px solid}
+@keyframes fin{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+.feedback.show{display:block}
+.feedback.good{background:rgba(16,185,129,.14);color:#34d399;border-color:var(--em)}
+.feedback.bad{background:rgba(244,63,94,.14);color:#fb7185;border-color:var(--rd)}
+.feedback b{display:block;font-size:1.02rem;margin-bottom:3px}.feedback .ft{color:var(--text);font-weight:500;font-size:.88rem}
+.reveal-btn{width:100%;border:2px dashed var(--line-2);border-radius:12px;padding:15px;font-weight:800;color:var(--i2);background:var(--glass-2)}
+:root[data-theme="dark"] .reveal-btn{color:#C4B5FD}
+.answer{background:var(--glass-2);border:1px solid var(--line);border-radius:12px;padding:16px;line-height:1.7}
+.chk{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;margin-bottom:9px;background:var(--glass-2);cursor:pointer}
+.chk .box{width:24px;height:24px;border-radius:7px;border:2px solid var(--line-2);flex:none;display:grid;place-items:center;font-size:.85rem;margin-top:1px}
+.chk.on{border-color:var(--em)}.chk.on .box{background:var(--em);border-color:var(--em);color:#fff}
+.review-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.review-list li{display:flex;gap:12px;background:var(--glass-2);border:1px solid var(--line);border-radius:11px;padding:13px 15px}
+.review-list li::before{content:"✓";color:var(--em);font-weight:900;flex:none}
+.notes-in{width:100%;background:var(--glass-2);border:1px solid var(--line);border-radius:12px;padding:13px;color:var(--text);min-height:80px;resize:vertical;margin-top:10px}
+
+.complete{text-align:center;padding:16px 0}
+.complete .trophy{font-size:4.2rem;animation:pop .6s var(--ease)}
+@keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.complete h2{font-size:1.7rem;margin:8px 0}
+.xp-earned{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:#fff;font-weight:800;padding:10px 22px;border-radius:999px;font-size:1.1rem;margin:6px 0 18px}
+.reward-row{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.reward-row .r{border-radius:14px;padding:12px 18px;background:var(--glass-2);border:1px solid var(--line)}
+.reward-row .r b{display:block;font-size:1.3rem}.reward-row .r span{font-size:.7rem;color:var(--muted);font-weight:700}
+
+.toasts{position:fixed;top:14px;right:14px;z-index:200;display:flex;flex-direction:column;gap:9px;pointer-events:none}
+.toast{border-radius:14px;padding:13px 16px;display:flex;gap:11px;align-items:center;min-width:230px;animation:tin .4s var(--ease);background:var(--glass);border:1px solid var(--line-2);box-shadow:var(--shadow-lg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.toast .ti{font-size:1.5rem}.toast b{display:block;font-size:.9rem}.toast span{font-size:.76rem;color:var(--muted)}
+@keyframes tin{from{transform:translateX(120%)}to{transform:none}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:150;overflow:hidden}
+.confetti i{position:absolute;width:9px;height:14px;top:-20px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.9}}
+.empty{text-align:center;padding:48px 20px;color:var(--muted)}.empty .e{font-size:3rem}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.05s!important}.blob{animation:none}}
+@media(max-width:560px){.view{padding:15px}.hero{padding:22px}}
+</style>
+</head>
+<body>
+<div class="bg-fx"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="Navigation">
+    <div class="brand"><div class="logo">🚀</div><div><b>FluentPath</b><span>ENGLISH LEARNING</span></div></div>
+    <nav id="nav"></nav>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+  <div class="main">
+    <header class="topbar">
+      <button class="hamb" id="hamb" aria-label="Menu">☰</button>
+      <div class="search"><span class="si">🔍</span><input id="searchInput" placeholder="Search lessons, skills, topics..." autocomplete="off"></div>
+      <div class="pills">
+        <span class="pill xp"><span>⚡</span><span id="p-xp">0</span></span>
+        <span class="pill streak"><span>🔥</span><span id="p-streak">0</span></span>
+        <button class="icon-btn" id="themeBtn" aria-label="Theme">☀️</button>
+      </div>
+    </header>
+    <main id="view" class="view"></main>
+  </div>
+</div>
+
+<div class="player" id="player" role="dialog" aria-modal="true">
+  <div class="bg-fx"><div class="blob b1"></div><div class="blob b2"></div></div>
+  <div class="pl-top">
+    <button class="pl-close" id="plClose" aria-label="Close">✕</button>
+    <div class="pl-prog"><i id="plProg"></i></div>
+    <div class="pl-info"><span id="plStage">Learn</span><span class="timer" id="plTimer" style="display:none"></span></div>
+  </div>
+  <div class="pl-scroll"><div class="pl-inner" id="plInner"></div></div>
+  <div class="pl-foot"><div class="in" id="plFoot"></div></div>
+</div>
+<div class="toasts" id="toasts"></div>
+
+<script>
+"use strict";
+/* ============ STORAGE ============ */
+var Store=(function(){var mem={},ok=false;try{var k="__fp__";localStorage.setItem(k,"1");localStorage.removeItem(k);ok=true;}catch(e){}
+  return{get:function(k){try{if(ok)return localStorage.getItem(k);}catch(e){}return k in mem?mem[k]:null;},
+         set:function(k,v){try{if(ok){localStorage.setItem(k,v);return;}}catch(e){}mem[k]=v;}};})();
+var DAY=86400000;
+function dkey(d){d=d||new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
+function weekKey(d){d=d||new Date();var on=new Date(d.getFullYear(),0,1);var day=Math.floor((d-on)/DAY);return d.getFullYear()+"-W"+Math.floor((day+on.getDay())/7);}
+function daysBetween(a,b){var pa=a.split("-").map(Number),pb=b.split("-").map(Number);return Math.round((new Date(pb[0],pb[1]-1,pb[2])-new Date(pa[0],pa[1]-1,pa[2]))/DAY);}
+
+/* ============ SKILLS ============ */
+var SKILLS=[
+ {k:"grammar",n:"Grammar",ic:"📐",c:"#6366F1"},{k:"vocabulary",n:"Vocabulary",ic:"📚",c:"#8B5CF6"},
+ {k:"pronunciation",n:"Pronunciation",ic:"🔊",c:"#EC4899"},{k:"listening",n:"Listening",ic:"🎧",c:"#06B6D4"},
+ {k:"reading",n:"Reading",ic:"📖",c:"#10B981"},{k:"writing",n:"Writing",ic:"✍️",c:"#F59E0B"},
+ {k:"speaking",n:"Speaking",ic:"🎙️",c:"#EF4444"},{k:"public",n:"Public Speaking",ic:"🎯",c:"#F97316"},
+ {k:"ielts",n:"IELTS",ic:"🎓",c:"#14B8A6"},{k:"business",n:"Business English",ic:"💼",c:"#3B82F6"}
+];
+function skillInfo(k){return SKILLS.find(function(s){return s.k===k;})||SKILLS[0];}
+var LEVELS=["","Beginner","Intermediate","Advanced"];
+var SUFFIX={
+ grammar:["Building Blocks","Tenses & Time","Spot the Error","Putting It Together"],
+ vocabulary:["Everyday Words","Word Families","Synonyms & Shades","Recall Sprint"],
+ pronunciation:["Sounds & Pairs","Tricky Sounds","Stress & Rhythm","Say It Clearly"],
+ listening:["Catch the Detail","Numbers & Times","Real Conversations","Gist & Focus"],
+ reading:["Read & Understand","Skim & Scan","Between the Lines","Comprehension"],
+ writing:["First Sentences","Clear Messages","Structure & Flow","Polish It"],
+ speaking:["Warm Up","Everyday Talk","Express Yourself","Fluency Push"],
+ public:["The Hook","Structure a Talk","Command the Room","Deliver It"],
+ ielts:["Part 1 Basics","The Long Turn","Discussion Skills","Band Booster"],
+ business:["Workplace Words","Emails & Etiquette","Meetings","Client-Ready"]
+};
+
+/* ============ EXERCISE BUILDERS ============ */
+function mc(q,o,a,e,l){return{type:"mcq",q:q,o:o,a:a,e:e,lvl:l||1};}
+function fi(q,a,e,l){return{type:"fill",q:q,a:a,e:e,lvl:l||1};}
+function or(s,e,l){return{type:"order",s:s,e:e,lvl:l||1};}
+function ma(p,pairs,l){return{type:"match",p:p,pairs:pairs,lvl:l||1};}
+function fl(f,b,n,l){return{type:"flash",f:f,b:b,n:n,lvl:l||1};}
+function li(p,t,o,a,e,l){return{type:"listen",p:p,t:t,o:o,a:a,e:e,lvl:l||1};}
+function sp(p,t,tip,l){return{type:"speak",p:p,t:t,tip:tip,lvl:l||1};}
+function rd(p,pass,qs,l){return{type:"reading",p:p,pass:pass,qs:qs,lvl:l||1};}
+function wr(p,m,c,l){return{type:"writing",p:p,m:m,c:c,lvl:l||1};}
+function co(orig,o,a,e,l){return{type:"correct",orig:orig,o:o,a:a,e:e,lvl:l||1};}
+
+/* ============ CONTENT BANK ============ */
+var BANK={
+ grammar:{learn:[
+  "The <b>present simple</b> is for habits and facts. With <span class='hl'>he/she/it</span>, add <b>-s</b> to the verb: <i>She works.</i> Negatives use <b>don't / doesn't</b> + base verb.",
+  "The <b>past simple</b> tells finished actions. Regular verbs add <b>-ed</b>; many are irregular (<span class='hl'>go→went, buy→bought</span>). Present perfect (<b>have + past participle</b>) links past to now.",
+  "<b>Conditionals</b> express possibility. Second conditional: <span class='hl'>If + past, would + base</span> — <i>If I knew, I would tell you.</i> Keep the two clauses in the right form."],
+  pool:[
+   mc("She ___ in a bank.",["work","works","working"],1,"He/she/it takes -s → works.",1),
+   co("He don't like coffee.",["He doesn't like coffee.","He not like coffee.","He don't likes coffee."],0,"doesn't + base verb.",1),
+   or("She is reading a book.","Subject–verb–object order.",1),
+   mc("I saw ___ owl in the tree.",["a","an","the"],1,"vowel sound → an.",1),
+   fi("Past of 'go' is ___.","went","go → went (irregular).",2),
+   co("I have visited Paris last year.",["I visited Paris last year.","I have visit Paris last year.","I visited Paris last years."],0,"Finished time → past simple.",2),
+   mc("I've lived here ___ 2019.",["for","since"],1,"a start point → since.",2),
+   mc("If I ___ rich, I would travel.",["am","was","were"],2,"Second conditional uses 'were'.",3),
+   co("If I would know, I would help.",["If I knew, I would help.","If I know, I would help.","If I would knew, I help."],0,"if-clause takes past simple.",3),
+   or("They have already finished the work.","Present perfect word order.",3)],
+  review:["Add -s for he/she/it in present simple.","Past simple = finished time; use -ed or irregular forms.","Second conditional: if + past, would + base."]},
+
+ vocabulary:{learn:[
+  "Build words in <b>families</b> and <span class='hl'>chunks</span>, not one by one. Learn a word with a partner word (a collocation) so it sticks: <i>make a decision</i>, <i>heavy rain</i>.",
+  "Strong speakers use precise <b>synonyms</b>. Instead of 'very tired', say <span class='hl'>exhausted</span>; instead of 'very happy', say <b>delighted</b>.",
+  "<b>Nuance</b> matters: <i>confident</i> vs <i>arrogant</i>, <i>frugal</i> vs <i>stingy</i>. Advanced vocabulary is about choosing the exact shade of meaning."],
+  pool:[
+   fl("delighted","very happy","😄",1),fl("exhausted","very tired","😴",1),
+   ma("Match word to meaning.",[["tiny","very small"],["ancient","very old"],["freezing","very cold"]],1),
+   mc("A synonym for 'big' is:",["huge","tiny","narrow"],0,"huge = very big.",1),
+   mc("The opposite of 'ancient' is:",["old","modern","huge"],1,"ancient ↔ modern.",2),
+   fi("Very tired = ex______.","exhausted","exhausted = very tired.",2),
+   ma("Match the collocations.",[["make","a decision"],["heavy","rain"],["strong","coffee"]],2),
+   mc("'Frugal' most nearly means:",["careful with money","generous","wealthy"],0,"frugal = economical/careful.",3),
+   fl("meticulous","very careful and precise","🔍",3)],
+  review:["Learn words in collocations, not alone.","Upgrade 'very + adjective' to one strong word.","Choose the exact shade of meaning."]},
+
+ pronunciation:{learn:[
+  "English has <b>short</b> and <b>long</b> vowels. <span class='hl'>ship</span> (short) vs <span class='hl'>sheep</span> (long). Length can change the whole word — listen closely.",
+  "The <b>TH</b> sound puts your tongue lightly between your teeth: soft <i>think</i> and buzzing <i>this</i>. Don't swap it for d, z, t or f.",
+  "<b>Word stress</b> carries meaning. <span class='hl'>PHO-to-graph</span> vs <span class='hl'>pho-TO-gra-pher</span>. Stress the right syllable and you sound instantly clearer."],
+  pool:[
+   li("Which word did you hear?","sheep",["ship","sheep"],1,"Long 'ee' → sheep.",1),
+   li("Which word did you hear?","full",["full","fool"],0,"Short u → full.",1),
+   sp("Say both, holding the long vowel.","ship ... sheep","Smile more for 'ee'.",1),
+   sp("Tongue between teeth.","think ... this ... three","Feel the air on your tongue.",2),
+   li("Which word did you hear?","three",["tree","three"],1,"TH → three.",2),
+   mc("Which word uses the buzzing /ð/?",["think","three","mother"],2,"'mother' buzzes.",2),
+   sp("Stress the first syllable.","PHO-to-graph","Punch the PHO.",3),
+   li("Which word did you hear?","vine",["wine","vine"],1,"Teeth on lip → vine.",3)],
+  review:["Vowel length can change meaning (ship/sheep).","TH = tongue between the teeth.","Stress the correct syllable for clarity."]},
+
+ listening:{learn:[
+  "Listen for <b>key words</b>, not every word. Catch the <span class='hl'>numbers, names and times</span> first — the rest supports them.",
+  "Watch the <b>-teen vs -ty</b> trap: <i>fourteen</i> (14) vs <i>forty</i> (40). The stress moves — listen for it.",
+  "In real conversations, aim for the <b>gist</b>. You don't need every word to understand the main idea and respond."],
+  pool:[
+   li("Choose the number.","fourteen",["40","14","4"],1,"fourteen = 14.",1),
+   li("What time?","half past seven",["7:30","6:30","7:15"],0,"half past seven = 7:30.",1),
+   li("Choose what you heard.","thirty",["13","30","3"],1,"thirty = 30.",1),
+   li("What is the job?","I'm a teacher and I live in Madrid.",["doctor","teacher","designer"],1,"'I'm a teacher'.",2),
+   li("Where does she live?","I'm a teacher and I live in Madrid.",["Madrid","Milan","Manchester"],0,"lives in Madrid.",2),
+   li("What does he do at weekends?","On weekends I usually play football.",["cook","play football","sleep"],1,"plays football.",2),
+   li("What's her field?","My name is Aisha and I work in marketing.",["finance","marketing","design"],1,"marketing.",3),
+   li("Pick the number.","nineteen",["90","19"],1,"nineteen = 19.",3)],
+  review:["Listen for key words, not every word.","-teen vs -ty: the stress moves.","Aim for the gist in real speech."]},
+
+ reading:{learn:[
+  "Read the <b>questions first</b>, then scan the text for answers. This is faster than reading every word twice.",
+  "<b>Skim</b> for the main idea; <b>scan</b> for specific details like names, dates and numbers.",
+  "For opinion texts, read <span class='hl'>between the lines</span> — find the writer's attitude, not just the facts."],
+  pool:[
+   rd("Read and answer.","Tom gets up at 6am. He drinks coffee, then goes for a run. He starts work at nine and reads before bed.",
+     [mc("When does Tom get up?",["5am","6am","9am"],1,"'6am'."),mc("What does he do after coffee?",["works","runs","reads"],1,"goes for a run."),mc("When does he read?",["morning","evening","noon"],1,"before bed.")],1),
+   rd("Read the email.","Hi Sam, Thanks for the designs — they look great! Could you make the buttons bigger and send the final version by Friday? Best, Lena",
+     [mc("What does Lena think?",["bad","great","unfinished"],1,"'look great'."),mc("What change is requested?",["smaller buttons","bigger buttons","new colours"],1,"bigger buttons."),mc("Deadline?",["today","Friday","Monday"],1,"by Friday.")],2),
+   rd("Read the opinion.","While remote work offers flexibility, some argue it weakens team bonds. On balance, a hybrid model may capture the benefits of both.",
+     [mc("The writer's overall view is:",["strongly against remote","balanced / hybrid","strongly for remote"],1,"'a hybrid model'."),mc("One downside mentioned:",["cost","weaker team bonds","slow internet"],1,"weakens team bonds.")],3)],
+  review:["Read the questions first, then scan.","Skim for gist, scan for details.","Find the writer's attitude in opinion texts."]},
+
+ writing:{learn:[
+  "Start with <b>clear, complete sentences</b>: capital letter, subject, verb, full stop. Simple and correct beats complex and messy.",
+  "Structure a message: <span class='hl'>greeting → reason → request → thanks</span>. Keep each part short.",
+  "Advanced writing links ideas with <b>connectors</b>: <i>however, therefore, in addition, on the other hand</i>."],
+  pool:[
+   wr("Write 3–4 sentences introducing yourself (name, job, an interest, a goal).",
+     "Hi, I'm Faruqi. I'm a UI/UX designer building a SaaS product. In my free time I enjoy improving my English. My goal is to speak confidently in meetings.",
+     ["States your name","Says what you do","Adds an interest","Mentions a goal","Full sentences, capital letters"],1),
+   wr("Write a short polite message to move a meeting from Monday to Wednesday.",
+     "Hi Alex, Something's come up on Monday, so sorry for the short notice. Would it be possible to move our meeting to Wednesday afternoon? Let me know what works. Thanks, Faruqi",
+     ["Polite greeting","Brief reason","Suggests a new time","Polite closing","Correct capitalisation"],2),
+   wr("Write a short opinion paragraph: is remote work better than office work?",
+     "In my view, remote work suits knowledge jobs best. It offers flexibility and cuts commuting, which boosts focus. However, it can weaken collaboration, so a hybrid model may be the ideal balance.",
+     ["States a clear opinion","Gives a reason","Uses a connector (however/therefore)","Acknowledges the other side","Has a concluding idea"],3)],
+  review:["Clear, complete sentences first.","Structure messages: greeting → reason → request → thanks.","Link ideas with connectors."]},
+
+ speaking:{learn:[
+  "Speak in short, clear phrases and <b>pause</b> to breathe. Fluency is about flow, not speed.",
+  "Connect your ideas with <span class='hl'>sequencers</span>: <i>first, then, after that, finally</i>. It makes you sound organised.",
+  "Push fluency by <b>extending</b> every answer with a reason or example — never stop at one sentence."],
+  pool:[
+   sp("Shadow this line aloud.","Hi, I'm a UI/UX designer.","Copy the rhythm.",1),
+   sp("Now this one.","I love turning complex problems into simple designs.","Pause after 'problems'.",1),
+   sp("Describe your morning using sequencers.","In the morning I check messages, then I work on designs.","Use 'then' and 'after that'.",2),
+   mc("Good linking words for a routine:",["because, although","then, after that, finally"],1,"Sequencers connect steps.",2),
+   sp("Give an opinion and a reason.","I think design matters because first impressions decide trust.","Stress 'because'.",3),
+   sp("Extend this answer with an example.","I enjoy reading — for instance, I just finished a book on habits.","Add 'for instance'.",3)],
+  review:["Short phrases + pauses = fluency.","Use sequencers to organise ideas.","Always extend with a reason or example."]},
+
+ public:{learn:[
+  "A talk lives or dies on the <b>first line</b>. Open with a question, a surprising fact, or a short story.",
+  "Structure everything in <span class='hl'>three parts</span>: tell them what's coming, say it, then summarise. Signpost as you go.",
+  "Command the room with <b>pace and pause</b>. Slow down on your key point and let silence do the work."],
+  pool:[
+   sp("Deliver this hook.","Imagine deleting an app the moment it annoys you.","Land it, then pause.",2),
+   mc("The strongest way to open a talk is:",["Today I will talk about design.","Let me start with a question...","Hello everyone, um..."],1,"A hook grabs attention.",2),
+   or("We will cover three things today.","Signposting sentence order.",2),
+   sp("Preview your structure.","We'll cover three ideas: first impressions, friction, and trust.","Number them clearly.",3),
+   sp("Close with a call to action.","So here's my ask: give me twenty minutes to show you.","Confident, specific ask.",3)],
+  review:["Open with a hook, not a title.","Structure in three parts and signpost.","Use pace and pause to command attention."]},
+
+ ielts:{learn:[
+  "In <b>Part 1</b>, give a fact plus a reason — don't answer in one word. Keep it natural and friendly.",
+  "In <b>Part 2</b>, use the 1-minute prep, then cover every bullet and <span class='hl'>speak for the full 2 minutes</span>.",
+  "In <b>Part 3</b>, develop opinions: <i>opinion → reason → example → balance</i>. Use discourse markers to organise."],
+  pool:[
+   mc("Best Part 1 answer to 'Do you like reading?'",["Yes.","Yes, I do — mainly because it helps me relax.","No comment."],1,"Add a reason.",1),
+   or("I was born and raised in a small town.","Natural Part 1 sentence.",1),
+   sp("Start a Part 2 long turn (describe a person you admire).","The person I'd like to talk about is my mentor.","Then keep going for 2 minutes.",2),
+   fi("'There's no ___ that technology changed communication.' (Part 3 phrase)","denying","'There's no denying that...'",2),
+   mc("A good Part 3 discourse marker is:",["and and and","on the other hand"],1,"Shows balance.",3),
+   mc("Higher-band phrase for opinions:",["I think maybe","I'd argue that"],1,"Sounds more academic.",3)],
+  review:["Part 1: fact + reason, keep it natural.","Part 2: cover all bullets, fill the 2 minutes.","Part 3: opinion → reason → example → balance."]},
+
+ business:{learn:[
+  "Learn high-frequency <b>workplace words</b>: <i>deadline, agenda, deliverable, stakeholder</i>. Use them confidently.",
+  "Emails need the right <span class='hl'>register</span>: soften requests with <i>Could you...?</i> and <i>Would it be possible...?</i>",
+  "In meetings, <b>signpost</b>: <i>Let's run through the agenda... To wrap up, the action items are...</i>"],
+  pool:[
+   fl("deadline","the latest time to finish something","⏰",1),
+   fl("agenda","the list of topics for a meeting","🗓️",1),
+   mc("The most polite request is:",["Send me the file.","Could you send me the file, please?","File now."],1,"'Could you... please?'",1),
+   co("I will discuss about the budget.",["I will discuss the budget.","I will discussing the budget.","I will discuss about budget."],0,"'discuss' takes no 'about'.",2),
+   ma("Match the meeting terms.",[["action item","a task to do"],["deliverable","a completed output"],["blocker","something stopping progress"]],2),
+   sp("Give a one-line project update.","Overall, we're on track for Friday; the one blocker is client feedback.","Lead with the status.",3),
+   mc("To close a meeting clearly, say:",["Okay bye.","To wrap up, the action items are..."],1,"Signpost the ending.",3)],
+  review:["Master high-frequency workplace vocabulary.","Soften requests: 'Could you...?'","Signpost meetings from open to close."]}
+};
+
+/* ============ BUILD LESSONS (120) ============ */
+var LESSONS=[];
+(function(){var id=0;
+ for(var lvl=1;lvl<=3;lvl++){
+  SKILLS.forEach(function(sk){
+   for(var i=0;i<4;i++){
+    LESSONS.push({id:"L"+(id++),path:LEVELS[lvl],level:lvl,skill:sk.k,skillName:sk.n,idx:i,
+      title:sk.n+": "+SUFFIX[sk.k][i]});
+   }
+  });
+ }
+})();
+function quizable(e){return ["mcq","fill","order","match","correct","listen"].indexOf(e.type)>=0;}
+function lessonContent(L){
+  var b=BANK[L.skill],lvl=L.level;
+  var pool=b.pool.filter(function(e){return e.lvl===lvl;});
+  if(pool.length<4)pool=pool.concat(b.pool.filter(function(e){return e.lvl!==lvl;}));
+  var rot=pool.slice();for(var k=0;k<L.idx;k++)rot.push(rot.shift());
+  var practice=rot.slice(0,4);
+  // quiz: prefer strictly-quizable items, but always fall back to any answerable exercise (e.g. reading) so no stage is ever empty
+  var quiz=rot.filter(quizable).slice(0,3);
+  if(quiz.length<3)quiz=b.pool.filter(quizable).slice(0,3);
+  if(!quiz.length)quiz=rot.slice(0,3);
+  var qable=rot.filter(quizable);
+  var challenge=[qable.length?qable[qable.length-1]:rot[rot.length-1]||rot[0]];
+  var learn=b.learn[lvl-1]||b.learn[0];
+  return {learn:learn,watch:learn.replace(/<[^>]+>/g,""),practice:practice,quiz:quiz,challenge:challenge,review:b.review};
+}
+
+/* ============ STATE ============ */
+var defaultState={xp:0,streak:0,best:0,lastActive:null,lastGoalDate:null,theme:"dark",
+  completed:{},scores:{},bookmarks:{},notes:{},achievements:{},revision:{},
+  stats:{lessons:0,exercises:0,correct:0,quizzes:0},
+  today:{date:null,lessons:0,xp:0,correct:0,skills:{},missions:null,claimed:{}},
+  week:{key:null,xp:0,lessons:0,skills:{},claimed:{}},
+  xpHist:{},pathFilter:"All"};
+var S=loadState();
+function loadState(){try{var s=JSON.parse(Store.get("fp_state"));if(s&&typeof s==="object"){for(var k in defaultState)if(!(k in s))s[k]=JSON.parse(JSON.stringify(defaultState[k]));return s;}}catch(e){}return JSON.parse(JSON.stringify(defaultState));}
+function save(){try{Store.set("fp_state",JSON.stringify(S));}catch(e){}}
+function levelInfo(xp){var lvl=1,need=100,acc=0;while(xp>=acc+need){acc+=need;lvl++;need=100+(lvl-1)*50;}return{level:lvl,inLvl:xp-acc,need:need,pct:Math.round((xp-acc)/need*100)};}
+
+/* ============ DAILY / WEEKLY ============ */
+var MISSIONS=[
+ {id:"m_les",icon:"📚",text:function(t){return "Complete "+t+" lessons";},target:3,rew:30,prog:function(){return S.today.lessons;}},
+ {id:"m_xp",icon:"⚡",text:function(t){return "Earn "+t+" XP today";},target:120,rew:20,prog:function(){return S.today.xp;}},
+ {id:"m_cor",icon:"🎯",text:function(t){return "Get "+t+" correct answers";},target:15,rew:20,prog:function(){return S.today.correct;}},
+ {id:"m_one",icon:"✅",text:function(){return "Finish one lesson";},target:1,rew:10,prog:function(){return S.today.lessons;}},
+ {id:"m_skill",icon:"🧠",text:function(){return "Practise 2 different skills";},target:2,rew:25,prog:function(){return Object.keys(S.today.skills).length;}}
+];
+var WEEKGOALS=[
+ {id:"w_xp",icon:"⚡",text:"Earn 800 XP this week",target:800,rew:80,prog:function(){return S.week.xp;}},
+ {id:"w_les",icon:"📚",text:"Complete 12 lessons this week",target:12,rew:60,prog:function(){return S.week.lessons;}},
+ {id:"w_skill",icon:"🌐",text:"Practise 6 different skills this week",target:6,rew:50,prog:function(){return Object.keys(S.week.skills).length;}}
+];
+function rollPeriods(){
+  var t=dkey();
+  if(S.today.date!==t){S.today={date:t,lessons:0,xp:0,correct:0,skills:{},missions:pickMissions(t),claimed:{}};}
+  else if(!S.today.missions){S.today.missions=pickMissions(t);}
+  var wk=weekKey();
+  if(S.week.key!==wk){S.week={key:wk,xp:0,lessons:0,skills:{},claimed:{}};}
+  save();
+}
+function pickMissions(seedStr){var seed=0;for(var i=0;i<seedStr.length;i++)seed=(seed*31+seedStr.charCodeAt(i))>>>0;
+  var idx=[],pool=MISSIONS.slice();for(var n=0;n<3;n++){var j=seed%pool.length;idx.push(pool.splice(j,1)[0].id);seed=(seed*1103515245+12345)>>>0;}return idx;}
+function checkPeriodRewards(){
+  (S.today.missions||[]).forEach(function(mid){var m=MISSIONS.find(function(x){return x.id===mid;});if(!m)return;
+    if(m.prog()>=m.target&&!S.today.claimed[mid]){S.today.claimed[mid]=true;S.xp+=m.rew;addXp(m.rew);toast("🎯","Daily mission done!","+"+m.rew+" XP");}});
+  WEEKGOALS.forEach(function(g){if(g.prog()>=g.target&&!S.week.claimed[g.id]){S.week.claimed[g.id]=true;S.xp+=g.rew;addXp(g.rew);toast("🏆","Weekly goal smashed!","+"+g.rew+" XP");}});
+  save();
+}
+
+/* ============ SPEECH ============ */
+var speechOn=("speechSynthesis"in window);
+function speak(t,rate){if(!speechOn)return;try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=rate||.94;
+  var vs=window.speechSynthesis.getVoices(),en=vs.filter(function(v){return /en[-_]/i.test(v.lang);});if(en.length){var p=en.find(function(v){return /female|samantha|zira|google us/i.test(v.name);});u.voice=p||en[0];}
+  window.speechSynthesis.speak(u);}catch(e){}}
+function stopSpeak(){if(speechOn)try{window.speechSynthesis.cancel();}catch(e){}}
+
+/* ============ HELPERS ============ */
+var $=function(s,r){return (r||document).querySelector(s);};
+function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function norm(s){return (s||"").toLowerCase().replace(/[^a-z0-9']/g,"").trim();}
+function lessonsOf(skill,level){return LESSONS.filter(function(L){return (!skill||L.skill===skill)&&(!level||L.level===level);});}
+function skillPct(skill,level){var ls=lessonsOf(skill,level),d=ls.filter(function(L){return S.completed[L.id];}).length;return{done:d,total:ls.length,pct:ls.length?Math.round(d/ls.length*100):0};}
+function overallPct(){var d=0;LESSONS.forEach(function(L){if(S.completed[L.id])d++;});return{done:d,total:LESSONS.length,pct:Math.round(d/LESSONS.length*100)};}
+function accuracy(){return S.stats.exercises?Math.round(S.stats.correct/S.stats.exercises*100):0;}
+function isBookmarked(id){return !!S.bookmarks[id];}
+function toggleBookmark(id){if(S.bookmarks[id])delete S.bookmarks[id];else S.bookmarks[id]=true;save();}
+
+/* ============ NAV ============ */
+var route={view:"dashboard",arg:null};
+function renderNav(){var nav=$("#nav");nav.innerHTML="";
+  nav.appendChild(navItem("dashboard",null,"🏠","Dashboard"));
+  nav.appendChild(navItem("paths",null,"🛤️","Learning Paths"));
+  nav.appendChild(navItem("missions",null,"🎯","Missions & Goals"));
+  nav.appendChild(navItem("analytics",null,"📊","Analytics"));
+  nav.appendChild(navItem("achievements",null,"🏅","Achievements"));
+  nav.appendChild(navItem("revision",null,"🔁","Revision"));
+  nav.appendChild(navItem("bookmarks",null,"⭐","Bookmarks"));
+  nav.appendChild(el("div","nav-group","Skills"));
+  SKILLS.forEach(function(sk){var it=navItem("skill",sk.k,sk.ic,sk.n);
+    var d=LESSONS.filter(function(L){return L.skill===sk.k&&S.completed[L.id];}).length;if(d>0)it.appendChild(el("span","cnt",d));nav.appendChild(it);});
+}
+function navItem(view,arg,icon,label){var b=el("button","nav-item","<span class='ic'>"+icon+"</span><span>"+label+"</span>");
+  if(route.view===view&&route.arg===(arg||null))b.classList.add("active");
+  b.onclick=function(){go(view,arg);closeDrawer();};return b;}
+function go(view,arg){route={view:view,arg:arg||null};renderNav();stopSpeak();
+  ({dashboard:renderDashboard,paths:renderPaths,missions:renderMissions,analytics:renderAnalytics,
+    achievements:renderAchievements,revision:renderRevision,bookmarks:renderBookmarks,skill:renderSkill,search:renderSearch}[view]||renderDashboard)(arg);
+  window.scrollTo(0,0);}
+
+/* ============ DASHBOARD ============ */
+function renderDashboard(){
+  var v=$("#view");v.innerHTML="";var li=levelInfo(S.xp),ov=overallPct();
+  var hour=new Date().getHours(),greet=hour<12?"Good morning":hour<18?"Good afternoon":"Good evening";
+  var next=LESSONS.find(function(L){return !S.completed[L.id];})||LESSONS[0];
+  var hero=el("div","hero");
+  hero.innerHTML="<div style='display:flex;gap:24px;flex-wrap:wrap;align-items:center'><div style='flex:1;min-width:240px'>"+
+    "<div style='font-size:.8rem;font-weight:800;opacity:.85;letter-spacing:.04em'>"+greet.toUpperCase()+" 👋</div>"+
+    "<h2>Your path to fluent English</h2><p>Level "+li.level+" · "+ov.done+" of "+ov.total+" lessons complete · "+S.streak+"-day streak</p>"+
+    "<div class='row'><div class='m'><b>"+S.xp+"</b><span>Total XP</span></div><div class='m'><b>"+accuracy()+"%</b><span>Accuracy</span></div><div class='m'><b>"+ov.pct+"%</b><span>Complete</span></div></div>"+
+    "<div class='cta-row'><button class='btn wht' id='cont'>▶ Continue: "+next.skillName+"</button><button class='btn gh' id='shuffle'>🎲 Surprise lesson</button></div></div>"+
+    ring(li.pct,"Lv "+li.level,li.inLvl+"/"+li.need)+"</div>";
+  v.appendChild(hero);
+  $("#cont",hero).onclick=function(){openLesson(next);};
+  $("#shuffle",hero).onclick=function(){openLesson(pick(LESSONS));};
+
+  var sg=el("div","grid g4");sg.style.marginTop="16px";
+  sg.appendChild(statEl("🔥",S.streak,"Streak"));
+  sg.appendChild(statEl("⚡",S.xp,"XP"));
+  sg.appendChild(statEl("📚",ov.done,"Lessons"));
+  sg.appendChild(statEl("🎯",accuracy()+"%","Accuracy"));
+  sg.appendChild(statEl("⭐",Object.keys(S.bookmarks).length,"Saved"));
+  sg.appendChild(statEl("🏅",Object.keys(S.achievements).length,"Badges"));
+  v.appendChild(sg);
+
+  // daily missions preview
+  v.appendChild(sectionTitle("Today's missions","View all →",function(){go("missions");}));
+  var mc2=el("div");
+  (S.today.missions||[]).forEach(function(mid){var m=MISSIONS.find(function(x){return x.id===mid;});if(m)mc2.appendChild(missionEl(m));});
+  v.appendChild(mc2);
+
+  // skills grid
+  v.appendChild(sectionTitle("Jump into a skill",null));
+  var g=el("div","grid skills");
+  SKILLS.forEach(function(sk){g.appendChild(skillCard(sk));});
+  v.appendChild(g);
+}
+function statEl(em,val,lbl){var s=el("div","stat");s.innerHTML="<div class='em'>"+em+"</div><b>"+val+"</b><span>"+lbl+"</span>";return s;}
+function sectionTitle(t,link,fn){var s=el("div","section-title");s.appendChild(el("h2",null,t));
+  if(link){var a=el("button","btn ghost sm",link);a.onclick=fn;s.appendChild(a);}return s;}
+function ring(pct,big,small){var r=48,c=2*Math.PI*r,off=c-(pct/100)*c;
+  return "<div class='ring-wrap'><svg width='120' height='120' viewBox='0 0 120 120'><circle class='ring-bg' cx='60' cy='60' r='"+r+"' fill='none' stroke-width='11'/><circle class='ring-fg' cx='60' cy='60' r='"+r+"' fill='none' stroke-width='11' stroke-dasharray='"+c+"' stroke-dashoffset='"+off+"'/></svg><div class='ring-center'><span class='big'>"+big+"</span><small>"+small+"</small></div></div>";}
+function skillCard(sk){var p=skillPct(sk.k);var c=el("button","skill-card");
+  c.innerHTML="<div class='s-ic' style='background:"+sk.c+"22;color:"+sk.c+"'>"+sk.ic+"</div><h3>"+sk.n+"</h3>"+
+    "<div class='s-meta'>"+p.done+"/"+p.total+" lessons · "+p.pct+"%</div><div class='mini-bar'><i style='width:"+p.pct+"%'></i></div>";
+  c.onclick=function(){go("skill",sk.k);};return c;}
+
+/* ============ PATHS ============ */
+function renderPaths(){
+  var v=$("#view");v.innerHTML="";
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>Structured learning</div><h1>Learning Paths</h1><p>Three paths, ten skills each, "+LESSONS.length+" lessons in total. Follow a path or jump to any skill.</p>";v.appendChild(head);
+  [1,2,3].forEach(function(lvl){
+    var ls=lessonsOf(null,lvl),done=ls.filter(function(L){return S.completed[L.id];}).length,pct=Math.round(done/ls.length*100);
+    v.appendChild((function(){var s=el("div","section-title");s.innerHTML="<h2><span class='diff d"+lvl+"'>"+LEVELS[lvl]+"</span> Path · "+pct+"%</h2>";return s;})());
+    var g=el("div","grid skills");
+    SKILLS.forEach(function(sk){var p=skillPct(sk.k,lvl);var c=el("button","skill-card");
+      c.innerHTML="<div class='s-ic' style='background:"+sk.c+"22;color:"+sk.c+"'>"+sk.ic+"</div><h3>"+sk.n+"</h3><div class='s-meta'>"+p.done+"/"+p.total+" · "+p.pct+"%</div><div class='mini-bar'><i style='width:"+p.pct+"%'></i></div>";
+      c.onclick=function(){go("skill",sk.k+"|"+lvl);};g.appendChild(c);});
+    v.appendChild(g);
+  });
+}
+
+/* ============ SKILL (lessons list) ============ */
+function renderSkill(arg){
+  var parts=(arg||"").split("|"),skillKey=parts[0],lvlFilter=parts[1]?parseInt(parts[1],10):null;
+  var sk=skillInfo(skillKey);var v=$("#view");v.innerHTML="";
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>"+sk.ic+" Skill</div><h1>"+sk.n+"</h1><p>"+lessonsOf(skillKey).length+" lessons across all three paths. Each runs Learn → Watch → Practice → Quiz → Challenge → Review.</p>";v.appendChild(head);
+  var fWrap=el("div","filters");fWrap.style.marginBottom="16px";
+  [["All",null],["Beginner",1],["Intermediate",2],["Advanced",3]].forEach(function(f){
+    var on=(S.pathFilter===f[0]);var b=el("button","chip-f"+(on?" on":""),f[0]);b.onclick=function(){S.pathFilter=f[0];save();renderSkill(arg);};fWrap.appendChild(b);});
+  v.appendChild(fWrap);
+  var lvl=lvlFilter||{Beginner:1,Intermediate:2,Advanced:3}[S.pathFilter]||null;
+  var ls=lessonsOf(skillKey,lvl);
+  var g=el("div","grid lessons");ls.forEach(function(L){g.appendChild(lessonCard(L));});v.appendChild(g);
+}
+function lessonCard(L){var sk=skillInfo(L.skill),done=!!S.completed[L.id];
+  var c=el("div","lesson-card");
+  c.innerHTML="<div class='lc-top'><span class='lc-ic' style='background:"+sk.c+"22;color:"+sk.c+"'>"+sk.ic+"</span><span style='color:"+sk.c+"'>"+sk.n+"</span><span class='diff d"+L.level+"' style='margin-left:auto'>"+L.path+"</span></div>"+
+    "<h3>"+L.title+"</h3>"+
+    "<div class='muted' style='font-size:.82rem'>"+(done?"Best score "+(S.scores[L.id]||0)+"%":"6 stages · earn XP")+"</div>"+
+    "<div class='lc-foot'><button class='btn sm' style='flex:1'>"+(done?"↻ Replay":"▶ Start")+"</button>"+
+    (done?"<span class='done-badge'>✓</span>":"")+
+    "<button class='star"+(isBookmarked(L.id)?" on":"")+"' aria-label='Bookmark'>"+(isBookmarked(L.id)?"★":"☆")+"</button></div>";
+  $(".btn",c).onclick=function(){openLesson(L);};c.querySelector("h3").onclick=function(){openLesson(L);};
+  var star=$(".star",c);star.onclick=function(e){e.stopPropagation();toggleBookmark(L.id);star.classList.toggle("on");star.textContent=isBookmarked(L.id)?"★":"☆";renderNav();};
+  return c;}
+
+/* ============ MISSIONS & GOALS ============ */
+function renderMissions(){
+  var v=$("#view");v.innerHTML="";
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>Stay consistent</div><h1>Missions & Goals</h1><p>Fresh missions every day and bigger goals each week. Hit them to earn bonus XP.</p>";v.appendChild(head);
+  v.appendChild(sectionTitle("🎯 Daily missions",null));
+  var d=el("div");(S.today.missions||[]).forEach(function(mid){var m=MISSIONS.find(function(x){return x.id===mid;});if(m)d.appendChild(missionEl(m));});v.appendChild(d);
+  v.appendChild(sectionTitle("🏆 Weekly goals",null));
+  var w=el("div");WEEKGOALS.forEach(function(g){w.appendChild(goalEl(g));});v.appendChild(w);
+}
+function missionEl(m){var prog=Math.min(m.target,m.prog()),done=prog>=m.target;var e=el("div","mission"+(done?" done":""));
+  e.innerHTML="<div class='m-ic'>"+(done?"✓":m.icon)+"</div><div class='m-body'><b>"+m.text(m.target)+"</b><div class='m-prog'>"+prog+" / "+m.target+"</div><div class='mbar'><i style='width:"+(prog/m.target*100)+"%'></i></div></div><div class='rew'>"+(done?"✓ +"+m.rew:"+"+m.rew+" XP")+"</div>";return e;}
+function goalEl(g){var prog=Math.min(g.target,g.prog()),done=prog>=g.target;var e=el("div","mission"+(done?" done":""));
+  e.innerHTML="<div class='m-ic'>"+(done?"✓":g.icon)+"</div><div class='m-body'><b>"+g.text+"</b><div class='m-prog'>"+prog+" / "+g.target+"</div><div class='mbar'><i style='width:"+(prog/g.target*100)+"%'></i></div></div><div class='rew'>"+(done?"✓ +"+g.rew:"+"+g.rew+" XP")+"</div>";return e;}
+
+/* ============ ANALYTICS ============ */
+function renderAnalytics(){
+  var v=$("#view");v.innerHTML="";var li=levelInfo(S.xp),ov=overallPct();
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>Your progress</div><h1>Analytics</h1><p>Track how your English is growing across every skill.</p>";v.appendChild(head);
+  var sg=el("div","grid g4");
+  sg.appendChild(statEl("⚡",S.xp,"Total XP"));
+  sg.appendChild(statEl("⭐","Lv "+li.level,"Level"));
+  sg.appendChild(statEl("🔥",S.streak,"Streak"));
+  sg.appendChild(statEl("🏅",S.best,"Best streak"));
+  sg.appendChild(statEl("📚",ov.done+"/"+ov.total,"Lessons"));
+  sg.appendChild(statEl("🎯",accuracy()+"%","Accuracy"));
+  sg.appendChild(statEl("✍️",S.stats.exercises,"Exercises"));
+  sg.appendChild(statEl("🏆",S.stats.quizzes,"Quizzes"));
+  v.appendChild(sg);
+  v.appendChild(sectionTitle("XP this week",null));
+  var cc=el("div","card");cc.appendChild(weekChart());v.appendChild(cc);
+  v.appendChild(sectionTitle("Skill mastery",null));
+  var g=el("div","grid g2");
+  SKILLS.forEach(function(sk){var p=skillPct(sk.k);var c=el("div","card");
+    c.innerHTML="<div style='display:flex;align-items:center;gap:10px;margin-bottom:10px'><span style='font-size:1.2rem'>"+sk.ic+"</span><b style='flex:1'>"+sk.n+"</b><span style='font-weight:800;color:"+sk.c+"'>"+p.pct+"%</span></div><div class='mini-bar' style='height:9px'><i style='width:"+p.pct+"%;background:"+sk.c+"'></i></div><div style='font-size:.74rem;color:var(--faint);font-weight:700;margin-top:6px'>"+p.done+" / "+p.total+" lessons</div>";g.appendChild(c);});
+  v.appendChild(g);
+  var reset=el("button","btn ghost sm","↺ Reset all progress");reset.style.marginTop="22px";
+  reset.onclick=function(){if(confirm("Reset ALL progress, XP and badges? Bookmarks and notes are kept.")){var bm=S.bookmarks,nt=S.notes,th=S.theme;S=JSON.parse(JSON.stringify(defaultState));S.bookmarks=bm;S.notes=nt;S.theme=th;rollPeriods();save();refreshTop();renderAnalytics();toast("↺","Reset done","Fresh start!");}};
+  v.appendChild(reset);
+}
+function weekChart(){var wrap=el("div","chart"),days=[];
+  for(var i=6;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);var k=dkey(d);days.push({xp:S.xpHist[k]||0,lbl:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d.getDay()],today:i===0});}
+  var max=Math.max(30,Math.max.apply(null,days.map(function(d){return d.xp;})));
+  days.forEach(function(d){var col=el("div","col"+(d.today?" today":""));col.innerHTML="<span class='v'>"+(d.xp||"")+"</span><div class='b' style='height:0'></div><small>"+d.lbl+"</small>";wrap.appendChild(col);
+    setTimeout(function(){$(".b",col).style.height=Math.max(4,d.xp/max*100)+"%";},60);});
+  return wrap;}
+
+/* ============ ACHIEVEMENTS ============ */
+var BADGES=[
+ {id:"first",icon:"🌱",name:"First Steps",desc:"Finish your first lesson",cond:function(){return S.stats.lessons>=1;}},
+ {id:"ten",icon:"📗",name:"Getting Serious",desc:"Finish 10 lessons",cond:function(){return S.stats.lessons>=10;}},
+ {id:"tf",icon:"🎓",name:"Committed",desc:"Finish 25 lessons",cond:function(){return S.stats.lessons>=25;}},
+ {id:"fifty",icon:"🚀",name:"Halfway Hero",desc:"Finish 50 lessons",cond:function(){return S.stats.lessons>=50;}},
+ {id:"hundred",icon:"👑",name:"Centurion",desc:"Finish 100 lessons",cond:function(){return S.stats.lessons>=100;}},
+ {id:"s3",icon:"🔥",name:"On Fire",desc:"3-day streak",cond:function(){return S.best>=3;}},
+ {id:"s7",icon:"⚡",name:"Unstoppable",desc:"7-day streak",cond:function(){return S.best>=7;}},
+ {id:"xp1k",icon:"💎",name:"XP Machine",desc:"Earn 1,000 XP",cond:function(){return S.xp>=1000;}},
+ {id:"lv10",icon:"⭐",name:"Rising Star",desc:"Reach Level 10",cond:function(){return levelInfo(S.xp).level>=10;}},
+ {id:"quiz10",icon:"🏆",name:"Quiz Master",desc:"Pass 10 quizzes",cond:function(){return S.stats.quizzes>=10;}},
+ {id:"allskill",icon:"🌐",name:"All-Rounder",desc:"Practise all 10 skills",cond:function(){var set={};LESSONS.forEach(function(L){if(S.completed[L.id])set[L.skill]=1;});return Object.keys(set).length>=10;}},
+ {id:"sharp",icon:"🎯",name:"Sharpshooter",desc:"Answer 100 exercises",cond:function(){return S.stats.exercises>=100;}}
+];
+function checkBadges(){var un=[];BADGES.forEach(function(b){if(!S.achievements[b.id]&&b.cond()){S.achievements[b.id]=true;un.push(b);}});if(un.length)save();return un;}
+function renderAchievements(){var v=$("#view");v.innerHTML="";
+  var got=BADGES.filter(function(b){return S.achievements[b.id];}).length;
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>Milestones</div><h1>Achievements</h1><p>You've unlocked "+got+" of "+BADGES.length+" badges. Keep going!</p>";v.appendChild(head);
+  var g=el("div","grid g2");BADGES.forEach(function(b){var un=!!S.achievements[b.id];var e=el("div","badge"+(un?" on":""));
+    e.innerHTML="<div class='b-ic'>"+(un?b.icon:"🔒")+"</div><div><b>"+b.name+"</b><span>"+b.desc+"</span></div>";g.appendChild(e);});v.appendChild(g);}
+
+/* ============ BOOKMARKS ============ */
+function renderBookmarks(){var v=$("#view");v.innerHTML="";
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>Saved</div><h1>⭐ Bookmarks</h1><p>Lessons you starred to revisit.</p>";v.appendChild(head);
+  var ls=LESSONS.filter(function(L){return isBookmarked(L.id);});
+  if(!ls.length){v.appendChild(el("div","empty","<div class='e'>⭐</div><p>No bookmarks yet. Tap the ☆ on any lesson to save it.</p>"));return;}
+  var g=el("div","grid lessons");ls.forEach(function(L){g.appendChild(lessonCard(L));});v.appendChild(g);}
+
+/* ============ REVISION ============ */
+function renderRevision(){var v=$("#view");v.innerHTML="";
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>Lock it in</div><h1>🔁 Revision Mode</h1><p>Mixed practice pulled from your bookmarked and completed lessons, plus your saved notes.</p>";v.appendChild(head);
+  var pool=revisionPool();
+  var card=el("div","card");card.style.textAlign="center";
+  card.innerHTML="<div style='font-size:2.4rem'>🧠</div><h3 style='margin:8px 0'>"+pool.length+" exercises ready</h3><p class='muted' style='margin-bottom:16px'>A quick mixed drill to refresh what you've learned.</p>";
+  var start=el("button","btn","▶ Start revision drill");start.onclick=function(){if(!pool.length){toast("🔁","Nothing yet","Finish or bookmark a lesson first.");return;}startRevision(pool);};
+  card.appendChild(start);v.appendChild(card);
+  // notes
+  var notesIds=Object.keys(S.notes).filter(function(id){return S.notes[id]&&S.notes[id].trim();});
+  v.appendChild(sectionTitle("Your notes",null));
+  if(!notesIds.length){v.appendChild(el("div","card","<p class='muted'>No notes yet. Add notes inside any lesson's Review stage.</p>"));}
+  else{var g=el("div","grid g2");notesIds.forEach(function(id){var L=LESSONS.find(function(x){return x.id===id;});if(!L)return;
+    var c=el("div","card");c.innerHTML="<div style='font-weight:800;margin-bottom:6px'>"+L.title+"</div><p class='muted' style='font-size:.9rem;white-space:pre-wrap'>"+S.notes[id].replace(/</g,"&lt;")+"</p>";
+    var b=el("button","btn ghost sm","Open lesson");b.style.marginTop="10px";b.onclick=function(){openLesson(L);};c.appendChild(b);g.appendChild(c);});v.appendChild(g);}}
+function revisionPool(){var ids=Object.keys(S.bookmarks);if(!ids.length)ids=Object.keys(S.completed);
+  var ex=[];ids.forEach(function(id){var L=LESSONS.find(function(x){return x.id===id;});if(!L)return;var c=lessonContent(L);
+    c.practice.concat(c.quiz).forEach(function(e){if(quizable(e))ex.push(e);});});
+  shuffle(ex);return ex.slice(0,10);}
+function startRevision(pool){SESSION={rev:true,items:pool.map(function(e){return{k:"ex",ex:e,quiz:true};}),idx:0,correct:0,total:0,xp:0,L:null};
+  SESSION.items.push({k:"revdone"});openPlayerRaw();}
+
+/* ============ SEARCH ============ */
+function renderSearch(q){var v=$("#view");v.innerHTML="";
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>Results</div><h1>Search: \u201C"+(q||"")+"\u201D</h1>";v.appendChild(head);
+  var ql=norm(q);var res=LESSONS.filter(function(L){return norm(L.title+" "+L.skillName+" "+L.path).indexOf(ql)>=0;});
+  if(!res.length){v.appendChild(el("div","empty","<div class='e'>🔍</div><p>No lessons match. Try 'grammar', 'ielts', 'business'...</p>"));return;}
+  var g=el("div","grid lessons");res.slice(0,40).forEach(function(L){g.appendChild(lessonCard(L));});v.appendChild(g);}
+$("#searchInput").addEventListener("keydown",function(e){if(e.key==="Enter"){var q=e.target.value.trim();if(q){route={view:"search",arg:q};renderNav();renderSearch(q);window.scrollTo(0,0);}}});
+
+/* ============ LESSON PLAYER ============ */
+var SESSION=null;
+function openLesson(L){
+  var c=lessonContent(L);
+  var items=[{k:"learn"},{k:"watch"}];
+  c.practice.forEach(function(e){items.push({k:"ex",ex:e,quiz:false});});
+  items.push({k:"quizintro"});c.quiz.forEach(function(e){items.push({k:"ex",ex:e,quiz:true});});
+  items.push({k:"challengeintro"});c.challenge.forEach(function(e){items.push({k:"ex",ex:e,quiz:true,challenge:true});});
+  items.push({k:"review"},{k:"complete"});
+  SESSION={rev:false,L:L,content:c,items:items,idx:0,correct:0,total:0,xp:0};
+  openPlayerRaw();
+}
+function openPlayerRaw(){$("#player").classList.add("show");document.body.style.overflow="hidden";renderStep();}
+function closePlayer(){$("#player").classList.remove("show");document.body.style.overflow="";stopSpeak();if(SESSION&&SESSION.timer)clearInterval(SESSION.timer);SESSION=null;
+  ({dashboard:renderDashboard,skill:renderSkill,bookmarks:renderBookmarks,revision:renderRevision,search:renderSearch,paths:renderPaths}[route.view]||renderDashboard)(route.arg);renderNav();refreshTop();}
+$("#plClose").onclick=function(){if(SESSION&&SESSION.total>0&&!SESSION.done){if(!confirm("Leave now? This lesson's progress won't be saved."))return;}closePlayer();};
+function renderStep(){
+  var it=SESSION.items[SESSION.idx];
+  $("#plProg").style.width=Math.round(SESSION.idx/(SESSION.items.length-1)*100)+"%";
+  var stageNames={learn:"Learn",watch:"Watch",quizintro:"Quiz",challengeintro:"Challenge",review:"Review",complete:"Done",revdone:"Done"};
+  var st=it.k==="ex"?(it.challenge?"Challenge":it.quiz?"Quiz":"Practice"):stageNames[it.k]||"";
+  $("#plStage").textContent=st;
+  $("#plTimer").style.display="none";
+  var inner=$("#plInner"),foot=$("#plFoot");inner.innerHTML="";foot.innerHTML="";
+  if(it.k==="learn")return stLearn(inner,foot);
+  if(it.k==="watch")return stWatch(inner,foot);
+  if(it.k==="quizintro")return stIntro(inner,foot,"🧠","Quiz Time","Show what you've learned.","green");
+  if(it.k==="challengeintro")return stIntro(inner,foot,"⚡","Challenge","One timed question. Beat the clock!","");
+  if(it.k==="review")return stReview(inner,foot);
+  if(it.k==="complete")return stComplete(inner,foot);
+  if(it.k==="revdone")return stRevDone(inner,foot);
+  if(it.k==="ex")return stEx(inner,foot,it);
+}
+function footBtn(foot,label,fn,cls){var b=el("button","btn "+(cls||"")+" block",label);b.onclick=fn;foot.appendChild(b);return b;}
+function nextStep(){SESSION.idx++;renderStep();$(".pl-scroll").scrollTop=0;}
+
+function stLearn(inner,foot){var L=SESSION.L,c=SESSION.content;
+  inner.innerHTML="<div class='stage-tag'>📖 Learn</div><h2 class='q-title'>"+L.title+"</h2><div class='learn-card'>"+c.learn+"</div>";
+  var play=el("button","btn ghost sm","🔊 Read aloud");play.onclick=function(){speak(c.watch);};inner.appendChild(play);
+  footBtn(foot,"Watch  →",nextStep);}
+function stWatch(inner,foot){var c=SESSION.content;
+  inner.innerHTML="<div class='stage-tag'>🎬 Watch</div><h2 class='q-title sm'>Mini-lesson video</h2>"+
+    "<div class='video'><div class='grid-o'></div><button class='vplay' id='vplay'>▶</button><span class='vlabel'>"+SESSION.L.skillName+" · "+SESSION.L.path+"</span><span class='vtime'>0:00 / 1:30</span></div>"+
+    "<p class='muted' style='font-size:.82rem;margin:8px 0 12px'>Video is a placeholder — tap play to hear the narration read aloud.</p>"+
+    "<div class='transcript'><b>Transcript:</b> "+c.watch+"</div>";
+  $("#vplay",inner).onclick=function(){var b=$("#vplay");b.classList.add("playing");b.textContent="❚❚";speak(c.watch);
+    setTimeout(function(){b.classList.remove("playing");b.textContent="▶";},Math.min(9000,1500+c.watch.length*55));};
+  footBtn(foot,"Start practising  →",nextStep,"green");}
+function stIntro(inner,foot,icon,title,sub,cls){
+  inner.innerHTML="<div class='complete'><div class='trophy'>"+icon+"</div><h2>"+title+"</h2><p class='muted'>"+sub+"</p></div>";
+  footBtn(foot,"Let's go  →",nextStep,cls);}
+function stReview(inner,foot){var L=SESSION.L,c=SESSION.content;
+  inner.innerHTML="<div class='stage-tag'>🔁 Review</div><h2 class='q-title sm'>Key takeaways</h2><ul class='review-list'>"+c.review.map(function(r){return "<li>"+r+"</li>";}).join("")+"</ul>";
+  var nt=el("div");nt.innerHTML="<div style='font-weight:800;margin:18px 0 4px'>📝 Your notes</div><p class='muted' style='font-size:.85rem'>Jot anything you want to remember (saved automatically).</p>";
+  var ta=el("textarea","notes-in");ta.value=S.notes[L.id]||"";ta.placeholder="e.g. remember: doesn't + base verb...";
+  ta.oninput=function(){S.notes[L.id]=ta.value;save();};nt.appendChild(ta);inner.appendChild(nt);
+  var star=el("button","btn ghost sm",isBookmarked(L.id)?"★ Bookmarked":"☆ Bookmark this lesson");star.style.marginTop="12px";
+  star.onclick=function(){toggleBookmark(L.id);star.textContent=isBookmarked(L.id)?"★ Bookmarked":"☆ Bookmark this lesson";renderNav();};inner.appendChild(star);
+  footBtn(foot,"Finish lesson  →",nextStep,"green");}
+
+/* ---- EX ROUTER ---- */
+function stEx(inner,foot,it){
+  var ex=it.ex;
+  inner.appendChild(el("div","stage-tag",(it.challenge?"⚡ Challenge":it.quiz?"🧠 Quiz":"✏️ Practice")));
+  var host=el("div");inner.appendChild(host);
+  var fb=el("div","feedback");inner.appendChild(fb);
+  var answered=false,cont;
+  if(it.challenge){$("#plTimer").style.display="inline";startChallengeTimer(function(){if(!answered)done(false,"Time's up! "+(ex.e||""));});}
+  function done(correct){
+    if(answered)return;answered=true;if(SESSION.timer){clearInterval(SESSION.timer);$("#plTimer").style.display="none";}
+    SESSION.total++;S.stats.exercises++;
+    if(correct){SESSION.correct++;var g=it.quiz?(it.challenge?15:8):10;SESSION.xp+=g;S.stats.correct++;S.today.correct++;}
+    var explainHtml=arguments[1]||ex.e||"";
+    fb.className="feedback show "+(correct?"good":"bad");
+    fb.innerHTML="<b>"+(correct?"✓ "+pick(["Nice!","Correct!","Well done!","Exactly!"]):"✗ Not quite")+"</b><div class='ft'>"+explainHtml+"</div>";
+    fb.scrollIntoView({behavior:"smooth",block:"nearest"});
+    cont.disabled=false;cont.classList.remove("ghost");cont.classList.add(correct?"green":"");
+    cont.textContent=SESSION.idx>=SESSION.items.length-2?"Finish  →":"Continue  →";
+  }
+  var t=ex.type;
+  if(t==="mcq")exMCQ(host,ex,done);
+  else if(t==="correct")exCorrect(host,ex,done);
+  else if(t==="fill")exFill(host,ex,done);
+  else if(t==="order")exOrder(host,ex,done);
+  else if(t==="match")exMatch(host,ex,done);
+  else if(t==="flash")exFlash(host,ex,done);
+  else if(t==="listen")exListen(host,ex,done);
+  else if(t==="speak")exSpeak(host,ex,done);
+  else if(t==="reading")exReading(host,ex,done);
+  else if(t==="writing")exWriting(host,ex,done);
+  else exMCQ(host,ex,done);
+  cont=footBtn(foot,"Continue  →",function(){nextStep();},"ghost");cont.disabled=true;
+}
+function startChallengeTimer(onEnd){var t=20;$("#plTimer").textContent="⏱ "+t+"s";
+  SESSION.timer=setInterval(function(){t--;var e=$("#plTimer");e.textContent="⏱ "+t+"s";e.classList.toggle("low",t<=5);if(t<=0){clearInterval(SESSION.timer);onEnd();}},1000);}
+
+function exMCQ(host,ex,done){host.appendChild(el("h3","q-title sm",ex.q));
+  var opts=ex.o.map(function(o,i){return{o:o,i:i};});
+  opts.forEach(function(item,vis){var b=el("button","opt","<span class='key'>"+String.fromCharCode(65+vis)+"</span><span>"+item.o+"</span>");
+    b.onclick=function(){if(host.dataset.l)return;host.dataset.l="1";var ok=item.i===ex.a;b.classList.add(ok?"correct":"wrong");
+      if(!ok)Array.prototype.forEach.call(host.querySelectorAll(".opt"),function(x,k){if(opts[k].i===ex.a)x.classList.add("correct");});
+      Array.prototype.forEach.call(host.querySelectorAll(".opt"),function(x){x.disabled=true;});done(ok,ex.e);};host.appendChild(b);});}
+function exCorrect(host,ex,done){
+  host.appendChild(el("div","correct-orig","<span class='lbl'>Fix this sentence</span>"+ex.orig));
+  host.appendChild(el("h3","q-title sm","Which version is correct?"));
+  ex.o.forEach(function(o,i){var b=el("button","opt","<span class='key'>"+String.fromCharCode(65+i)+"</span><span>"+o+"</span>");
+    b.onclick=function(){if(host.dataset.l)return;host.dataset.l="1";var ok=i===ex.a;b.classList.add(ok?"correct":"wrong");
+      if(!ok)host.querySelectorAll(".opt")[ex.a].classList.add("correct");
+      Array.prototype.forEach.call(host.querySelectorAll(".opt"),function(x){x.disabled=true;});done(ok,ex.e);};host.appendChild(b);});}
+function exFill(host,ex,done){host.appendChild(el("h3","q-title sm",ex.q));
+  var inp=el("input","text-in");inp.placeholder="Type your answer...";inp.autocapitalize="none";inp.autocomplete="off";host.appendChild(inp);
+  var ck=el("button","btn","Check");ck.style.marginTop="14px";
+  ck.onclick=function(){if(host.dataset.l)return;host.dataset.l="1";var ok=norm(inp.value)===norm(ex.a);inp.style.borderColor=ok?"var(--em)":"var(--rd)";inp.disabled=true;ck.disabled=true;done(ok,(ok?"":"Answer: <b>"+ex.a+"</b>. ")+ex.e);};
+  inp.addEventListener("keydown",function(e){if(e.key==="Enter")ck.click();});host.appendChild(ck);setTimeout(function(){inp.focus();},50);}
+function exOrder(host,ex,done){host.appendChild(el("h3","q-title sm","Put the words in order."));
+  var clean=ex.s.replace(/[.?!]$/,""),words=clean.split(" ");
+  var line=el("div","build-line"),bank=el("div","bank");host.appendChild(line);host.appendChild(bank);
+  var placed=[],sh=words.map(function(w,i){return{w:w,i:i};});shuffle(sh);
+  sh.forEach(function(item){var chip=el("button","chip",item.w);chip.onclick=function(){if(bank.dataset.l)return;chip.classList.add("used");
+    var pc=el("button","chip placed",item.w);pc.onclick=function(){if(bank.dataset.l)return;pc.remove();chip.classList.remove("used");placed=placed.filter(function(p){return p.pc!==pc;});sync();};
+    line.appendChild(pc);placed.push({w:item.w,pc:pc});sync();};bank.appendChild(chip);});
+  var ck=el("button","btn","Check");ck.style.marginTop="16px";ck.disabled=true;
+  function sync(){ck.disabled=placed.length!==words.length;}
+  ck.onclick=function(){if(bank.dataset.l)return;bank.dataset.l="1";var ok=norm(placed.map(function(p){return p.w;}).join(" "))===norm(clean);done(ok,(ok?"":"Correct: <b>"+ex.s+"</b>. ")+(ex.e||""));};host.appendChild(ck);}
+function exMatch(host,ex,done){host.appendChild(el("h3","q-title sm",ex.p));
+  var left=ex.pairs.map(function(p,i){return{t:p[0],i:i};}),right=ex.pairs.map(function(p,i){return{t:p[1],i:i};});shuffle(left);shuffle(right);
+  var grid=el("div","match-grid"),lc=el("div","mcol"),rc=el("div","mcol");grid.appendChild(lc);grid.appendChild(rc);host.appendChild(grid);
+  var sel=null,matched=0;
+  function tile(item){var t=el("button","mtile",item.t);t.dataset.i=item.i;t.onclick=function(){if(t.classList.contains("matched"))return;
+    if(!sel){sel=t;t.classList.add("sel");return;}if(sel===t){t.classList.remove("sel");sel=null;return;}
+    if(sel.parentNode===t.parentNode){sel.classList.remove("sel");sel=t;t.classList.add("sel");return;}
+    if(sel.dataset.i===t.dataset.i){sel.classList.add("matched");t.classList.add("matched");sel=null;matched++;if(matched===ex.pairs.length)done(true,"All matched!");}
+    else{var bad=sel;t.classList.add("miss");bad.classList.add("miss");setTimeout(function(){t.classList.remove("miss");bad.classList.remove("miss","sel");},400);sel=null;}};return t;}
+  left.forEach(function(it){lc.appendChild(tile(it));});right.forEach(function(it){rc.appendChild(tile(it));});}
+function exFlash(host,ex,done){host.appendChild(el("h3","q-title sm","Tap to flip, then continue."));
+  var f=el("div","flash");f.innerHTML="<div class='flash-in'><div class='flash-face flash-front'><div style='font-size:2rem'>"+(ex.n||"🃏")+"</div><div class='big'>"+ex.f+"</div><div class='sub'>tap to reveal</div></div><div class='flash-face flash-back'><div class='big'>"+ex.b+"</div><div class='sub'>"+ex.f+"</div></div></div>";
+  f.onclick=function(){f.classList.toggle("flip");if(f.classList.contains("flip"))speak(ex.f);};host.appendChild(f);
+  var b=el("button","btn green block","Got it ✓");b.onclick=function(){if(host.dataset.l)return;host.dataset.l="1";b.disabled=true;done(true,"<b>"+ex.f+"</b> — "+ex.b+".");};host.appendChild(b);}
+function exListen(host,ex,done){host.appendChild(el("h3","q-title sm",ex.p));
+  var card=el("div","audio-card"),pb=el("button","play-btn","▶");card.appendChild(pb);
+  card.appendChild(el("div","muted",speechOn?"Tap to play. Replay as needed.":"Audio unavailable — text shown below."));
+  if(!speechOn)card.appendChild(el("div","speak-word","\u201C"+ex.t+"\u201D"));host.appendChild(card);
+  function play(){pb.classList.add("playing");pb.textContent="❚❚";speak(ex.t);setTimeout(function(){pb.classList.remove("playing");pb.textContent="▶";},Math.min(3000,700+ex.t.length*70));}
+  pb.onclick=play;setTimeout(play,300);
+  var qh=el("div");host.appendChild(qh);exMCQ(qh,{q:"",o:ex.o,a:ex.a,e:ex.e},done);var tt=qh.querySelector(".q-title");if(tt)tt.remove();}
+function exSpeak(host,ex,done){host.appendChild(el("h3","q-title sm",ex.p));
+  var card=el("div","audio-card"),pb=el("button","play-btn","🔊");card.appendChild(pb);card.appendChild(el("div","speak-word","\u201C"+ex.t+"\u201D"));if(ex.tip)card.appendChild(el("div","muted","💡 "+ex.tip));host.appendChild(card);
+  pb.onclick=function(){pb.classList.add("playing");speak(ex.t);setTimeout(function(){pb.classList.remove("playing");},Math.min(3500,900+ex.t.length*70));};setTimeout(function(){speak(ex.t);},300);
+  host.appendChild(el("div","muted","Listen, then say it aloud 2–3 times. Tap when done."));
+  var b=el("button","btn green block","I said it ✓");b.style.marginTop="14px";b.onclick=function(){if(host.dataset.l)return;host.dataset.l="1";b.disabled=true;done(true,"Speaking out loud builds real fluency.");};host.appendChild(b);}
+function exReading(host,ex,done){host.appendChild(el("h3","q-title sm",ex.p));
+  host.appendChild(el("div","learn-card",ex.pass));
+  var total=ex.qs.length,ans=0,correct=0;
+  ex.qs.forEach(function(q,i){var wrap=el("div");wrap.style.marginTop="14px";wrap.appendChild(el("div","stage-tag","Q"+(i+1)));host.appendChild(wrap);var locked=false;
+    q.o.forEach(function(o,oi){var b=el("button","opt","<span class='key'>"+String.fromCharCode(65+oi)+"</span><span>"+o+"</span>");
+      b.onclick=function(){if(locked)return;locked=true;var ok=oi===q.a;b.classList.add(ok?"correct":"wrong");
+        if(!ok)wrap.querySelectorAll(".opt")[q.a].classList.add("correct");Array.prototype.forEach.call(wrap.querySelectorAll(".opt"),function(x){x.disabled=true;});
+        ans++;if(ok)correct++;if(ans===total)done(correct===total,correct+" of "+total+" correct.");};wrap.appendChild(b);});});}
+function exWriting(host,ex,done){host.appendChild(el("h3","q-title sm",ex.p));
+  var ta=el("textarea","text-in");ta.placeholder="Write your answer...";host.appendChild(ta);
+  var b=el("button","btn","Compare with model");b.style.marginTop="14px";
+  b.onclick=function(){if(host.dataset.l)return;if(norm(ta.value).length<8){ta.style.borderColor="var(--rd)";return;}host.dataset.l="1";b.remove();ta.disabled=true;
+    var model=el("div","answer");model.style.marginTop="14px";model.innerHTML="<b>✍️ Model answer</b><br>"+ex.m;host.appendChild(model);
+    host.appendChild(el("div",null,"<div style='font-weight:800;margin:16px 0 8px'>Self-check:</div>"));
+    var checks=[];ex.c.forEach(function(cc,i){var row=el("label","chk");row.innerHTML="<span class='box'></span><span>"+cc+"</span>";
+      row.onclick=function(){var on=row.classList.toggle("on");$(".box",row).textContent=on?"✓":"";checks[i]=on;fin.disabled=checks.filter(Boolean).length===0;};host.appendChild(row);checks[i]=false;});
+    var fin=el("button","btn green block","Done");fin.style.marginTop="10px";fin.disabled=true;fin.onclick=function(){fin.disabled=true;done(true,"You matched "+checks.filter(Boolean).length+" of "+ex.c.length+" points. Great writing practice!");};host.appendChild(fin);};
+  host.appendChild(b);}
+
+/* ---- COMPLETE ---- */
+function stComplete(inner,foot){
+  var L=SESSION.L,acc=SESSION.total?Math.round(SESSION.correct/SESSION.total*100):0;
+  var first=!S.completed[L.id];var bonus=first?30:10;var totalXp=SESSION.xp+bonus;
+  S.xp+=totalXp;addXpHist(totalXp);
+  S.today.lessons++;S.today.xp+=totalXp;S.today.skills[L.skill]=1;
+  S.week.lessons++;S.week.xp+=totalXp;S.week.skills[L.skill]=1;
+  if(first){S.completed[L.id]=true;S.stats.lessons++;}
+  S.scores[L.id]=Math.max(S.scores[L.id]||0,acc);
+  if(acc>=60)S.stats.quizzes++;
+  updateStreak();
+  var before=levelInfo(S.xp-totalXp).level,after=levelInfo(S.xp).level;
+  var badges=checkBadges();save();refreshTop();checkPeriodRewards();
+  inner.innerHTML="<div class='complete'><div class='trophy'>"+(first?"🏆":"🎉")+"</div><h2>"+(first?"Lesson complete!":"Nice replay!")+"</h2>"+
+    "<div class='xp-earned'>⚡ +"+totalXp+" XP</div>"+
+    "<div class='reward-row'><div class='r'><b>"+acc+"%</b><span>Accuracy</span></div><div class='r'><b>🔥 "+S.streak+"</b><span>Streak</span></div><div class='r'><b>⭐ "+after+"</b><span>Level</span></div></div></div>";
+  if(after>before)inner.appendChild(el("div","feedback good show","<b>⭐ Level up! You reached Level "+after+"</b>"));
+  var next=nextLesson(L);
+  var again=el("button","btn ghost","↻ Replay");again.onclick=function(){openLesson(L);};again.style.flex="1";
+  var nx=el("button","btn","Continue  →");nx.style.flex="2";nx.onclick=function(){if(next)openLesson(next);else closePlayer();};
+  var wrap=el("div");wrap.style.cssText="display:flex;gap:12px;width:100%";wrap.appendChild(again);wrap.appendChild(nx);foot.appendChild(wrap);
+  SESSION.done=true;confetti();
+  badges.forEach(function(b,i){setTimeout(function(){toast(b.icon,"Badge unlocked!",b.name);},500+i*700);});
+}
+function stRevDone(inner,foot){var acc=SESSION.total?Math.round(SESSION.correct/SESSION.total*100):0;
+  S.xp+=SESSION.xp;addXpHist(SESSION.xp);S.today.xp+=SESSION.xp;S.week.xp+=SESSION.xp;save();refreshTop();checkPeriodRewards();
+  inner.innerHTML="<div class='complete'><div class='trophy'>"+(acc>=80?"🏆":"💪")+"</div><h2>Revision done!</h2><div class='xp-earned'>⚡ +"+SESSION.xp+" XP</div><div class='reward-row'><div class='r'><b>"+SESSION.correct+"/"+SESSION.total+"</b><span>Correct</span></div><div class='r'><b>"+acc+"%</b><span>Accuracy</span></div></div></div>";
+  SESSION.done=true;footBtn(foot,"Done  →",closePlayer,"green");if(SESSION.correct>0)confetti();}
+function nextLesson(L){var i=LESSONS.indexOf(L);for(var j=i+1;j<LESSONS.length;j++)if(!S.completed[LESSONS[j].id])return LESSONS[j];return LESSONS[i+1]||null;}
+
+/* ============ XP / STREAK ============ */
+function addXp(n){/* xp already added to S.xp by caller for missions; keep hist */addXpHist(n);}
+function addXpHist(n){var t=dkey();S.xpHist[t]=(S.xpHist[t]||0)+n;}
+function updateStreak(){var t=dkey();if(S.lastGoalDate===t){}else if(S.lastGoalDate&&daysBetween(S.lastGoalDate,t)===1)S.streak++;else S.streak=1;
+  S.lastGoalDate=t;S.lastActive=t;if(S.streak>S.best)S.best=S.streak;}
+
+/* ============ FX ============ */
+function refreshTop(){$("#p-xp").textContent=S.xp;$("#p-streak").textContent=S.streak;}
+function toast(icon,title,sub){var t=el("div","toast","<div class='ti'>"+icon+"</div><div><b>"+title+"</b><span>"+sub+"</span></div>");$("#toasts").appendChild(t);
+  setTimeout(function(){t.style.transition="opacity .4s,transform .4s";t.style.opacity="0";t.style.transform="translateX(120%)";setTimeout(function(){t.remove();},400);},3300);}
+function confetti(){if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  var c=el("div","confetti");document.body.appendChild(c);var cols=["#6366F1","#8B5CF6","#D946EF","#22D3EE","#10B981","#F59E0B"];
+  for(var i=0;i<70;i++){var p=el("i");p.style.left=Math.random()*100+"%";p.style.background=cols[i%cols.length];p.style.animationDuration=(1.6+Math.random()*1.6)+"s";p.style.animationDelay=(Math.random()*.4)+"s";p.style.transform="rotate("+Math.random()*360+"deg)";if(Math.random()>.5)p.style.borderRadius="50%";c.appendChild(p);}
+  setTimeout(function(){c.remove();},3600);}
+
+/* ============ THEME + DRAWER ============ */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);$("#themeBtn").textContent=t==="dark"?"☀️":"🌙";S.theme=t;save();}
+$("#themeBtn").onclick=function(){applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");};
+function openDrawer(){$("#sidebar").classList.add("open");$("#scrim").classList.add("show");}
+function closeDrawer(){$("#sidebar").classList.remove("open");$("#scrim").classList.remove("show");}
+$("#hamb").onclick=openDrawer;$("#scrim").onclick=closeDrawer;
+
+/* ============ INIT ============ */
+(function init(){
+  applyTheme(S.theme||"dark");
+  rollPeriods();
+  if(S.lastActive){var g=daysBetween(S.lastActive,dkey());if(g>1&&S.lastGoalDate&&daysBetween(S.lastGoalDate,dkey())>1)S.streak=0;save();}
+  refreshTop();renderNav();renderDashboard();
+  if(speechOn)try{window.speechSynthesis.getVoices();}catch(e){}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Speaking Coach</title>
+<style>
+:root{
+  --brand:#3452C4; --brand-2:#4C6EF5; --brand-ink:#27408B;
+  --gold:#D9A21B; --gold-2:#F0B429; --gold-soft:#FBF1D6;
+  --green:#2F9E44; --green-soft:#E6F5EB;
+  --red:#E03131; --red-soft:#FDECEC;
+  --r:18px; --r-sm:12px; --r-lg:26px; --tap:46px;
+  --sp:clamp(15px,4vw,28px);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:ui-serif,Georgia,"Iowan Old Style","Palatino Linotype","Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+:root[data-theme="light"]{
+  --bg:#F6F5F1; --bg-2:#EEEDE6; --surface:#FFFFFF; --surface-2:#FBFAF6;
+  --text:#1B1B29; --muted:#63636F; --faint:#9A9AA6; --line:#EAE8E0; --line-2:#DEDCD2;
+  --shadow:0 1px 2px rgba(27,27,41,.04),0 12px 28px -16px rgba(27,27,41,.2);
+  --shadow-lg:0 2px 8px rgba(27,27,41,.06),0 30px 64px -26px rgba(27,27,41,.32);
+  --tint:#E7ECFB;
+}
+:root[data-theme="dark"]{
+  --bg:#0F1017; --bg-2:#15161F; --surface:#1A1B26; --surface-2:#20222F;
+  --text:#ECECF2; --muted:#A0A0B0; --faint:#63636F; --line:#282A38; --line-2:#333546;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 32px -18px rgba(0,0,0,.65);
+  --shadow-lg:0 2px 10px rgba(0,0,0,.4),0 34px 74px -30px rgba(0,0,0,.8);
+  --tint:#1D2240; --gold-soft:#332A12; --green-soft:#12321E; --red-soft:#3A1717;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font-family:inherit;font-size:1rem}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:8px}
+h1,h2,h3,h4{margin:0;line-height:1.2}
+.serif{font-family:var(--serif)}
+p{margin:0}.muted{color:var(--muted)}.mono{font-family:var(--mono)}
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:9px}
+
+.app{display:grid;grid-template-columns:262px 1fr;min-height:100vh}
+@media(max-width:920px){.app{grid-template-columns:1fr}}
+.sidebar{background:var(--surface);border-right:1px solid var(--line);padding:20px 14px;position:sticky;top:0;
+  height:100vh;overflow-y:auto;display:flex;flex-direction:column;gap:2px;z-index:60}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 8px 16px}
+.brand .logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  display:grid;place-items:center;font-size:22px;box-shadow:0 6px 16px -6px var(--brand);position:relative}
+.brand .logo::after{content:"";position:absolute;right:-2px;bottom:-2px;width:14px;height:14px;border-radius:50%;background:var(--gold-2);border:2px solid var(--surface)}
+.brand b{font-family:var(--serif);font-size:1.15rem;font-weight:700;display:block;line-height:1.1;letter-spacing:-.01em}
+.brand span{font-size:.7rem;color:var(--faint);font-weight:700;letter-spacing:.05em}
+.nav-group{font-size:.66rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);padding:14px 12px 5px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-weight:600;font-size:.91rem;
+  color:var(--muted);min-height:44px;width:100%;text-align:left;transition:background .15s,color .15s,transform .1s}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}.nav-item:active{transform:scale(.98)}
+.nav-item.active{background:var(--tint);color:var(--brand-ink);font-weight:700}
+:root[data-theme="dark"] .nav-item.active{color:#AEC0FF}
+.nav-item .ic{font-size:1.08rem;width:22px;text-align:center;flex:none}
+.nav-item .cnt{margin-left:auto;font-size:.66rem;font-weight:800;color:var(--gold);background:var(--gold-soft);border-radius:999px;padding:2px 8px}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 85%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px;padding:11px var(--sp)}
+.hamb{display:none;width:44px;height:44px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:1.2rem;place-items:center}
+@media(max-width:920px){.hamb{display:grid}}
+.pills{display:flex;gap:8px;margin-left:auto;align-items:center;flex-wrap:wrap}
+.pill{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);padding:7px 12px;
+  border-radius:999px;font-weight:800;font-size:.84rem;box-shadow:var(--shadow)}
+.pill.streak{color:#E8590C}.pill.conf{color:var(--brand-ink)}
+:root[data-theme="dark"] .pill.conf{color:#AEC0FF}
+.icon-btn{width:44px;height:44px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-size:1.1rem;box-shadow:var(--shadow)}
+.icon-btn.gold{background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#fff;border:none}
+.view{padding:var(--sp);max-width:1080px;width:100%;margin:0 auto;animation:vin .4s var(--ease)}
+@keyframes vin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.scrim{position:fixed;inset:0;background:rgba(10,10,18,.55);z-index:59;display:none;opacity:0;transition:opacity .25s}
+.scrim.show{display:block;opacity:1}
+@media(max-width:920px){.sidebar{position:fixed;left:0;top:0;width:282px;transform:translateX(-104%);transition:transform .28s var(--ease);box-shadow:var(--shadow-lg)}.sidebar.open{transform:none}}
+
+.page-head{margin-bottom:20px}
+.page-head .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--brand)}
+.page-head h1{font-family:var(--serif);font-size:clamp(1.9rem,5vw,2.6rem);margin-top:8px;font-weight:700;letter-spacing:-.01em}
+.page-head p{color:var(--muted);margin-top:8px;max-width:62ch}
+.grid{display:grid;gap:15px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(146px,1fr))}
+.cats{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.topics{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px}
+
+.btn{background:var(--brand);color:#fff;font-weight:800;border-radius:14px;padding:13px 22px;min-height:var(--tap);
+  box-shadow:0 8px 20px -8px var(--brand);transition:transform .12s,filter .15s;font-size:.95rem;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.btn:hover{filter:brightness(1.07)}.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line-2);box-shadow:none}
+.btn.gold{background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#241a00;box-shadow:0 8px 20px -8px var(--gold)}
+.btn.green{background:var(--green);box-shadow:0 8px 20px -8px var(--green)}
+.btn.block{width:100%}.btn.sm{padding:9px 15px;font-size:.85rem;min-height:40px;border-radius:11px}
+.btn[disabled]{opacity:.5;pointer-events:none}
+
+/* hero */
+.hero{background:linear-gradient(140deg,var(--brand-ink),var(--brand) 60%,var(--brand-2));color:#fff;border-radius:var(--r-lg);
+  padding:28px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:230px;height:230px;border-radius:50%;background:rgba(255,255,255,.08)}
+.hero::before{content:"";position:absolute;right:40px;bottom:-40px;width:120px;height:120px;border-radius:50%;background:rgba(240,180,41,.18)}
+.hero .tag{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.16);padding:6px 13px;border-radius:999px;font-size:.74rem;font-weight:800;letter-spacing:.04em}
+.hero h2{font-family:var(--serif);font-size:clamp(1.5rem,4vw,2rem);margin:14px 0 6px;font-weight:700;position:relative;z-index:1;max-width:24ch}
+.hero .sub{opacity:.9;position:relative;z-index:1}
+.hero .cta-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;position:relative;z-index:1}
+.hero .btn.wht{background:#fff;color:var(--brand-ink)}
+.hero .btn.ghost{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3)}
+
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.stat .em{font-size:1.3rem}.stat b{font-size:1.6rem;font-weight:900;display:block;margin-top:5px;letter-spacing:-.03em}
+.stat span{color:var(--muted);font-size:.79rem;font-weight:600}
+
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:26px 0 14px;gap:12px;flex-wrap:wrap}
+.section-title h2{font-family:var(--serif);font-size:1.35rem;font-weight:700}
+
+.diff{font-size:.66rem;font-weight:800;padding:3px 10px;border-radius:999px;letter-spacing:.02em;white-space:nowrap}
+.diff.d1{background:var(--green-soft);color:var(--green)}
+.diff.d2{background:var(--gold-soft);color:#a9770a}
+.diff.d3{background:var(--red-soft);color:var(--red)}
+:root[data-theme="dark"] .diff.d2{color:var(--gold-2)}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip-f{background:var(--surface);border:1px solid var(--line-2);border-radius:999px;padding:8px 15px;font-weight:700;font-size:.84rem;min-height:40px;transition:.15s}
+.chip-f.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* cat + topic cards */
+.cat-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;
+  text-align:left;display:flex;flex-direction:column;gap:9px;transition:transform .15s var(--ease),box-shadow .15s}
+.cat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.cat-card .c-ic{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;font-size:1.45rem}
+.cat-card b{font-family:var(--serif);font-size:1.1rem;font-weight:700}
+.cat-card p{color:var(--muted);font-size:.85rem;flex:1}
+.cat-card .c-meta{font-size:.75rem;color:var(--faint);font-weight:700}
+
+.topic-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;
+  text-align:left;display:flex;flex-direction:column;gap:10px;position:relative;transition:transform .15s var(--ease),box-shadow .15s}
+.topic-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.topic-card .tc-top{display:flex;align-items:center;gap:8px}
+.topic-card .cat-name{font-size:.72rem;font-weight:800;letter-spacing:.03em;color:var(--brand)}
+.topic-card h3{font-family:var(--serif);font-size:1.15rem;font-weight:700;line-height:1.25}
+.topic-card .prev{color:var(--muted);font-size:.87rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.topic-card .tc-foot{display:flex;align-items:center;gap:8px;margin-top:auto}
+.star{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem;background:var(--surface-2);border:1px solid var(--line);flex:none;transition:.15s}
+.star.on{background:var(--gold-soft);color:var(--gold);border-color:var(--gold)}
+.done-badge{font-size:.7rem;font-weight:800;color:var(--green);background:var(--green-soft);padding:3px 9px;border-radius:999px}
+
+/* TOPIC DETAIL */
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-weight:700;font-size:.88rem;margin-bottom:14px}
+.topic-hero{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:24px;margin-bottom:18px;position:relative;overflow:hidden}
+.topic-hero::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--brand),var(--gold-2))}
+.topic-hero .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--brand)}
+.topic-hero h1{font-family:var(--serif);font-size:clamp(1.5rem,4.2vw,2.1rem);font-weight:700;margin:8px 0 12px;letter-spacing:-.01em}
+.topic-hero .h-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.prompt-box{background:var(--tint);border-radius:var(--r);padding:18px 20px;font-size:1.05rem;line-height:1.7}
+:root[data-theme="dark"] .prompt-box{border:1px solid var(--line)}
+.prompt-box .cue-lead{font-weight:800;margin:10px 0 4px}
+.prompt-box ul{margin:4px 0;padding-left:22px}.prompt-box li{margin:3px 0}
+
+/* timer */
+.timer-card{background:linear-gradient(140deg,var(--brand-ink),var(--brand));color:#fff;border-radius:var(--r-lg);
+  padding:24px;margin-bottom:18px;box-shadow:var(--shadow-lg);text-align:center;position:relative;overflow:hidden}
+.timer-phase{font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.timer-time{font-family:var(--serif);font-size:3.6rem;font-weight:700;line-height:1;margin:8px 0;font-variant-numeric:tabular-nums}
+.timer-bar{height:8px;background:rgba(255,255,255,.22);border-radius:999px;overflow:hidden;margin:14px auto;max-width:420px}
+.timer-bar i{display:block;height:100%;background:var(--gold-2);border-radius:999px;width:0;transition:width .3s linear}
+.timer-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.timer-controls .tbtn{background:rgba(255,255,255,.18);color:#fff;font-weight:800;padding:11px 20px;border-radius:12px;min-height:44px;border:1px solid rgba(255,255,255,.25)}
+.timer-controls .tbtn.primary{background:#fff;color:var(--brand-ink);border:none}
+.timer-note{font-size:.78rem;opacity:.8;margin-top:12px}
+
+/* practice sections */
+.p-section{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.p-head{display:flex;align-items:center;gap:12px;padding:16px 20px;width:100%;text-align:left}
+.p-head .p-ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:1.15rem;flex:none;background:var(--tint);color:var(--brand-ink)}
+:root[data-theme="dark"] .p-head .p-ic{color:#AEC0FF}
+.p-head .p-t{flex:1}
+.p-head h3{font-family:var(--serif);font-size:1.12rem;font-weight:700}
+.p-head .p-sub{font-size:.78rem;color:var(--muted)}
+.p-head .chev{color:var(--faint);font-size:1rem;transition:transform .2s}
+.p-section.open .chev{transform:rotate(180deg)}
+.p-body{padding:0 20px 20px;display:none}
+.p-section.open .p-body{display:block;animation:vin .25s var(--ease)}
+
+.dl{display:flex;flex-direction:column;gap:9px}
+.dl .row{display:flex;gap:12px;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:11px 14px}
+.dl .row .k{font-weight:800;flex:none;min-width:34%}
+.dl .row .k.wide{min-width:44%}
+.dl .row .v{color:var(--muted)}
+.pill-list{display:flex;flex-wrap:wrap;gap:8px}
+.pill-list span{background:var(--tint);color:var(--brand-ink);font-size:.86rem;font-weight:600;padding:7px 13px;border-radius:9px}
+:root[data-theme="dark"] .pill-list span{color:#AEC0FF}
+.mis .row .k{color:var(--red);text-decoration:line-through;min-width:40%}
+.mis .row .v{color:var(--green);font-weight:600}
+.mis .row .v::before{content:"→ "}
+.answer{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;line-height:1.75;font-size:1.02rem}
+.answer.adv{border-left:3px solid var(--gold)}
+.reveal-btn{width:100%;border:2px dashed var(--line-2);border-radius:12px;padding:16px;font-weight:800;color:var(--brand);background:var(--surface-2)}
+.play-inline{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:800;color:var(--brand);background:var(--tint);padding:5px 11px;border-radius:8px;margin-top:12px}
+.chk{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;margin-bottom:9px;background:var(--surface-2);cursor:pointer;transition:.15s}
+.chk .box{width:24px;height:24px;border-radius:7px;border:2px solid var(--line-2);flex:none;display:grid;place-items:center;font-size:.85rem;transition:.15s;margin-top:1px}
+.chk.on{border-color:var(--green);background:var(--green-soft)}.chk.on .box{background:var(--green);border-color:var(--green);color:#fff}
+.reflect{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.reflect li{display:flex;gap:12px;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:13px 15px}
+.reflect li::before{content:"?";width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;display:grid;place-items:center;flex:none;font-size:.85rem}
+
+/* confidence */
+.conf-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:22px;text-align:center;margin-top:18px}
+.conf-faces{display:flex;gap:10px;justify-content:center;margin:14px 0;flex-wrap:wrap}
+.face{width:60px;height:60px;border-radius:16px;border:2px solid var(--line-2);background:var(--surface-2);font-size:1.7rem;display:grid;place-items:center;transition:.15s}
+.face:hover{transform:translateY(-3px)}.face.on{border-color:var(--brand);background:var(--tint);transform:translateY(-3px) scale(1.05)}
+.face small{position:absolute}
+.conf-label{font-weight:700;color:var(--muted);min-height:1.4em}
+
+/* chart */
+.chart{display:flex;align-items:flex-end;gap:min(3vw,14px);height:150px;padding-top:8px}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
+.chart .col .b{width:100%;max-width:34px;background:linear-gradient(180deg,var(--brand-2),var(--brand));border-radius:7px 7px 3px 3px;min-height:4px;transition:height .7s var(--ease)}
+.chart .col small{font-size:.66rem;color:var(--muted);font-weight:700}.chart .col .v{font-size:.66rem;color:var(--faint);font-weight:800}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:.8rem;color:var(--muted)}
+
+.toasts{position:fixed;top:14px;right:14px;z-index:200;display:flex;flex-direction:column;gap:9px;pointer-events:none}
+.toast{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);padding:13px 16px;display:flex;gap:11px;align-items:center;min-width:230px;animation:tin .4s var(--ease)}
+.toast .ti{font-size:1.5rem}.toast b{display:block;font-size:.9rem}.toast span{font-size:.76rem;color:var(--muted)}
+@keyframes tin{from{transform:translateX(120%)}to{transform:none}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:150;overflow:hidden}
+.confetti i{position:absolute;width:9px;height:14px;top:-20px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.9}}
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}.empty .e{font-size:3rem}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.05s!important}}
+@media(max-width:560px){.dl .row{flex-direction:column;gap:3px}.dl .row .k{min-width:0!important}.view{padding:15px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="Navigation">
+    <div class="brand"><div class="logo">🎙️</div><div><b>Speaking Coach</b><span>SPEAK EVERY DAY</span></div></div>
+    <nav id="nav"></nav>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+  <div class="main">
+    <header class="topbar">
+      <button class="hamb" id="hamb" aria-label="Menu">☰</button>
+      <div class="pills">
+        <span class="pill conf"><span>💪</span><span id="p-conf">—</span></span>
+        <span class="pill streak"><span>🔥</span><span id="p-streak">0</span></span>
+        <button class="icon-btn gold" id="randomBtn" aria-label="Random topic" title="Random topic">🎲</button>
+        <button class="icon-btn" id="themeBtn" aria-label="Theme">🌙</button>
+      </div>
+    </header>
+    <main id="view" class="view"></main>
+  </div>
+</div>
+<div class="toasts" id="toasts"></div>
+<script>
+"use strict";
+/* ===== STORAGE ===== */
+var Store=(function(){var mem={},ok=false;try{var k="__dsc__";localStorage.setItem(k,"1");localStorage.removeItem(k);ok=true;}catch(e){}
+  return{get:function(k){try{if(ok)return localStorage.getItem(k);}catch(e){}return k in mem?mem[k]:null;},
+         set:function(k,v){try{if(ok){localStorage.setItem(k,v);return;}}catch(e){}mem[k]=v;}};})();
+var DAY=86400000;
+function dkey(d){d=d||new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
+function daysBetween(a,b){var pa=a.split("-").map(Number),pb=b.split("-").map(Number);return Math.round((new Date(pb[0],pb[1]-1,pb[2])-new Date(pa[0],pa[1]-1,pa[2]))/DAY);}
+
+/* ===== CATEGORIES ===== */
+var CATS=[
+ ["IELTS Part 1","🎤","#3452C4","Short, friendly questions about you and your life."],
+ ["IELTS Part 2","🗣️","#7048E8","The two-minute long-turn cue card."],
+ ["IELTS Part 3","💭","#1098AD","Abstract discussion and developed opinions."],
+ ["Everyday Conversation","💬","#F08C00","Natural language for real-life situations."],
+ ["Business English","💼","#2F9E44","Professional, workplace and client speaking."],
+ ["Public Speaking","🎯","#E8590C","Presenting and holding an audience."],
+ ["Interview Questions","🧑‍💼","#B02A67","Answer common job-interview questions well."],
+ ["Storytelling","📖","#0C8599","Tell vivid, engaging personal stories."],
+ ["Debate Topics","⚖️","#5F3DC4","Argue a clear position with structure."]
+];
+function catInfo(n){return CATS.find(function(c){return c[0]===n;})||["","🎙️","#3452C4",""];}
+
+/* ===== TOPIC DATA ===== */
+function T(cat,title,diff,prompt,warmup,vocab,expr,idioms,mistakes,sample,advanced,checklist,reflect){
+  return{cat:cat,title:title,diff:diff,prompt:prompt,warmup:warmup,vocab:vocab||[],expr:expr||[],idioms:idioms||[],
+    mistakes:mistakes||[],sample:sample,advanced:advanced,checklist:checklist||[],reflect:reflect||[]};
+}
+var TOPICS=[
+/* ===== IELTS PART 1 ===== */
+T("IELTS Part 1","Your Hometown",1,
+ "Where is your hometown? What do you like most about it? Has it changed much in recent years?",
+ "Warm up by naming your town and one feeling word about it. Say two sentences out loud before you start.",
+ [["hometown","the place you grew up"],["outskirts","the edge of a town"],["bustling","busy and lively"],["laid-back","relaxed, not stressful"],["landmark","a famous local place"]],
+ ["I was born and raised in...","What I love most is...","It's known for...","Over the past few years, it has...","If I had to describe it in one word..."],
+ [["off the beaten track","away from busy tourist areas"],["home is where the heart is","you feel best where your loved ones are"],["put it on the map","make a place famous"]],
+ [["I live in there since childhood","I have lived there since childhood"],["My town is more bigger now","My town is bigger now"],["It has a lot of pollutions","It has a lot of pollution"]],
+ "I'm from Narsingdi, a fairly laid-back town near Dhaka. What I like most is the friendly community and how green it still is. It has changed a bit recently, with new shops and better roads, but it keeps its calm feel.",
+ "I was born and raised in Narsingdi, a town on the outskirts of the capital. What appeals to me most is its relaxed pace of life, combined with easy access to the city. Admittedly, it has grown noticeably over the last decade, though thankfully it hasn't lost the close-knit charm that makes it feel like home.",
+ ["I spoke for at least 20–30 seconds","I gave a reason, not just a fact","I used one 'nice' word (laid-back, bustling)","My tenses were consistent","I sounded relaxed, not robotic"],
+ ["Which word made your answer sound more natural?","Did you add a reason or just state facts?","Could you add a small personal detail next time?"]),
+
+T("IELTS Part 1","Free Time & Hobbies",1,
+ "What do you usually do in your free time? Do you prefer relaxing alone or with others? Have your hobbies changed since you were younger?",
+ "List three things you do to relax. Pick the one you can talk about most easily and start there.",
+ [["unwind","relax after stress"],["recharge","get energy back"],["take up","start a new hobby"],["keen on","very interested in"],["me time","time alone for yourself"]],
+ ["In my spare time, I tend to...","It's a great way to unwind","I'm really keen on...","I took it up a couple of years ago","It depends on my mood, but..."],
+ [["kill two birds with one stone","achieve two things at once"],["let your hair down","relax and enjoy yourself"],["recharge your batteries","rest to regain energy"]],
+ [["I like very much reading","I really like reading"],["I am interesting in music","I am interested in music"],["I do sport every days","I do sport every day"]],
+ "In my free time I usually read or go for a walk to unwind. I prefer a mix — some quiet me time, but also meeting friends at weekends. As a kid I played more sports, but now I'm more keen on reading and design.",
+ "When I get the chance, I like to switch off by reading or taking a long walk, which really helps me recharge. Honestly, it depends on my mood: sometimes I need a bit of me time, whereas other days I'd rather let my hair down with friends. My interests have shifted over the years — I used to be sporty, but these days I'm far more into creative hobbies.",
+ ["I named a specific hobby","I explained why I enjoy it","I compared past and present (tenses)","I used a phrasal verb (unwind, take up)","I didn't just say 'I like it'"],
+ ["Did you use the past tense correctly for 'used to'?","Which phrasal verb felt natural?","How could you extend a short answer with a reason?"]),
+
+T("IELTS Part 1","Technology & Phones",2,
+ "How often do you use your smartphone? What do you mainly use it for? Do you think people rely on phones too much?",
+ "Say one honest sentence about your phone habit. Confidence comes from telling the truth simply.",
+ [["rely on","depend on"],["glued to","unable to stop looking at"],["notification","an app alert"],["screen time","hours spent on a device"],["distracting","taking your attention away"]],
+ ["I use it mainly for...","I have to admit, I'm quite...","To be fair, it's incredibly useful for...","That said, I do think...","I try to cut down on..."],
+ [["at your fingertips","easily available"],["glued to the screen","always looking at a device"],["a double-edged sword","something with good and bad sides"]],
+ [["I use phone for chatting","I use my phone for chatting"],["Technology make life easy","Technology makes life easier"],["People depends on phones","People depend on phones"]],
+ "I use my phone quite a lot, mainly for messaging, maps and design inspiration. It's genuinely useful, but I admit I can be glued to the screen. I do think many people rely on phones too much and lose focus.",
+ "I'll be honest — I'm on my phone more than I'd like, chiefly for communication, navigation and quick work tasks. It's a bit of a double-edged sword: everything is at your fingertips, yet it can be hugely distracting. On balance, I'd say most of us have become overly dependent, and cutting down on screen time would probably do us good.",
+ ["I gave a real, specific use","I balanced a good and bad point","Subject–verb agreement was correct","I used an opinion phrase ('I'd say')","I sounded natural, not memorised"],
+ ["Did you agree AND disagree a little (balance)?","Which linking word helped you sound fluent?","Was your subject–verb agreement correct?"]),
+
+/* ===== IELTS PART 2 ===== */
+T("IELTS Part 2","Describe a Person You Admire",2,
+ "<b>Describe a person you admire.</b><div class='cue-lead'>You should say:</div><ul><li>who this person is</li><li>how you know them</li><li>what qualities they have</li></ul>and explain why you admire them.",
+ "You have 1 minute to prepare. Jot 3–4 keywords, then speak for 2 minutes. Use the timer below — prep first, then talk.",
+ [["role model","someone you look up to"],["down-to-earth","practical and modest"],["resilient","able to recover from difficulty"],["selfless","caring more about others"],["inspiring","making you want to do better"]],
+ ["The person I'd like to talk about is...","What stands out about them is...","One thing I really admire is...","They've always...","The reason I look up to them is..."],
+ [["heart of gold","very kind nature"],["lead by example","show others how by doing it yourself"],["go the extra mile","do more than expected"]],
+ [["He is very kind person","He is a very kind person"],["She always help me","She always helps me"],["He learn me a lot","He taught me a lot"]],
+ "The person I'd like to talk about is my former mentor, Sohag. I know him from my early design career, when he trained me. He's incredibly resilient and always down-to-earth. I admire him because he leads by example and never stops learning, which pushed me to grow.",
+ "The person I'd most like to describe is my mentor, who I met at the very start of my career. What truly stands out about him is his rare mix of humility and drive — he's remarkably down-to-earth despite being hugely talented. He has a heart of gold and consistently goes the extra mile for the people around him. Ultimately, I admire him because he leads by example rather than words, and that quiet influence completely reshaped how I approach my own work.",
+ ["I covered all three bullet points","I explained WHY, not just facts","I spoke for close to 2 minutes","I used past tenses for how I met them","I used 2+ descriptive adjectives"],
+ ["Did you fill the full two minutes?","Which bullet point was hardest to expand?","Did you explain the 'why' clearly at the end?"]),
+
+T("IELTS Part 2","A Place You'd Like to Visit",1,
+ "<b>Describe a place you would like to visit in the future.</b><div class='cue-lead'>You should say:</div><ul><li>where it is</li><li>how you know about it</li><li>what you would do there</li></ul>and explain why you want to visit it.",
+ "Prep for 1 minute: choose the place and 3 things you'd do. Speak for 2 minutes without stopping.",
+ [["destination","a place you travel to"],["breathtaking","extremely beautiful"],["culture","the way of life of a people"],["scenery","natural views"],["bucket list","things to do before you die"]],
+ ["The place I'd love to visit is...","I first heard about it through...","If I ever go, I'd definitely...","What draws me to it is...","It's been on my bucket list for..."],
+ [["off the beaten track","away from tourist crowds"],["a change of scenery","a new environment"],["soak up the atmosphere","fully enjoy the mood of a place"]],
+ [["I want visit Japan","I want to visit Japan"],["The sceneries are beautiful","The scenery is beautiful"],["I will go there for see temples","I will go there to see temples"]],
+ "The place I'd love to visit is Japan, especially Kyoto. I first heard about it through documentaries and design blogs. If I go, I'd explore the temples, try the food, and soak up the atmosphere. What draws me to it is the blend of tradition and modern design.",
+ "A destination that's firmly on my bucket list is Kyoto, in Japan. I initially came across it through design documentaries, and I've been fascinated ever since. Given the chance, I'd wander through the old temples, sample the local cuisine, and simply soak up the atmosphere of the backstreets. Ultimately, what pulls me there is the extraordinary balance between centuries-old tradition and cutting-edge design — something I find genuinely inspiring as a designer.",
+ ["I covered all three bullets + the 'why'","I used the conditional (I'd / I would)","I described the place vividly","I spoke for around 2 minutes","I linked ideas smoothly"],
+ ["Did you use 'would' consistently for the imaginary trip?","Was your description vivid enough to picture?","Did you keep going for the full two minutes?"]),
+
+T("IELTS Part 2","A Skill You Want to Learn",2,
+ "<b>Describe a skill you would like to learn.</b><div class='cue-lead'>You should say:</div><ul><li>what the skill is</li><li>how you would learn it</li><li>how long it might take</li></ul>and explain why you want to learn it.",
+ "One minute prep: name the skill and your plan to learn it. Then talk for two full minutes.",
+ [["pick up","learn (informally)"],["from scratch","from the very beginning"],["hands-on","practical, by doing"],["proficient","skilled"],["steep learning curve","hard to learn quickly"]],
+ ["The skill I'd really like to master is...","I'd probably learn it by...","Realistically, it might take...","The main reason is...","I've always wanted to..."],
+ [["practice makes perfect","repetition builds skill"],["get the hang of it","start to do it well"],["throw yourself into it","commit fully"]],
+ [["I want learn coding","I want to learn coding"],["It takes long time","It takes a long time"],["I will learn it by watch videos","I will learn it by watching videos"]],
+ "The skill I'd really like to master is public speaking. I'd learn it by practising daily, joining a group, and recording myself. Realistically it might take a year to get comfortable. The main reason is that, as a future founder, I'll need to pitch confidently.",
+ "A skill I'm genuinely keen to develop is confident public speaking. My plan would be to throw myself into it — practising every day, joining a speaking club, and reviewing recordings of myself to spot weaknesses. It's got a fairly steep learning curve, so I imagine it would take a good year before I truly get the hang of it. Ultimately, I want to master it because, as someone building a startup, being able to pitch persuasively could make or break an opportunity.",
+ ["I covered the skill, method, time + why","I used future/conditional forms","I gave a realistic time frame","I explained a strong reason","I spoke fluently for ~2 minutes"],
+ ["Did you sound committed and specific about your plan?","Was your time estimate realistic?","Which idiom made you sound more fluent?"]),
+
+/* ===== IELTS PART 3 ===== */
+T("IELTS Part 3","Technology & Society",3,
+ "How has technology changed the way people communicate? Do you think these changes are mostly positive? Will face-to-face conversation disappear in the future?",
+ "This part rewards developed opinions. Aim for: opinion → reason → example → balance. Don't rush.",
+ [["face-to-face","in person"],["instant","immediate"],["superficial","shallow, not deep"],["isolate","separate from others"],["foster","encourage the growth of"]],
+ ["There's no denying that...","On the one hand... on the other hand...","A good example of this would be...","I'd argue that...","While that's true, we should also consider..."],
+ [["a mixed blessing","something with pros and cons"],["lose touch","stop communicating"],["bring people together","unite people"]],
+ [["Technology have changed communication","Technology has changed communication"],["People communicates faster","People communicate faster"],["It make relationships weak","It makes relationships weaker"]],
+ "There's no denying that technology has made communication instant and global. Overall I think it's positive, because it connects families across distance. On the other hand, some conversations become superficial. I don't think face-to-face talk will disappear, though, because people still crave real connection.",
+ "There's no denying that technology has completely transformed how we connect — communication is now instant, borderless and constant. On balance I'd argue it's a mixed blessing: while it brings people together across continents, it can also foster rather superficial exchanges and, ironically, leave some individuals feeling isolated. As for whether face-to-face conversation will vanish, I very much doubt it; no matter how advanced our tools become, humans fundamentally crave genuine, in-person connection, so I suspect the two will simply coexist.",
+ ["I stated a clear opinion","I gave at least one reason + example","I showed balance (both sides)","My answers were extended (not short)","My grammar stayed accurate under pressure"],
+ ["Did you develop your answer with a 'because'?","Did you show both sides of the argument?","Which discourse marker helped you organise ideas?"]),
+
+T("IELTS Part 3","Education & Learning",3,
+ "Should education focus more on practical skills or academic knowledge? How has the way people learn changed? Is lifelong learning important today?",
+ "Think in terms of trade-offs. Strong Part 3 answers weigh options rather than picking one blindly.",
+ [["practical skills","useful real-world abilities"],["academic","related to study and theory"],["equip","prepare with what's needed"],["lifelong learning","learning throughout life"],["adapt","change to fit new conditions"]],
+ ["It's a bit of a balancing act...","Ideally, education should...","I'm inclined to think...","Take coding, for instance...","In today's fast-moving world..."],
+ [["learn the ropes","learn how something is done"],["keep up with the times","stay current"],["food for thought","something worth thinking about"]],
+ [["Education must to change","Education must change"],["Students needs practical skills","Students need practical skills"],["It is more better","It is better"]],
+ "It's a balancing act. I'm inclined to think education should equip students with practical skills, like problem-solving, but academic knowledge still matters as a foundation. Learning has changed a lot — people now learn online, at their own pace. And yes, lifelong learning is essential because industries keep changing.",
+ "Honestly, it's a balancing act rather than an either-or choice. Ideally, education should equip young people with practical, transferable skills — critical thinking, collaboration, problem-solving — while still grounding them in solid academic foundations. The way we learn has shifted dramatically too; online platforms mean people can now learn at their own pace and keep up with the times. And in such a fast-moving job market, I'd say lifelong learning isn't just important, it's essential — those who stop adapting quickly get left behind.",
+ ["I weighed both sides fairly","I gave a concrete example","I used advanced linkers ('rather than')","I extended each answer","I kept a confident, measured pace"],
+ ["Did you avoid a simple black-and-white answer?","Which example made your point concrete?","Did your pace stay calm and controlled?"]),
+
+/* ===== EVERYDAY CONVERSATION ===== */
+T("Everyday Conversation","Making Small Talk",1,
+ "You meet someone new at an event. Practise starting a friendly conversation and keeping it going for a minute.",
+ "Small talk is about warmth, not deep content. Smile in your voice. Start with a question, then follow up.",
+ [["break the ice","start a conversation comfortably"],["catch up","talk about recent news"],["get along","have a friendly relationship"],["chatty","talkative in a friendly way"],["common ground","shared interests"]],
+ ["So, how do you know the host?","What brings you here?","I couldn't help noticing...","That's interesting — tell me more.","It was lovely chatting, let's stay in touch."],
+ [["break the ice","start a conversation"],["hit it off","get along instantly"],["small world","surprise at a shared connection"]],
+ [["How do you call this?","What do you call this?"],["I am agree with you","I agree with you"],["What means this word?","What does this word mean?"]],
+ "Hi, I'm Faruqi. So, what brings you here today? Oh nice — how did you get into that? I work in design myself, so we might have some common ground. It's been great chatting; shall we stay in touch?",
+ "Hi there, I don't think we've met — I'm Faruqi. What brings you along tonight? Ah, that sounds fascinating; how did you first get into it? Funnily enough, I'm in a related field, so we've clearly got some common ground. Anyway, it's been really lovely chatting — small world, isn't it? Let's definitely stay in touch.",
+ ["I opened with a friendly question","I asked a follow-up question","I found common ground","I closed warmly","I kept a relaxed, upbeat tone"],
+ ["Did you ask more than you talked?","Which opener felt most natural to you?","How did you keep the conversation flowing?"]),
+
+T("Everyday Conversation","Ordering at a Restaurant",1,
+ "You're at a café or restaurant. Practise ordering food and drinks politely, including a special request.",
+ "Politeness carries the whole exchange. Practise 'Could I…?' and 'Would it be possible…?' out loud twice.",
+ [["starter","first small dish"],["main course","the biggest dish"],["recommend","suggest as good"],["dietary","related to what you can eat"],["the bill / check","what you pay"]],
+ ["Could I get..., please?","What would you recommend?","Do you have anything without...?","Could we have the bill, please?","That was delicious, thank you."],
+ [["grab a bite","eat something quickly"],["my treat","I'll pay"],["food for thought","(lit. a menu joke) something to consider"]],
+ [["I want a coffee","Could I have a coffee, please?"],["Give me the menu","Could I see the menu, please?"],["The bill please now","Could we have the bill, please?"]],
+ "Hi, could I see the menu, please? What would you recommend? I'll have the pasta as a main. Do you have anything without nuts? Great, thank you. Later: Could we have the bill, please? That was delicious.",
+ "Good evening — could we see the menu when you get a moment, please? Actually, what would you recommend tonight? In that case I'll go for the pasta as a main, and could I get that without nuts, if it's possible? Lovely, thank you so much. ... That was absolutely delicious — could we have the bill whenever you're ready?",
+ ["I used 'Could I…?' politely","I made a special/dietary request","I asked for a recommendation","I thanked the server","I asked for the bill correctly"],
+ ["Did you sound polite without being stiff?","Which polite phrase will you reuse?","How would you handle a mistake in your order?"]),
+
+/* ===== BUSINESS ENGLISH ===== */
+T("Business English","Leading a Team Meeting",2,
+ "You're chairing a short team meeting. Practise opening it, moving through the agenda, and closing with clear action items.",
+ "Structure is authority. Rehearse your opening line and your closing line — those two anchor the whole meeting.",
+ [["agenda","list of topics"],["align","agree on direction"],["action item","a task to be done"],["circle back","return to a point later"],["wrap up","finish"]],
+ ["Thanks everyone for joining.","Let's run through the agenda.","Just to make sure we're aligned...","Let's circle back to that offline.","To wrap up, the action items are..."],
+ [["get the ball rolling","start something"],["on the same page","in agreement"],["touch base","make brief contact"]],
+ [["Let we start","Let's start"],["I will discuss about the budget","I will discuss the budget"],["Everyone agree?","Does everyone agree?"]],
+ "Thanks everyone for joining. Let's run through the agenda quickly. First, the project update — are we on the same page about the deadline? Great. Let's circle back to the budget offline. To wrap up, the action items are: Sohag sends the designs, and I'll follow up with the client.",
+ "Thanks for making the time, everyone — let's get the ball rolling. I'll run through three quick items today: the project update, the timeline, and next steps. On the deadline, I just want to make sure we're all on the same page before we commit. The budget question is a bit involved, so let's touch base on that separately. To wrap up, the action items are clear: Sohag will finalise the designs by Thursday, and I'll circle back to the client with a summary.",
+ ["I opened and set the agenda","I checked for alignment","I managed time (parked a topic)","I closed with clear action items","I sounded calm and in control"],
+ ["Did your opening set a clear direction?","Did every action item have an owner?","How did you keep the meeting on time?"]),
+
+T("Business English","Giving a Project Update",2,
+ "Give a concise status update on a project to your manager or client — progress, blockers, and next steps.",
+ "Lead with the headline, then details. Practise saying the status in ONE sentence first.",
+ [["on track","going as planned"],["blocker","something stopping progress"],["milestone","a key stage"],["deliverable","a completed output"],["bandwidth","available time/capacity"]],
+ ["Overall, we're on track for...","We've hit the first milestone.","The main blocker right now is...","Next up, we'll be...","I'll keep you posted on..."],
+ [["up to speed","fully informed"],["in the pipeline","being prepared"],["back to the drawing board","start planning again"]],
+ [["The project going well","The project is going well"],["We finished the half of work","We've finished half of the work"],["I will inform you later the progress","I'll update you on the progress later"]],
+ "Overall, we're on track for the Friday deadline. We've hit the first milestone — the designs are done. The main blocker is waiting on client feedback. Next up, we'll build the prototype. I'll keep you posted on any changes.",
+ "In short, the project's in good shape and on track for Friday. We've cleared the first milestone — the core designs are signed off and the prototype's in the pipeline. The one blocker is that we're waiting on client feedback, which could push timelines slightly if it's delayed. Next up, we'll move into build, and I'll make sure you're kept up to speed at every stage.",
+ ["I led with the overall status","I named a concrete milestone","I flagged the blocker honestly","I stated the next step","I kept it concise, no rambling"],
+ ["Could you say the status in one line?","Did you flag risks early and honestly?","Was your update concise or too detailed?"]),
+
+/* ===== PUBLIC SPEAKING ===== */
+T("Public Speaking","Delivering a 60-Second Pitch",3,
+ "Pitch an idea, product, or yourself in 60 seconds: hook, problem, solution, and a clear ask.",
+ "A pitch lives or dies on the first line. Rehearse your hook until it's automatic. Use the 2-minute timer as a stretch goal, but aim tight.",
+ [["hook","an attention-grabbing opening"],["value proposition","the core benefit you offer"],["pain point","a customer's problem"],["traction","evidence of early success"],["call to action","what you want them to do"]],
+ ["Imagine if...","The problem is...","That's where we come in.","We've already...","So here's what I'm asking..."],
+ [["cut to the chase","get to the point"],["a game changer","something that transforms things"],["hit home","have a strong effect"]],
+ [["I will talk about my idea","Let me tell you about an idea"],["It solve a big problem","It solves a big problem"],["We have a lot of success","We've had a lot of success"]],
+ "Imagine spending hours on a design that users still find confusing. That's the problem most SaaS teams face. That's where we come in — we redesign interfaces that actually convert. We've already helped clients lift onboarding by over 50%. So here's my ask: give us 20 minutes to show you how.",
+ "Picture this: you pour months into a product, yet users still bounce at onboarding. That pain point costs SaaS companies millions — and it's exactly where we come in. We turn confusing interfaces into experiences that convert, and we've already driven a 53% lift in onboarding for one client. This isn't a nice-to-have; for growth-stage teams, it's a genuine game changer. So here's my ask — give me twenty minutes, and I'll show you the opportunity hiding in your funnel.",
+ ["My hook grabbed attention fast","I stated a clear problem","I gave one proof point / result","I ended with a specific ask","I finished within about a minute"],
+ ["Did your first sentence earn attention?","Was your ask specific and confident?","Did you cut anything that wasn't essential?"]),
+
+T("Public Speaking","Opening a Talk Strongly",2,
+ "Practise the first 45 seconds of a talk. Grab attention, state your topic, and preview what's coming.",
+ "The opening sets the energy. Try three openers — a question, a stat, a short story — and keep the strongest.",
+ [["captivate","hold full attention"],["preview","tell what's coming"],["relatable","easy to identify with"],["anecdote","a short personal story"],["signpost","words that guide listeners"]],
+ ["Let me start with a question...","Here's something that surprised me...","By the end of this talk, you'll...","I want to share a quick story...","We'll cover three things today..."],
+ [["set the scene","give background"],["grab attention","make people notice"],["in a nutshell","briefly summarised"]],
+ [["Today I will talk about the design","Today I'm going to talk about design"],["I want that you learn","I want you to learn"],["Let me to begin","Let me begin"]],
+ "Let me start with a question: how many apps did you delete this week because they annoyed you? Today I'm going to talk about designing products people actually keep. We'll cover three things: first impressions, friction, and trust. By the end, you'll see your own product differently.",
+ "Let me open with a question: how many apps have you deleted this month simply because they got in your way? Keep that number in mind — because today I want to talk about designing products people actually stick with. In a nutshell, we'll explore three ideas: the power of first impressions, the hidden cost of friction, and how trust is earned pixel by pixel. By the time we finish, I promise you'll never look at your own product quite the same way again.",
+ ["I opened with a hook (question/story/stat)","I clearly stated my topic","I previewed the structure","I used a signposting phrase","My energy was engaging, not flat"],
+ ["Which opener type suited you best?","Did listeners know what's coming next?","Was your energy high enough to captivate?"]),
+
+/* ===== INTERVIEW QUESTIONS ===== */
+T("Interview Questions","Tell Me About Yourself",2,
+ "Answer the classic opener: 'Tell me about yourself.' Keep it to about 60–90 seconds, relevant to the role.",
+ "Use Present–Past–Future: who you are now, a relevant past win, where you're heading. Rehearse the shape, not a script.",
+ [["background","your experience and history"],["specialise in","focus on a particular area"],["track record","a history of results"],["transition","a change of role/direction"],["aligned with","matching well"]],
+ ["I'm a ... with a background in...","Currently, I...","Before that, I...","One achievement I'm proud of is...","What excites me about this role is..."],
+ [["wear many hats","do many different jobs"],["a proven track record","a clear history of success"],["hit the ground running","start effectively straight away"]],
+ [["I am working as designer since 5 years","I've been working as a designer for 5 years"],["My English is not so good","I'm always improving my communication"],["I have many experiences","I have a lot of experience"]],
+ "I'm a UI/UX designer with a background in SaaS products. Currently I run a small design agency helping tech companies improve their interfaces. Before that, I worked with startups on onboarding and conversion. One win I'm proud of is a 53% onboarding lift for a client. What excites me about this role is applying that to a bigger product.",
+ "I'm a UI/UX designer who specialises in SaaS and fintech products. Right now, I lead a design studio where we help growth-stage companies turn confusing interfaces into experiences that convert. Earlier in my career I focused on onboarding and activation, and I've built a solid track record there — one project lifted a client's onboarding completion by 53%. Looking ahead, what really draws me to this role is the chance to bring that conversion-focused thinking to a product at scale, and I'm confident I could hit the ground running.",
+ ["I used Present–Past–Future structure","I stayed relevant to the role","I included one concrete achievement","I kept it under ~90 seconds","I ended on why I want THIS role"],
+ ["Was your answer tailored to the job?","Did you include a measurable result?","Did you avoid rambling past 90 seconds?"]),
+
+T("Interview Questions","Your Greatest Weakness",3,
+ "Answer 'What is your greatest weakness?' honestly, showing self-awareness and how you're improving.",
+ "Pick a real but non-fatal weakness, then show growth. Structure: weakness → impact → the action you're taking.",
+ [["self-aware","understanding your own traits"],["perfectionist","wanting everything flawless"],["delegate","give tasks to others"],["mitigate","reduce a problem"],["actively working on","making real effort to improve"]],
+ ["One area I've had to work on is...","I noticed this was holding me back when...","To address it, I started...","It's still a work in progress, but...","I've already seen improvement in..."],
+ [["a work in progress","not finished improving yet"],["bite off more than you can chew","take on too much"],["play to your strengths","use what you're good at"]],
+ [["I don't have any weakness","One area I'm improving is..."],["I am too much perfectionist","I can be a bit of a perfectionist"],["I try to improve myself always","I'm always working to improve"]],
+ "One area I've had to work on is delegating. As my agency grew, I tried to do everything myself, which slowed us down. To address it, I started trusting my team with more ownership and using clearer briefs. It's still a work in progress, but our output has genuinely improved.",
+ "Honestly, one area I've actively had to work on is delegation. Early on, I had a tendency to bite off more than I could chew because I wanted every detail to be perfect — which, ironically, became a bottleneck as the team grew. To mitigate that, I built clearer processes and started handing real ownership to colleagues rather than just tasks. It's still a work in progress, but I've already seen the difference: the team moves faster, and I get to play to my strengths instead of spreading myself thin.",
+ ["I named a genuine weakness","I showed self-awareness of its impact","I described concrete action taken","I showed measurable improvement","I avoided a fake or arrogant answer"],
+ ["Was your weakness real but recoverable?","Did you show a clear improvement action?","Did you sound honest rather than rehearsed?"]),
+
+/* ===== STORYTELLING ===== */
+T("Storytelling","A Challenge You Overcame",2,
+ "Tell a short story about a difficult situation you faced and how you got through it. Aim for a clear beginning, middle, and end.",
+ "Good stories have a turning point. Set the scene briefly, build the tension, then land the lesson.",
+ [["setback","a problem that slows progress"],["turning point","the key moment of change"],["persevere","keep going despite difficulty"],["overcome","succeed in dealing with"],["takeaway","the lesson learned"]],
+ ["It all started when...","At first, I felt...","The turning point came when...","Looking back, I realised...","What I took away from it was..."],
+ [["against all odds","despite big difficulties"],["a blessing in disguise","a bad thing that turns out good"],["turn things around","improve a bad situation"]],
+ [["When I was young, I face a problem","When I was younger, I faced a problem"],["I was very stress","I was very stressed"],["Finally I success","In the end, I succeeded"]],
+ "It all started when I lost my biggest client early in my career. At first I felt like giving up. The turning point came when I decided to rebuild my portfolio and reach out to new people every day. Slowly, work came back. Looking back, that setback was a blessing in disguise — it made me more resilient.",
+ "It all started a few years ago, when I lost my biggest client almost overnight — and with it, most of my income. At first, I'll admit, I felt completely deflated and questioned whether I was cut out for it. But the turning point came when I stopped dwelling on the loss and committed to reaching out to five new prospects every single day. Against all odds, within a couple of months the work started flowing again, stronger than before. Looking back, that setback was a blessing in disguise: it forced me to build resilience and a proper pipeline, and honestly, it's the reason my business survived.",
+ ["I set the scene quickly","I built up the difficulty/tension","I described a clear turning point","I ended with a lesson/takeaway","I used past tenses accurately"],
+ ["Did your story have a clear turning point?","Was the emotional arc easy to follow?","Did you land a satisfying lesson at the end?"]),
+
+T("Storytelling","A Memorable Experience",1,
+ "Describe a memorable or funny experience from your life. Make the listener feel like they were there.",
+ "Vivid details make stories stick. Pick one moment and paint it with senses — what you saw, felt, heard.",
+ [["vivid","clear and detailed"],["out of the blue","unexpectedly"],["hilarious","very funny"],["awkward","embarrassing or uncomfortable"],["unforgettable","impossible to forget"]],
+ ["I'll never forget the time...","Out of the blue,...","You should have seen...","We couldn't stop laughing because...","To this day, I still..."],
+ [["out of the blue","unexpectedly"],["laugh your head off","laugh a lot"],["the icing on the cake","a final good detail"]],
+ [["It was very funny moment","It was a very funny moment"],["We laughed a lot time","We laughed a lot"],["I remember it very good","I remember it very well"]],
+ "I'll never forget my first client presentation. I was so nervous that I called the client by the wrong name — twice. Out of the blue, he laughed and said his brother had the same name. We couldn't stop laughing, and it actually broke the ice. To this day, I still smile about it.",
+ "I'll never forget my very first big client pitch. I'd rehearsed for days, yet the moment I opened my mouth, I confidently called the client by completely the wrong name — not once, but twice. You should have seen my face. Then, out of the blue, he burst out laughing and admitted his brother shared that exact name. The whole room relaxed, we were practically laughing our heads off, and — the icing on the cake — that awkward slip is probably what won me the project. To this day, it's my favourite reminder that being human beats being perfect.",
+ ["I chose one clear moment","I used vivid, sensory detail","I built to a fun/surprising point","I used past tenses well","I engaged the listener ('You should have seen...')"],
+ ["Could the listener picture the scene?","Did one detail bring it to life?","Did your delivery match the mood of the story?"]),
+
+/* ===== DEBATE TOPICS ===== */
+T("Debate Topics","Remote Work vs Office Work",3,
+ "Debate the motion: 'Remote work is better than working in an office.' Argue one side clearly, then acknowledge the other.",
+ "Pick a side for practice. Structure: claim → reason → evidence → rebuttal. Confidence beats hedging in debate.",
+ [["productivity","how much useful work is done"],["flexibility","freedom to choose how/when"],["collaboration","working together"],["burnout","exhaustion from overwork"],["autonomy","independence to decide"]],
+ ["I firmly believe that...","The main argument in favour is...","Critics might argue... however...","The evidence suggests...","For these reasons, I'd conclude..."],
+ [["the best of both worlds","benefits of two options"],["a slippery slope","a small step leading to bad results"],["common ground","shared agreement"]],
+ [["I am agree that remote work is better","I agree that remote work is better"],["Remote work give more freedom","Remote work gives more freedom"],["Peoples are more productive","People are more productive"]],
+ "I firmly believe remote work is better for most knowledge jobs. The main argument is flexibility — people work when they're most focused, which boosts productivity. Critics argue it harms collaboration; however, good tools solve that. The evidence shows many remote teams outperform office ones. For these reasons, I'd side with remote work.",
+ "I'd argue, fairly firmly, that remote work is the superior model for most knowledge-based roles. The central case rests on autonomy and flexibility: when people can work during their sharpest hours and skip a draining commute, both productivity and wellbeing tend to rise. Now, critics reasonably point out that spontaneous collaboration suffers — and there's some truth to that. However, with the right rituals and tools, teams can capture much of that benefit while avoiding burnout. On balance, the evidence increasingly favours flexibility, so while a hybrid model may be the best of both worlds, I'd still come down on the side of remote-first.",
+ ["I stated my position clearly","I gave a reason AND evidence","I acknowledged the opposing view","I rebutted it (not just ignored it)","I concluded with conviction"],
+ ["Did you commit to a side confidently?","Did you fairly represent the other view?","Was your rebuttal convincing, not dismissive?"]),
+
+T("Debate Topics","Is Social Media Harmful?",3,
+ "Debate the motion: 'Social media does more harm than good.' Take a position and defend it with structure.",
+ "Strong debating uses concessions strategically. Grant a small point to the other side, then show why your side still wins.",
+ [["addictive","hard to stop using"],["misinformation","false information"],["echo chamber","hearing only similar views"],["connectivity","being connected to others"],["moderation","control/limits on content"]],
+ ["My stance is that...","Firstly... secondly...","Admittedly, ... but...","This is precisely why...","Weighing it all up, I'd say..."],
+ [["a double-edged sword","having good and bad sides"],["draw the line","set a limit"],["at the end of the day","ultimately"]],
+ [["Social media are harmful","Social media is harmful"],["It cause many problem","It causes many problems"],["In nowadays","Nowadays"]],
+ "My stance is that social media does more harm than good as it stands. Firstly, it's addictive and fuels misinformation. Secondly, it can harm mental health. Admittedly, it connects people and helps small businesses — but without better moderation, the harm outweighs the good. At the end of the day, I'd say we need to draw the line.",
+ "My stance is that, in its current form, social media does more harm than good — though it's undeniably a double-edged sword. Firstly, the platforms are engineered to be addictive, which fuels anxiety and quietly erodes attention. Secondly, they accelerate misinformation and trap people in echo chambers that harden division. Admittedly, I won't pretend there are no upsides — social media has democratised connection and given small businesses a global voice. But at the end of the day, until the incentives and moderation improve, I believe the societal costs tip the balance, and it's on all of us to draw the line.",
+ ["I took a clear stance","I structured points (firstly, secondly)","I made a genuine concession","I explained why my side still wins","I closed with a strong final line"],
+ ["Did your concession strengthen your argument?","Were your points clearly sequenced?","Did your closing line leave an impression?"])
+];
+TOPICS.forEach(function(t,i){t.id="t"+i;});
+
+/* ===== STATE ===== */
+var defaultState={streak:0,best:0,lastActive:null,lastGoalDate:null,sessions:0,
+  practiced:{},bookmarks:{},confHistory:[],theme:"light",diff:"All"};
+var S=loadState();
+function loadState(){try{var s=JSON.parse(Store.get("dsc_state"));if(s&&typeof s==="object"){for(var k in defaultState)if(!(k in s))s[k]=JSON.parse(JSON.stringify(defaultState[k]));return s;}}catch(e){}return JSON.parse(JSON.stringify(defaultState));}
+function saveState(){try{Store.set("dsc_state",JSON.stringify(S));}catch(e){}}
+
+/* ===== SPEECH + AUDIO ===== */
+var speechOn=("speechSynthesis"in window);
+function speak(t,rate){if(!speechOn)return;try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=rate||.94;
+  var vs=window.speechSynthesis.getVoices(),en=vs.filter(function(v){return /en[-_]/i.test(v.lang);});if(en.length){var p=en.find(function(v){return /female|samantha|zira|google us/i.test(v.name);});u.voice=p||en[0];}
+  window.speechSynthesis.speak(u);}catch(e){}}
+function stopSpeak(){if(speechOn)try{window.speechSynthesis.cancel();}catch(e){}}
+var AC=null;
+function beep(freq,dur){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain();
+  o.frequency.value=freq;o.type="sine";o.connect(g);g.connect(AC.destination);g.gain.setValueAtTime(.0001,AC.currentTime);
+  g.gain.exponentialRampToValueAtTime(.12,AC.currentTime+.02);g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+(dur||.25));
+  o.start();o.stop(AC.currentTime+(dur||.25)+.02);}catch(e){}}
+
+/* ===== LOGIC ===== */
+function isBookmarked(id){return !!S.bookmarks[id];}
+function toggleBookmark(id){if(S.bookmarks[id])delete S.bookmarks[id];else S.bookmarks[id]=true;saveState();}
+function isPracticed(id){return !!S.practiced[id];}
+function avgConfidence(){if(!S.confHistory.length)return 0;var sum=S.confHistory.reduce(function(a,b){return a+b.v;},0);return sum/S.confHistory.length;}
+function confFace(v){return ["","😣","😕","😐","🙂","😄"][Math.round(v)]||"—";}
+function displayStreak(){if(!S.lastGoalDate)return 0;return daysBetween(S.lastGoalDate,dkey())<=1?S.streak:0;}
+function recordPractice(topicId,confidence){
+  var t=dkey();
+  S.practiced[topicId]={date:t,conf:confidence};
+  S.confHistory.push({date:t,v:confidence,id:topicId});if(S.confHistory.length>60)S.confHistory=S.confHistory.slice(-60);
+  S.sessions++;
+  if(S.lastGoalDate!==t){if(S.lastGoalDate&&daysBetween(S.lastGoalDate,t)===1)S.streak++;else S.streak=1;
+    S.lastGoalDate=t;if(S.streak>S.best)S.best=S.streak;}
+  S.lastActive=t;saveState();refreshTop();
+}
+function filteredTopics(cat){var arr=cat?TOPICS.filter(function(t){return t.cat===cat;}):TOPICS.slice();
+  if(S.diff!=="All"){var d={"Beginner":1,"Intermediate":2,"Advanced":3}[S.diff];arr=arr.filter(function(t){return t.diff===d;});}return arr;}
+function dailyTopic(){var seed=0,k=dkey();for(var i=0;i<k.length;i++)seed=(seed*31+k.charCodeAt(i))>>>0;return TOPICS[seed%TOPICS.length];}
+
+/* ===== HELPERS ===== */
+var $=function(s,r){return (r||document).querySelector(s);};
+function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+var DIFFN=["","Beginner","Intermediate","Advanced"];
+
+/* ===== NAV ===== */
+var route={view:"dashboard",arg:null};
+function renderNav(){var nav=$("#nav");nav.innerHTML="";
+  nav.appendChild(navItem("dashboard",null,"🏠","Today"));
+  nav.appendChild(navItem("bookmarks",null,"⭐","Bookmarks"));
+  nav.appendChild(navItem("progress",null,"📊","Progress"));
+  nav.appendChild(el("div","nav-group","Speaking Categories"));
+  CATS.forEach(function(c){var it=navItem("category",c[0],c[1],c[0]);
+    var pr=TOPICS.filter(function(t){return t.cat===c[0]&&isPracticed(t.id);}).length;
+    if(pr>0)it.appendChild(el("span","cnt",pr));nav.appendChild(it);});
+}
+function navItem(view,arg,icon,label){var b=el("button","nav-item","<span class='ic'>"+icon+"</span><span>"+label+"</span>");
+  if(route.view===view&&route.arg===(arg||null))b.classList.add("active");
+  b.onclick=function(){go(view,arg);closeDrawer();};return b;}
+function go(view,arg){route={view:view,arg:arg||null};renderNav();stopSpeak();
+  if(view==="dashboard")renderDashboard();
+  else if(view==="category")renderCategory(arg);
+  else if(view==="topic")renderTopic(arg);
+  else if(view==="bookmarks")renderBookmarks();
+  else if(view==="progress")renderProgress();
+  window.scrollTo(0,0);}
+
+/* ===== DASHBOARD ===== */
+function renderDashboard(){
+  var v=$("#view");v.innerHTML="";var dt=dailyTopic(),ci=catInfo(dt.cat);
+  var hero=el("div","hero");
+  hero.innerHTML="<span class='tag'>✨ TODAY'S SPEAKING TOPIC</span>"+
+    "<h2 class='serif'>"+dt.title+"</h2>"+
+    "<div class='sub'>"+ci[1]+" "+dt.cat+" · "+DIFFN[dt.diff]+" · about 2 minutes of speaking</div>"+
+    "<div class='cta-row'><button class='btn wht' id='startToday'>🎙️ Start practising</button>"+
+    "<button class='btn ghost' id='surprise'>🎲 Surprise me</button></div>";
+  v.appendChild(hero);
+  $("#startToday",hero).onclick=function(){go("topic",dt.id);};
+  $("#surprise",hero).onclick=randomTopic;
+
+  var c=avgConfidence();
+  var sg=el("div","grid g4");sg.style.marginTop="16px";
+  sg.appendChild(statEl("🔥",displayStreak(),"Day streak"));
+  sg.appendChild(statEl("💪",c?c.toFixed(1):"—","Avg confidence"));
+  sg.appendChild(statEl("🎙️",S.sessions,"Sessions"));
+  sg.appendChild(statEl("✅",Object.keys(S.practiced).length,"Topics done"));
+  sg.appendChild(statEl("⭐",Object.keys(S.bookmarks).length,"Bookmarks"));
+  sg.appendChild(statEl("📚",TOPICS.length,"Total topics"));
+  v.appendChild(sg);
+
+  var st=el("div","section-title");st.innerHTML="<h2 class='serif'>Explore categories</h2>";
+  var fWrap=el("div","filters");["All","Beginner","Intermediate","Advanced"].forEach(function(d){
+    var b=el("button","chip-f"+(S.diff===d?" on":""),d);b.onclick=function(){S.diff=d;saveState();renderDashboard();};fWrap.appendChild(b);});
+  st.appendChild(fWrap);v.appendChild(st);
+
+  var cg=el("div","grid cats");
+  CATS.forEach(function(cat){var topics=filteredTopics(cat[0]);
+    var card=el("button","cat-card");
+    var done=topics.filter(function(t){return isPracticed(t.id);}).length;
+    card.innerHTML="<div class='c-ic' style='background:"+cat[2]+"22;color:"+cat[2]+"'>"+cat[1]+"</div>"+
+      "<b class='serif'>"+cat[0]+"</b><p>"+cat[3]+"</p><div class='c-meta'>"+topics.length+" topic"+(topics.length!==1?"s":"")+(done?" · "+done+" done":"")+"</div>";
+    card.onclick=function(){go("category",cat[0]);};cg.appendChild(card);});
+  v.appendChild(cg);
+}
+function statEl(em,val,lbl){var s=el("div","stat");s.innerHTML="<div class='em'>"+em+"</div><b>"+val+"</b><span>"+lbl+"</span>";return s;}
+
+/* ===== CATEGORY ===== */
+function renderCategory(cat){
+  var v=$("#view");v.innerHTML="";var ci=catInfo(cat);
+  var head=el("div","page-head");
+  head.innerHTML="<div class='eyebrow'>"+ci[1]+" Speaking Category</div><h1>"+cat+"</h1><p>"+ci[3]+"</p>";
+  v.appendChild(head);
+  var fWrap=el("div","filters");fWrap.style.marginBottom="18px";
+  ["All","Beginner","Intermediate","Advanced"].forEach(function(d){var b=el("button","chip-f"+(S.diff===d?" on":""),d);b.onclick=function(){S.diff=d;saveState();renderCategory(cat);};fWrap.appendChild(b);});
+  v.appendChild(fWrap);
+  var topics=filteredTopics(cat);
+  if(!topics.length){v.appendChild(el("div","empty","<div class='e'>🔍</div><p>No "+S.diff+" topics in this category. Try another filter.</p>"));return;}
+  var g=el("div","grid topics");
+  topics.forEach(function(t){g.appendChild(topicCard(t));});
+  v.appendChild(g);
+}
+function topicCard(t){
+  var ci=catInfo(t.cat),card=el("div","topic-card");
+  card.innerHTML="<div class='tc-top'><span class='cat-name'>"+ci[1]+" "+t.cat+"</span><span class='diff d"+t.diff+"' style='margin-left:auto'>"+DIFFN[t.diff]+"</span></div>"+
+    "<h3 class='serif'>"+t.title+"</h3>"+
+    "<div class='prev'>"+t.prompt.replace(/<[^>]+>/g," ").trim()+"</div>"+
+    "<div class='tc-foot'><button class='btn sm' style='flex:1'>🎙️ Practise</button>"+
+    (isPracticed(t.id)?"<span class='done-badge'>✓ Done</span>":"")+
+    "<button class='star"+(isBookmarked(t.id)?" on":"")+"' aria-label='Bookmark'>"+(isBookmarked(t.id)?"★":"☆")+"</button></div>";
+  var star=$(".star",card),practise=$(".btn",card);
+  practise.onclick=function(){go("topic",t.id);};
+  card.querySelector("h3").onclick=function(){go("topic",t.id);};
+  star.onclick=function(e){e.stopPropagation();toggleBookmark(t.id);star.classList.toggle("on");star.textContent=isBookmarked(t.id)?"★":"☆";renderNav();};
+  return card;
+}
+
+/* ===== TOPIC DETAIL ===== */
+function renderTopic(id){
+  var t=TOPICS.find(function(x){return x.id===id;});if(!t)return renderDashboard();
+  var v=$("#view");v.innerHTML="";var ci=catInfo(t.cat);
+  var back=el("button","back-link","← Back");back.onclick=function(){history.length>1?go("category",t.cat):go("dashboard");};v.appendChild(back);
+
+  var hero=el("div","topic-hero");
+  hero.innerHTML="<div class='eyebrow'>"+ci[1]+" "+t.cat+"</div><h1 class='serif'>"+t.title+"</h1>"+
+    "<div class='h-meta'><span class='diff d"+t.diff+"'>"+DIFFN[t.diff]+"</span>"+
+    "<button class='btn sm ghost' id='bmBtn'>"+(isBookmarked(t.id)?"★ Bookmarked":"☆ Bookmark")+"</button>"+
+    "<button class='btn sm ghost' id='hearBtn'>🔊 Hear prompt</button></div>"+
+    "<div class='prompt-box'>"+t.prompt+"</div>";
+  v.appendChild(hero);
+  $("#bmBtn",hero).onclick=function(){toggleBookmark(t.id);$("#bmBtn").innerHTML=isBookmarked(t.id)?"★ Bookmarked":"☆ Bookmark";renderNav();};
+  $("#hearBtn",hero).onclick=function(){speak(t.prompt.replace(/<[^>]+>/g,". "));};
+
+  v.appendChild(buildTimer(t));
+
+  // sections
+  v.appendChild(section("🔥","Warm-up","Ease in before you speak",true,"<p>"+t.warmup+"</p>"));
+  if(t.vocab.length)v.appendChild(section("📘","Vocabulary","Words to weave in",false,dlHtml(t.vocab)));
+  if(t.expr.length)v.appendChild(section("✨","Useful Expressions","Ready-made phrases",false,"<div class='pill-list'>"+t.expr.map(function(e){return "<span>"+e+"</span>";}).join("")+"</div>"));
+  if(t.idioms.length)v.appendChild(section("💎","Idioms","Sound more natural",false,dlHtml(t.idioms)));
+  if(t.mistakes.length)v.appendChild(section("⚠️","Common Grammar Mistakes","Avoid these slips",false,"<div class='dl mis'>"+t.mistakes.map(function(m){return "<div class='row'><div class='k'>"+m[0]+"</div><div class='v'>"+m[1]+"</div></div>";}).join("")+"</div>"));
+
+  v.appendChild(answerSection("💬","Sample Answer","A solid, natural response",t.sample));
+  v.appendChild(answerSection("🏆","Advanced Answer","Higher-band, richer language",t.advanced,true));
+
+  if(t.checklist.length){
+    var chkBody=el("div");
+    t.checklist.forEach(function(c){var row=el("label","chk");row.innerHTML="<span class='box'></span><span>"+c+"</span>";
+      row.onclick=function(){row.classList.toggle("on");$(".box",row).textContent=row.classList.contains("on")?"✓":"";};chkBody.appendChild(row);});
+    var sec=section("✅","Self-Evaluation Checklist","Rate your own answer",false,"");
+    $(".p-body",sec).appendChild(chkBody);v.appendChild(sec);
+  }
+  if(t.reflect.length){
+    v.appendChild(section("🤔","Reflection Questions","Think it through",false,"<ul class='reflect'>"+t.reflect.map(function(r){return "<li>"+r+"</li>";}).join("")+"</ul>"));
+  }
+
+  // confidence
+  var conf=el("div","conf-card");
+  conf.innerHTML="<h3 class='serif' style='font-size:1.3rem'>How confident did you feel?</h3><p class='muted' style='font-size:.9rem'>Rate yourself to log this session and keep your streak alive.</p>"+
+    "<div class='conf-faces'></div><div class='conf-label' id='confLabel'>Tap a face to rate</div>";
+  var faces=$(".conf-faces",conf),labels=["","Not confident","A bit shaky","Okay","Pretty good","Very confident!"];
+  var chosen=0;
+  for(var i=1;i<=5;i++){(function(i){var f=el("button","face",["","😣","😕","😐","🙂","😄"][i]);
+    f.onclick=function(){chosen=i;Array.prototype.forEach.call(faces.children,function(x){x.classList.remove("on");});f.classList.add("on");$("#confLabel").textContent=labels[i];};faces.appendChild(f);})(i);}
+  var saveBtn=el("button","btn green block","Log this session");saveBtn.style.marginTop="8px";
+  saveBtn.onclick=function(){if(!chosen){$("#confLabel").textContent="Pick a face first 🙂";return;}
+    var already=isPracticed(t.id);recordPractice(t.id,chosen);
+    toast("🎙️","Session logged!","Confidence: "+labels[chosen]);
+    if(displayStreak()>0)confetti();
+    saveBtn.textContent="✓ Logged — great work!";saveBtn.disabled=true;renderNav();};
+  conf.appendChild(saveBtn);v.appendChild(conf);
+}
+function section(icon,title,sub,open,bodyHtml){
+  var s=el("div","p-section"+(open?" open":""));
+  s.innerHTML="<button class='p-head'><span class='p-ic'>"+icon+"</span><span class='p-t'><h3 class='serif'>"+title+"</h3><span class='p-sub'>"+sub+"</span></span><span class='chev'>▾</span></button><div class='p-body'>"+bodyHtml+"</div>";
+  $(".p-head",s).onclick=function(){s.classList.toggle("open");};
+  return s;
+}
+function dlHtml(pairs){return "<div class='dl'>"+pairs.map(function(p){return "<div class='row'><div class='k'>"+p[0]+"</div><div class='v'>"+p[1]+"</div></div>";}).join("")+"</div>";}
+function answerSection(icon,title,sub,text,adv){
+  var s=section(icon,title,sub,false,"");var body=$(".p-body",s);
+  var reveal=el("button","reveal-btn","👁️ Try speaking first, then reveal");
+  reveal.onclick=function(){
+    var ans=el("div","answer"+(adv?" adv":""),text);
+    var play=el("button","play-inline","🔊 Listen to this answer");
+    play.onclick=function(){speak(text);};
+    body.innerHTML="";body.appendChild(ans);body.appendChild(play);
+  };
+  body.appendChild(reveal);
+  return s;
+}
+
+/* ===== TIMER ===== */
+function buildTimer(t){
+  var isP2=t.cat==="IELTS Part 2";
+  var targets={"IELTS Part 1":60,"IELTS Part 3":75,"Everyday Conversation":75,"Business English":90,"Public Speaking":90,"Interview Questions":90,"Storytelling":90,"Debate Topics":120};
+  var speakTarget=targets[t.cat]||90;
+  var phases=isP2?[{n:"Prep",s:60},{n:"Speak",s:120}]:[{n:"Speak (count up)",s:speakTarget}];
+  var card=el("div","timer-card");
+  card.innerHTML="<div class='timer-phase' id='tPhase'>"+phases[0].n+"</div><div class='timer-time' id='tTime'>"+fmt(isP2?60:0)+"</div>"+
+    "<div class='timer-bar'><i id='tBar'></i></div>"+
+    "<div class='timer-controls'><button class='tbtn primary' id='tStart'>▶ Start</button><button class='tbtn' id='tReset'>↺ Reset</button></div>"+
+    "<div class='timer-note' id='tNote'>"+(isP2?"1 min to prepare, then 2 mins to speak. A soft chime marks each phase.":"Aim for around "+fmt(speakTarget)+". A chime sounds at your target — keep going if you can!")+"</div>";
+  var state={running:false,phase:0,remaining:isP2?60:0,elapsed:0,interval:null};
+  var tTime=$("#tTime",card),tBar=$("#tBar",card),tPhase=$("#tPhase",card),tStart=$("#tStart",card),tNote=$("#tNote",card);
+  function fmt(s){var m=Math.floor(s/60),ss=s%60;return m+":"+(ss<10?"0":"")+ss;}
+  function tick(){
+    if(isP2){
+      state.remaining--;
+      var ph=phases[state.phase];
+      tTime.textContent=fmt(Math.max(0,state.remaining));
+      tBar.style.width=(100-(state.remaining/ph.s*100))+"%";
+      if(state.remaining<=0){beep(state.phase===0?660:520,.35);
+        if(state.phase===0){state.phase=1;state.remaining=120;tPhase.textContent="Speak";tNote.textContent="Now speak for two minutes. Don't stop!";}
+        else{stop();tPhase.textContent="Done ✓";tNote.textContent="Great — that's a full long-turn. Rate your confidence below.";beep(600,.5);}
+      }
+    }else{
+      state.elapsed++;tTime.textContent=fmt(state.elapsed);
+      var pct=Math.min(100,state.elapsed/speakTarget*100);tBar.style.width=pct+"%";
+      if(state.elapsed===speakTarget){beep(600,.4);tNote.textContent="Target reached! Keep going if you've got more to say. 💪";}
+    }
+  }
+  function start(){if(state.running)return;state.running=true;tStart.textContent="⏸ Pause";try{if(AC&&AC.state==="suspended")AC.resume();}catch(e){}state.interval=setInterval(tick,1000);}
+  function pause(){state.running=false;tStart.textContent="▶ Resume";clearInterval(state.interval);}
+  function stop(){state.running=false;tStart.textContent="▶ Start";clearInterval(state.interval);}
+  function reset(){stop();state.phase=0;state.remaining=isP2?60:0;state.elapsed=0;
+    tPhase.textContent=phases[0].n;tTime.textContent=fmt(isP2?60:0);tBar.style.width="0%";
+    tNote.textContent=isP2?"1 min to prepare, then 2 mins to speak. A soft chime marks each phase.":"Aim for around "+fmt(speakTarget)+". A chime sounds at your target — keep going if you can!";}
+  tStart.onclick=function(){state.running?pause():start();};
+  $("#tReset",card).onclick=reset;
+  return card;
+}
+function fmt(s){var m=Math.floor(s/60),ss=s%60;return m+":"+(ss<10?"0":"")+ss;}
+
+/* ===== BOOKMARKS ===== */
+function renderBookmarks(){
+  var v=$("#view");v.innerHTML="";
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>Saved for later</div><h1>⭐ Your Bookmarks</h1><p>Topics you've starred to revisit and master.</p>";v.appendChild(head);
+  var ids=Object.keys(S.bookmarks),topics=TOPICS.filter(function(t){return ids.indexOf(t.id)>=0;});
+  if(!topics.length){v.appendChild(el("div","empty","<div class='e'>⭐</div><p>No bookmarks yet. Tap the ☆ star on any topic to save it here.</p>"));return;}
+  var g=el("div","grid topics");topics.forEach(function(t){g.appendChild(topicCard(t));});v.appendChild(g);
+}
+
+/* ===== PROGRESS ===== */
+function renderProgress(){
+  var v=$("#view");v.innerHTML="";var c=avgConfidence();
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>Your journey</div><h1>📊 Progress Dashboard</h1><p>Consistency is everything. A little speaking every day compounds fast.</p>";v.appendChild(head);
+  var sg=el("div","grid g4");
+  sg.appendChild(statEl("🔥",displayStreak(),"Current streak"));
+  sg.appendChild(statEl("🏅",S.best,"Best streak"));
+  sg.appendChild(statEl("🎙️",S.sessions,"Total sessions"));
+  sg.appendChild(statEl("✅",Object.keys(S.practiced).length,"Topics practised"));
+  sg.appendChild(statEl("💪",c?c.toFixed(1)+" "+confFace(c):"—","Avg confidence"));
+  sg.appendChild(statEl("⭐",Object.keys(S.bookmarks).length,"Bookmarks"));
+  v.appendChild(sg);
+
+  v.appendChild((function(){var s=el("div","section-title");s.innerHTML="<h2 class='serif'>Confidence trend</h2>";return s;})());
+  var cc=el("div","card");
+  if(!S.confHistory.length){cc.innerHTML="<div class='empty' style='padding:24px'><div class='e'>💪</div><p>Log a session to start tracking your confidence.</p></div>";}
+  else{cc.appendChild(confChart());cc.appendChild(el("div","legend","<span>Each bar is one logged session (1–5 confidence). Watch it climb.</span>"));}
+  v.appendChild(cc);
+
+  v.appendChild((function(){var s=el("div","section-title");s.innerHTML="<h2 class='serif'>Progress by category</h2>";return s;})());
+  var cg=el("div","grid");cg.style.gridTemplateColumns="repeat(auto-fit,minmax(240px,1fr))";
+  CATS.forEach(function(cat){var topics=TOPICS.filter(function(t){return t.cat===cat[0];});
+    var done=topics.filter(function(t){return isPracticed(t.id);}).length,pct=Math.round(done/topics.length*100);
+    var card=el("div","card");
+    card.innerHTML="<div style='display:flex;align-items:center;gap:10px;margin-bottom:10px'><span style='font-size:1.2rem'>"+cat[1]+"</span><b style='flex:1;font-family:var(--serif)'>"+cat[0]+"</b><span style='font-weight:800;color:var(--brand)'>"+pct+"%</span></div>"+
+      "<div style='height:8px;background:var(--bg-2);border-radius:999px;overflow:hidden'><i style='display:block;height:100%;width:"+pct+"%;background:linear-gradient(90deg,var(--brand),var(--gold-2));border-radius:999px;transition:width .6s'></i></div>"+
+      "<div style='font-size:.76rem;color:var(--faint);font-weight:700;margin-top:6px'>"+done+" / "+topics.length+" topics</div>";
+    cg.appendChild(card);});
+  v.appendChild(cg);
+
+  var reset=el("button","btn ghost sm","↺ Reset all progress");reset.style.marginTop="22px";
+  reset.onclick=function(){if(confirm("Reset streak, sessions, confidence and practice history? Bookmarks stay.")){var bm=S.bookmarks,th=S.theme;S=JSON.parse(JSON.stringify(defaultState));S.bookmarks=bm;S.theme=th;saveState();refreshTop();renderProgress();toast("↺","Progress reset","Fresh start!");}};
+  v.appendChild(reset);
+}
+function confChart(){
+  var data=S.confHistory.slice(-10),wrap=el("div","chart");
+  data.forEach(function(d,i){var col=el("div","col");col.innerHTML="<span class='v'>"+d.v+"</span><div class='b' style='height:0'></div><small>"+["","😣","😕","😐","🙂","😄"][d.v]+"</small>";
+    wrap.appendChild(col);setTimeout(function(){$(".b",col).style.height=(d.v/5*100)+"%";},60+i*40);});
+  return wrap;
+}
+
+/* ===== RANDOM ===== */
+function randomTopic(){var pool=filteredTopics(null);if(!pool.length)pool=TOPICS.slice();var t=pool[Math.floor(Math.random()*pool.length)];
+  toast("🎲","Random topic!",t.title);go("topic",t.id);}
+
+/* ===== FX ===== */
+function refreshTop(){$("#p-streak").textContent=displayStreak();var c=avgConfidence();$("#p-conf").textContent=c?(c.toFixed(1)+" "+confFace(c)):"—";}
+function toast(icon,title,sub){var t=el("div","toast","<div class='ti'>"+icon+"</div><div><b>"+title+"</b><span>"+sub+"</span></div>");$("#toasts").appendChild(t);
+  setTimeout(function(){t.style.transition="opacity .4s,transform .4s";t.style.opacity="0";t.style.transform="translateX(120%)";setTimeout(function(){t.remove();},400);},3200);}
+function confetti(){if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  var c=el("div","confetti");document.body.appendChild(c);var cols=["#3452C4","#4C6EF5","#F0B429","#D9A21B","#2F9E44","#E8590C"];
+  for(var i=0;i<64;i++){var p=el("i");p.style.left=Math.random()*100+"%";p.style.background=cols[i%cols.length];p.style.animationDuration=(1.6+Math.random()*1.6)+"s";p.style.animationDelay=(Math.random()*.4)+"s";p.style.transform="rotate("+Math.random()*360+"deg)";if(Math.random()>.5)p.style.borderRadius="50%";c.appendChild(p);}
+  setTimeout(function(){c.remove();},3600);}
+
+/* ===== THEME + DRAWER ===== */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);$("#themeBtn").textContent=t==="dark"?"☀️":"🌙";S.theme=t;saveState();}
+$("#themeBtn").onclick=function(){applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");};
+$("#randomBtn").onclick=randomTopic;
+function openDrawer(){$("#sidebar").classList.add("open");$("#scrim").classList.add("show");}
+function closeDrawer(){$("#sidebar").classList.remove("open");$("#scrim").classList.remove("show");}
+$("#hamb").onclick=openDrawer;$("#scrim").onclick=closeDrawer;
+
+/* ===== INIT ===== */
+(function init(){
+  applyTheme(S.theme||((window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)?"dark":"light"));
+  if(S.lastActive){var g=daysBetween(S.lastActive,dkey());if(g>1&&S.lastGoalDate&&daysBetween(S.lastGoalDate,dkey())>1){/* streak shows 0 via displayStreak */}}
+  refreshTop();renderNav();renderDashboard();
+  if(speechOn)try{window.speechSynthesis.getVoices();}catch(e){}
+})();
+</script>
+</body>
+</html>

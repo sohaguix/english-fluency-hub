@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>English Fluency Hub — Learn, Practice, Speak</title>
+<meta name="description" content="A hub of free single-page apps for learning English: foundations, vocabulary, speaking practice, IELTS &amp; public speaking, and full learning platforms.">
+<style>
+:root{
+  --i1:#6366F1; --i2:#8B5CF6; --i3:#D946EF; --cy:#22D3EE;
+  --bg:#0B0F1A; --bg2:#111827; --card:#161E2E; --card2:#1B2436;
+  --ink:#F3F4F6; --mut:#9CA3AF; --line:rgba(255,255,255,.08);
+  --shadow:0 18px 50px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:
+    radial-gradient(1000px 600px at 15% -10%, rgba(99,102,241,.18), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(217,70,239,.12), transparent 55%),
+    var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(18px,4vw,32px) 64px}
+header{text-align:center;margin-bottom:clamp(28px,5vw,48px)}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;color:var(--cy);
+  border:1px solid var(--line);border-radius:999px;
+  padding:6px 14px;background:rgba(34,211,238,.06);margin-bottom:20px;
+}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--cy);box-shadow:0 0 12px var(--cy)}
+h1{
+  font-size:clamp(30px,6vw,52px);line-height:1.05;margin:0 0 14px;
+  font-weight:800;letter-spacing:-.02em;
+  background:linear-gradient(120deg,var(--i1),var(--i3) 60%,var(--cy));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sub{font-size:clamp(15px,2.4vw,19px);color:var(--mut);max-width:620px;margin:0 auto;line-height:1.55}
+.grid{
+  display:grid;gap:18px;margin-top:clamp(28px,5vw,44px);
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+}
+a.card{
+  display:flex;flex-direction:column;text-decoration:none;color:inherit;
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+a.card:hover{transform:translateY(-4px);border-color:rgba(139,92,246,.5);box-shadow:0 24px 60px rgba(99,102,241,.25)}
+a.card:focus-visible{outline:2px solid var(--cy);outline-offset:3px}
+.ico{
+  width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+  font-size:22px;margin-bottom:14px;border:1px solid var(--line);
+}
+.card h3{margin:0 0 6px;font-size:19px;font-weight:700;letter-spacing:-.01em}
+.card p{margin:0;color:var(--mut);font-size:14px;line-height:1.5;flex:1}
+.tag{
+  display:inline-block;margin-top:14px;font-size:12px;font-weight:600;
+  color:var(--i2);
+}
+.arrow{position:absolute;top:20px;right:20px;color:var(--mut);transition:transform .18s ease,color .18s ease}
+a.card:hover .arrow{transform:translate(3px,-3px);color:var(--cy)}
+footer{text-align:center;margin-top:clamp(36px,6vw,60px);color:var(--mut);font-size:13px;line-height:1.7}
+footer a{color:var(--i2);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="badge"><span class="dot"></span> 6 free apps · no sign-up · works offline</span>
+    <h1>English Fluency Hub</h1>
+    <p class="sub">A collection of self-contained apps to build your English from the ground up — foundations, vocabulary, speaking, and exam prep. Pick one and start.</p>
+  </header>
+
+  <main class="grid">
+    <a class="card" href="English-Foundations.html">
+      <span class="arrow" aria-hidden="true">↗</span>
+      <div class="ico" style="background:rgba(99,102,241,.12)">🧱</div>
+      <h3>English Foundations</h3>
+      <p>Structured lessons covering grammar, vocabulary, listening, and writing with interactive exercises and progress tracking.</p>
+      <span class="tag">Start here · Beginner → Intermediate</span>
+    </a>
+
+    <a class="card" href="Vocabulary-Master.html">
+      <span class="arrow" aria-hidden="true">↗</span>
+      <div class="ico" style="background:rgba(20,184,166,.14)">📚</div>
+      <h3>Vocabulary Master</h3>
+      <p>Flashcards, quizzes, and spaced-repetition drills to grow and retain your word bank across topics and difficulty levels.</p>
+      <span class="tag">Flashcards · Spaced repetition</span>
+    </a>
+
+    <a class="card" href="Daily-Speaking-Coach.html">
+      <span class="arrow" aria-hidden="true">↗</span>
+      <div class="ico" style="background:rgba(217,70,239,.12)">🎙️</div>
+      <h3>Daily Speaking Coach</h3>
+      <p>Daily speaking prompts, timed practice, and model answers to build fluency and confidence one session at a time.</p>
+      <span class="tag">Speaking · Daily practice</span>
+    </a>
+
+    <a class="card" href="IELTS-and-Public-Speaking-Guide.html">
+      <span class="arrow" aria-hidden="true">↗</span>
+      <div class="ico" style="background:rgba(34,211,238,.12)">🎯</div>
+      <h3>IELTS &amp; Public Speaking Guide</h3>
+      <p>A 30-day everyday-fluency plan with strategies for IELTS speaking and public speaking, plus a check-off progress tracker.</p>
+      <span class="tag">Exam prep · 30-day plan</span>
+    </a>
+
+    <a class="card" href="FluentPath.html">
+      <span class="arrow" aria-hidden="true">↗</span>
+      <div class="ico" style="background:rgba(139,92,246,.14)">🛤️</div>
+      <h3>FluentPath</h3>
+      <p>A full learning platform: guided lessons, quizzes, XP, streaks, and badges to keep you moving along a clear path.</p>
+      <span class="tag">Platform · Gamified</span>
+    </a>
+
+    <a class="card" href="English-OS.html">
+      <span class="arrow" aria-hidden="true">↗</span>
+      <div class="ico" style="background:rgba(99,102,241,.14)">🧠</div>
+      <h3>English OS</h3>
+      <p>An all-in-one "operating system" for English — adaptive sessions, review queue, daily challenges, and 12 exercise types.</p>
+      <span class="tag">Platform · Adaptive</span>
+    </a>
+  </main>
+
+  <footer>
+    All apps run entirely in your browser — your progress is saved locally on your device.<br>
+    Built for English learners · 2026
+  </footer>
+</div>
+</body>
+</html>

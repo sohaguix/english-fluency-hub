@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Vocabulary Master</title>
+<style>
+:root{
+  --brand:#0D9488; --brand-2:#14B8A6; --brand-ink:#0B7C71;
+  --green:#16A34A; --green-soft:#DCFCE7;
+  --red:#E11D48; --red-soft:#FFE4E9;
+  --amber:#F59E0B; --flame:#FB7A3C; --violet:#7C3AED; --blue:#2563EB;
+  --r:18px; --r-sm:12px; --r-lg:26px; --tap:46px;
+  --sp:clamp(15px,4vw,26px);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+:root[data-theme="light"]{
+  --bg:#F1F5F5; --bg-2:#E6EDEC; --surface:#FFFFFF; --surface-2:#F7FAFA;
+  --text:#132022; --muted:#5C6B6D; --faint:#93A2A3; --line:#E4EBEA; --line-2:#D6E0DF;
+  --shadow:0 1px 2px rgba(19,32,34,.04),0 10px 26px -14px rgba(19,32,34,.18);
+  --shadow-lg:0 2px 8px rgba(19,32,34,.06),0 26px 60px -24px rgba(19,32,34,.3);
+  --tint:#DFF5F2;
+}
+:root[data-theme="dark"]{
+  --bg:#0C1413; --bg-2:#101B1A; --surface:#15211F; --surface-2:#1B2A28;
+  --text:#E8F0EF; --muted:#9DB0AE; --faint:#657573; --line:#233432; --line-2:#2C403D;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px -16px rgba(0,0,0,.6);
+  --shadow-lg:0 2px 10px rgba(0,0,0,.4),0 30px 70px -28px rgba(0,0,0,.75);
+  --tint:#0E2E2A; --green-soft:#0E3A24; --red-soft:#3A1620;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font-family:inherit;font-size:1rem}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:8px}
+h1,h2,h3,h4{margin:0;line-height:1.15;letter-spacing:-.02em;font-weight:800}
+p{margin:0}
+.muted{color:var(--muted)} .mono{font-family:var(--mono)}
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:9px}
+
+/* shell */
+.app{display:grid;grid-template-columns:256px 1fr;min-height:100vh}
+@media(max-width:920px){.app{grid-template-columns:1fr}}
+.sidebar{background:var(--surface);border-right:1px solid var(--line);padding:20px 14px;position:sticky;top:0;
+  height:100vh;overflow-y:auto;display:flex;flex-direction:column;gap:3px;z-index:60}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 8px 14px}
+.brand .logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  display:grid;place-items:center;font-size:22px;box-shadow:0 6px 16px -6px var(--brand)}
+.brand b{font-size:1.1rem;letter-spacing:-.03em;display:block;line-height:1.1}
+.brand span{font-size:.7rem;color:var(--faint);font-weight:700;letter-spacing:.04em}
+.nav-group{font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:14px 12px 5px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-weight:600;font-size:.92rem;
+  color:var(--muted);min-height:44px;width:100%;text-align:left;transition:background .15s,color .15s,transform .1s}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}.nav-item:active{transform:scale(.98)}
+.nav-item.active{background:var(--tint);color:var(--brand-ink);font-weight:800}
+:root[data-theme="dark"] .nav-item.active{color:#7FEAE0}
+.nav-item .ic{font-size:1.1rem;width:22px;text-align:center;flex:none}
+.nav-item .badge{margin-left:auto;font-size:.64rem;font-weight:800;background:var(--flame);color:#fff;border-radius:999px;padding:2px 7px}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 85%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:11px var(--sp)}
+.hamb{display:none;width:44px;height:44px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:1.2rem;place-items:center}
+@media(max-width:920px){.hamb{display:grid}}
+.pills{display:flex;gap:8px;margin-left:auto;align-items:center;flex-wrap:wrap}
+.pill{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);padding:7px 12px;
+  border-radius:999px;font-weight:800;font-size:.84rem;box-shadow:var(--shadow)}
+.pill.xp{color:var(--brand-ink)}.pill.streak{color:var(--flame)}
+:root[data-theme="dark"] .pill.xp{color:#7FEAE0}
+.icon-btn{width:44px;height:44px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-size:1.1rem;box-shadow:var(--shadow)}
+.view{padding:var(--sp);max-width:1140px;width:100%;margin:0 auto;animation:vin .35s var(--ease)}
+@keyframes vin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.scrim{position:fixed;inset:0;background:rgba(6,15,14,.55);z-index:59;display:none;opacity:0;transition:opacity .25s}
+.scrim.show{display:block;opacity:1}
+@media(max-width:920px){.sidebar{position:fixed;left:0;top:0;width:280px;transform:translateX(-104%);transition:transform .28s var(--ease);box-shadow:var(--shadow-lg)}.sidebar.open{transform:none}}
+
+/* generic */
+.page-head{margin-bottom:20px}
+.page-head .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
+.page-head h1{font-size:clamp(1.7rem,4.5vw,2.4rem);margin-top:6px}
+.page-head p{color:var(--muted);margin-top:6px;max-width:60ch}
+.grid{display:grid;gap:15px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(185px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(148px,1fr))}
+.modes{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.cats{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}
+.bar{height:8px;background:var(--bg-2);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-2));border-radius:999px;width:0;transition:width .6s var(--ease)}
+.bar.g i{background:linear-gradient(90deg,var(--green),#4ade80)}
+
+.btn{background:var(--brand);color:#fff;font-weight:800;border-radius:14px;padding:13px 22px;min-height:var(--tap);
+  box-shadow:0 8px 20px -8px var(--brand);transition:transform .12s,filter .15s;font-size:.95rem}
+.btn:hover{filter:brightness(1.07)}.btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line-2);box-shadow:none}
+.btn.green{background:var(--green);box-shadow:0 8px 20px -8px var(--green)}
+.btn.block{width:100%}.btn.sm{padding:9px 15px;font-size:.86rem;min-height:40px;border-radius:11px}
+.btn[disabled]{opacity:.5;pointer-events:none}
+
+/* hero */
+.hero{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-radius:var(--r-lg);padding:24px;
+  display:flex;gap:24px;align-items:center;flex-wrap:wrap;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-50px;top:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero .h-txt{flex:1;min-width:220px;z-index:1}
+.hero h2{font-size:1.5rem}.hero p{opacity:.92;margin-top:6px}
+.hero .cta-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;z-index:1;position:relative}
+.hero .btn.ghost{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.hero .btn.wht{background:#fff;color:var(--brand-ink)}
+.ring-wrap{position:relative;width:130px;height:130px;flex:none}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{stroke:rgba(255,255,255,.25)}.ring-fg{stroke:#fff;stroke-linecap:round;transition:stroke-dashoffset 1s var(--ease)}
+.ring-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center;color:#fff}
+.ring-center .big{font-size:1.7rem;font-weight:900;letter-spacing:-.04em}
+.ring-center small{font-size:.64rem;opacity:.85;font-weight:700;letter-spacing:.05em}
+
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.stat .em{font-size:1.3rem}.stat b{font-size:1.6rem;font-weight:900;display:block;margin-top:5px;letter-spacing:-.03em}
+.stat span{color:var(--muted);font-size:.8rem;font-weight:600}
+
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:24px 0 13px}
+.section-title h2{font-size:1.18rem}
+.section-title .sel{display:flex;align-items:center;gap:8px}
+select.deck{background:var(--surface);border:1px solid var(--line-2);border-radius:11px;padding:9px 12px;font-weight:700;color:var(--text);min-height:42px}
+
+.mode-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
+  padding:18px;text-align:left;display:flex;flex-direction:column;gap:8px;transition:transform .15s var(--ease),box-shadow .15s}
+.mode-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.mode-card .m-ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.4rem;flex:none}
+.mode-card h3{font-size:1.03rem}.mode-card p{color:var(--muted);font-size:.83rem;flex:1}
+
+.cat-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
+  padding:16px;text-align:left;display:flex;flex-direction:column;gap:8px;transition:transform .15s var(--ease),box-shadow .15s}
+.cat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.cat-card .c-ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:1.3rem}
+.cat-card b{font-size:.98rem}.cat-card .c-meta{font-size:.76rem;color:var(--faint);font-weight:700}
+
+.diff{font-size:.66rem;font-weight:800;padding:3px 9px;border-radius:999px}
+.diff.d1{background:var(--green-soft);color:var(--green)}
+.diff.d2{background:#FEF3C7;color:#B45309}
+.diff.d3{background:var(--red-soft);color:var(--red)}
+:root[data-theme="dark"] .diff.d2{background:#3A2E10;color:#FBBF24}
+
+/* browse list */
+.word-row{display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:13px 16px;box-shadow:var(--shadow);text-align:left;width:100%;transition:transform .13s,box-shadow .13s}
+.word-row:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.word-row .w-main{flex:1;min-width:0}
+.word-row .w-main b{font-size:1.02rem}
+.word-row .w-ipa{font-family:var(--mono);font-size:.8rem;color:var(--brand);margin-left:6px}
+.word-row .w-mean{font-size:.82rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status-dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--line-2)}
+.status-dot.learning{background:var(--amber)}.status-dot.review{background:var(--blue)}.status-dot.mastered{background:var(--green)}
+
+/* modal */
+.modal-scrim{position:fixed;inset:0;background:rgba(6,15,14,.6);backdrop-filter:blur(3px);z-index:120;display:none;
+  align-items:center;justify-content:center;padding:16px;opacity:0;transition:opacity .22s}
+.modal-scrim.show{display:flex;opacity:1}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);max-width:560px;width:100%;
+  max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:min .3s var(--ease)}
+@keyframes min{from{transform:translateY(20px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+.modal-head{position:sticky;top:0;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;padding:22px 24px;border-radius:var(--r-lg) var(--r-lg) 0 0}
+.modal-head .w{font-size:1.9rem;font-weight:900;letter-spacing:-.03em;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.modal-head .ipa{font-family:var(--mono);font-size:1rem;opacity:.9}
+.modal-head .play{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.22);display:grid;place-items:center;font-size:1.1rem}
+.modal-head .mclose{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.2);color:#fff;font-size:1.1rem}
+.modal-body{padding:22px 24px;display:flex;flex-direction:column;gap:16px}
+.field{}
+.field .lbl{font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--brand);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.field p{font-size:.95rem}
+.field .ex{font-style:italic;color:var(--muted);border-left:3px solid var(--brand-2);padding-left:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{background:var(--tint);color:var(--brand-ink);font-size:.82rem;font-weight:700;padding:5px 11px;border-radius:8px}
+:root[data-theme="dark"] .chips span{color:#7FEAE0}
+.chips.ant span{background:var(--red-soft);color:var(--red)}
+.chips.coll span{background:var(--bg-2);color:var(--text)}
+.trick-box{background:linear-gradient(135deg,#FEF9C3,#FDE68A);color:#713F12;border-radius:14px;padding:14px 16px}
+:root[data-theme="dark"] .trick-box{background:#3A310F;color:#FDE68A}
+.mistake-box{background:var(--red-soft);color:var(--text);border-radius:14px;padding:14px 16px;border:1px solid var(--red)}
+.mistake-box .lbl{color:var(--red)}
+
+/* SESSION PLAYER */
+.player{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;flex-direction:column;animation:vin .3s var(--ease)}
+.player.show{display:flex}
+.pl-top{display:flex;align-items:center;gap:13px;padding:13px var(--sp);border-bottom:1px solid var(--line);background:var(--surface)}
+.pl-close{width:40px;height:40px;border-radius:12px;font-size:1.3rem;color:var(--muted);flex:none}
+.pl-prog{flex:1;height:13px;background:var(--bg-2);border-radius:999px;overflow:hidden}
+.pl-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#4ade80);border-radius:999px;width:0;transition:width .4s var(--ease)}
+.pl-info{font-weight:800;font-size:.85rem;white-space:nowrap;display:flex;gap:12px;align-items:center}
+.timer{color:var(--flame)}.timer.low{color:var(--red);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.4}}
+.pl-scroll{flex:1;overflow-y:auto;padding:var(--sp)}
+.pl-inner{max-width:640px;margin:0 auto;padding-bottom:120px}
+.pl-foot{border-top:1px solid var(--line);background:var(--surface);padding:15px var(--sp);position:sticky;bottom:0}
+.pl-foot .in{max-width:640px;margin:0 auto;display:flex;gap:12px}
+.step-tag{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);margin-bottom:10px}
+.q-title{font-size:1.3rem;font-weight:800;margin-bottom:18px;letter-spacing:-.02em}
+.q-title.sm{font-size:1.08rem}
+.prompt-word{font-size:2rem;font-weight:900;letter-spacing:-.03em;text-align:center}
+.prompt-ipa{font-family:var(--mono);color:var(--brand);text-align:center;margin-top:2px}
+
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);border:2px solid var(--line-2);
+  border-radius:var(--r-sm);padding:15px 18px;margin-bottom:10px;font-weight:600;min-height:var(--tap);transition:transform .1s,border-color .15s,background .15s}
+.opt:hover{border-color:var(--brand)}.opt:active{transform:scale(.99)}
+.opt .key{width:27px;height:27px;border-radius:8px;background:var(--bg-2);display:grid;place-items:center;font-size:.78rem;font-weight:800;flex:none;color:var(--muted)}
+.opt.correct{border-color:var(--green);background:var(--green-soft)}.opt.correct .key{background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}.opt.wrong .key{background:var(--red);color:#fff}
+.opt[disabled]{pointer-events:none}
+.text-in{width:100%;background:var(--surface);border:2px solid var(--line-2);border-radius:var(--r-sm);padding:15px 18px;color:var(--text);transition:border-color .15s}
+.text-in:focus{border-color:var(--brand);outline:none}
+.text-in.big{font-size:1.3rem;text-align:center;font-weight:700;letter-spacing:.02em}
+
+.audio-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;text-align:center;margin-bottom:18px;box-shadow:var(--shadow)}
+.play-btn{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;font-size:1.9rem;
+  display:grid;place-items:center;margin:0 auto 8px;box-shadow:0 14px 30px -12px var(--brand);transition:transform .12s}
+.play-btn:active{transform:scale(.92)}.play-btn.playing{animation:pr 1.2s infinite}
+@keyframes pr{0%{box-shadow:0 0 0 0 rgba(13,148,136,.5)}70%{box-shadow:0 0 0 20px rgba(13,148,136,0)}100%{box-shadow:0 0 0 0 rgba(13,148,136,0)}}
+
+/* flashcard */
+.flash{perspective:1500px;height:280px;margin-bottom:14px}
+.flash-in{position:relative;width:100%;height:100%;transition:transform .6s var(--ease);transform-style:preserve-3d;cursor:pointer}
+.flash.flip .flash-in{transform:rotateY(180deg)}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r-lg);display:flex;flex-direction:column;
+  justify-content:center;text-align:center;gap:8px;padding:24px;box-shadow:var(--shadow-lg);border:1px solid var(--line)}
+.flash-front{background:var(--surface)}
+.flash-back{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;transform:rotateY(180deg);overflow-y:auto}
+.flash-front .big{font-size:2.2rem;font-weight:900;letter-spacing:-.03em}
+.flash-back .big{font-size:1.2rem;font-weight:800}
+.flash-back .m{font-size:.95rem;opacity:.95}.flash-back .e{font-size:.85rem;opacity:.85;font-style:italic}
+.flash-hint{text-align:center;color:var(--faint);font-size:.78rem;font-weight:700;margin-bottom:12px}
+
+/* word bank */
+.build-line{min-height:56px;border-bottom:2px dashed var(--line-2);display:flex;flex-wrap:wrap;gap:8px;padding:10px 4px;margin-bottom:20px;align-content:flex-start}
+.bank{display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:var(--surface);border:2px solid var(--line-2);border-radius:12px;padding:9px 15px;font-weight:700;box-shadow:var(--shadow);transition:transform .1s,opacity .15s}
+.chip:active{transform:scale(.94)}.chip.used{opacity:0;pointer-events:none;width:0;padding:0;margin:0;border:0}
+.chip.placed{background:var(--tint);border-color:var(--brand)}
+
+/* match */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.mcol{display:flex;flex-direction:column;gap:10px}
+.mtile{background:var(--surface);border:2px solid var(--line-2);border-radius:12px;padding:12px 14px;font-weight:600;text-align:center;min-height:var(--tap);transition:.14s;font-size:.9rem}
+.mtile.sel{border-color:var(--brand);background:var(--tint)}
+.mtile.matched{border-color:var(--green);background:var(--green-soft);pointer-events:none;opacity:.7}
+.mtile.miss{border-color:var(--red);animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* drag drop */
+.dd-bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:20px;min-height:50px}
+.dd-word{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;font-weight:800;padding:11px 18px;border-radius:12px;box-shadow:var(--shadow);touch-action:none;user-select:none;transition:opacity .2s}
+.dd-word.gone{opacity:0;pointer-events:none;width:0;padding:0;margin:0;overflow:hidden}
+.dd-drop{background:var(--surface);border:2px dashed var(--line-2);border-radius:12px;padding:14px 16px;margin-bottom:11px;min-height:58px;
+  display:flex;align-items:center;gap:10px;transition:.15s}
+.dd-drop.over{border-color:var(--brand);background:var(--tint)}
+.dd-drop.filled{border-style:solid;border-color:var(--green);background:var(--green-soft)}
+.dd-drop .def{flex:1;font-size:.9rem}
+.dd-drop .slot{font-weight:800;color:var(--green)}
+.dd-ghost{position:fixed;z-index:300;pointer-events:none;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;font-weight:800;padding:11px 18px;border-radius:12px;box-shadow:var(--shadow-lg);transform:translate(-50%,-50%)}
+
+/* feedback */
+.feedback{border-radius:var(--r);padding:15px 17px;margin-bottom:8px;font-weight:600;display:none;animation:fin .3s var(--ease)}
+@keyframes fin{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+.feedback.show{display:block}
+.feedback.good{background:var(--green-soft);color:var(--green);border:1px solid var(--green)}
+.feedback.bad{background:var(--red-soft);color:var(--red);border:1px solid var(--red)}
+.feedback b{display:block;font-size:1.02rem;margin-bottom:3px}
+.feedback .ft{color:var(--text);font-weight:500;font-size:.88rem}
+.feedback .ft .mono{color:var(--brand);font-weight:700}
+
+/* complete */
+.done-screen{text-align:center;padding:16px 0}
+.done-screen .trophy{font-size:4.2rem;animation:pop .6s var(--ease)}
+@keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.done-screen h2{font-size:1.7rem;margin:8px 0}
+.reward-row{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin:16px 0 20px}
+.reward-row .r{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 18px;box-shadow:var(--shadow)}
+.reward-row .r b{display:block;font-size:1.3rem}.reward-row .r span{font-size:.7rem;color:var(--muted);font-weight:700}
+
+/* chart */
+.chart{display:flex;align-items:flex-end;gap:min(3vw,14px);height:140px;padding-top:8px}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
+.chart .col .b{width:100%;max-width:32px;background:linear-gradient(180deg,var(--brand-2),var(--brand));border-radius:7px 7px 3px 3px;min-height:4px;transition:height .7s var(--ease)}
+.chart .col.today .b{background:linear-gradient(180deg,#FFC46B,var(--flame))}
+.chart .col small{font-size:.66rem;color:var(--muted);font-weight:700}.chart .col .v{font-size:.64rem;color:var(--faint);font-weight:800}
+
+/* toast + confetti */
+.toasts{position:fixed;top:14px;right:14px;z-index:200;display:flex;flex-direction:column;gap:9px;pointer-events:none}
+.toast{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);padding:13px 16px;display:flex;gap:11px;align-items:center;min-width:230px;animation:tin .4s var(--ease)}
+.toast .ti{font-size:1.5rem}.toast b{display:block;font-size:.9rem}.toast span{font-size:.76rem;color:var(--muted)}
+@keyframes tin{from{transform:translateX(120%)}to{transform:none}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:150;overflow:hidden}
+.confetti i{position:absolute;width:10px;height:14px;top:-20px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.9}}
+
+.form-row{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.form-row label{font-size:.78rem;font-weight:700;color:var(--muted)}
+.empty{text-align:center;padding:44px 20px;color:var(--muted)}.empty .e{font-size:2.6rem}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.05s!important}}
+@media(max-width:560px){.hero{flex-direction:column;text-align:center}.match-grid{gap:8px}.view{padding:15px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="Navigation">
+    <div class="brand"><div class="logo">📖</div><div><b>Vocabulary<br>Master</b><span>Learn · Recall · Master</span></div></div>
+    <nav id="nav"></nav>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+  <div class="main">
+    <header class="topbar">
+      <button class="hamb" id="hamb" aria-label="Menu">☰</button>
+      <div class="pills">
+        <span class="pill xp"><span>⚡</span><span id="p-xp">0 XP</span></span>
+        <span class="pill streak"><span>🔥</span><span id="p-streak">0</span></span>
+        <button class="icon-btn" id="themeBtn" aria-label="Theme">🌙</button>
+      </div>
+    </header>
+    <main id="view" class="view"></main>
+  </div>
+</div>
+
+<div class="player" id="player" role="dialog" aria-modal="true">
+  <div class="pl-top">
+    <button class="pl-close" id="plClose" aria-label="Close">✕</button>
+    <div class="pl-prog"><i id="plProg"></i></div>
+    <div class="pl-info"><span id="plCount">0/0</span><span class="timer" id="plTimer" style="display:none"></span></div>
+  </div>
+  <div class="pl-scroll"><div class="pl-inner" id="plInner"></div></div>
+  <div class="pl-foot"><div class="in" id="plFoot"></div></div>
+</div>
+
+<div class="modal-scrim" id="modalScrim"><div class="modal" id="modal"></div></div>
+<div class="toasts" id="toasts"></div>
+
+<script>
+"use strict";
+/* ===================== SAFE STORAGE ===================== */
+var Store=(function(){var mem={},ok=false;try{var k="__vm__";localStorage.setItem(k,"1");localStorage.removeItem(k);ok=true;}catch(e){}
+  return {get:function(k){try{if(ok)return localStorage.getItem(k);}catch(e){}return k in mem?mem[k]:null;},
+          set:function(k,v){try{if(ok){localStorage.setItem(k,v);return;}}catch(e){}mem[k]=v;}};})();
+
+/* ===================== DATE HELPERS ===================== */
+var DAY=86400000;
+function dkey(d){d=d||new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
+function daysBetween(a,b){var pa=a.split("-").map(Number),pb=b.split("-").map(Number);
+  return Math.round((new Date(pb[0],pb[1]-1,pb[2])-new Date(pa[0],pa[1]-1,pa[2]))/DAY);}
+
+/* ===================== CATEGORIES ===================== */
+var CATS=[
+ ["Daily Life","🏠","#0D9488"],["Family","👨‍👩‍👧","#EC4899"],["Travel","✈️","#3B82F6"],["Food","🍽️","#F97316"],
+ ["Business","💼","#6366F1"],["Technology","💻","#0EA5E9"],["AI","🤖","#8B5CF6"],["Work","🧰","#14B8A6"],
+ ["Meetings","🗓️","#F59E0B"],["UI/UX","🎨","#DB2777"],["SaaS","☁️","#0891B2"],["Health","🩺","#22C55E"],
+ ["Education","🎓","#7C3AED"],["Shopping","🛍️","#EF4444"],["Finance","💰","#CA8A04"],["Leadership","🧭","#2563EB"],
+ ["Emotions","💚","#10B981"],["Nature","🌿","#65A30D"],["Culture","🎭","#E11D48"],["Academic English","📚","#4F46E5"]
+];
+
+/* ===================== CARD DATA ===================== */
+function C(word,ipa,cat,diff,meaning,explain,example,syn,ant,coll,mistake,trick){
+  function sp(s){return s?s.split(",").map(function(x){return x.trim();}).filter(Boolean):[];}
+  return {word:word,ipa:ipa,cat:cat,diff:diff,meaning:meaning,explain:explain,example:example,
+    syn:sp(syn),ant:sp(ant),coll:sp(coll),mistake:mistake,trick:trick};
+}
+var CARDS=[
+/* DAILY LIFE */
+C("routine","/ruːˈtiːn/","Daily Life",1,"A regular, fixed way of doing things.","The set of things you do in the same order every day.","My morning routine starts with a glass of water.","habit, schedule, pattern","chaos, spontaneity","daily routine, morning routine, stick to a routine","Not 'rutine' — remember the ou.","'Rou-TINE' sounds like 'machine' — both run automatically."),
+C("chore","/tʃɔːr/","Daily Life",1,"A small, boring job you have to do at home.","Regular housework like cleaning or washing.","Doing the dishes is my least favourite chore.","task, duty, errand","","household chores, do the chores, daily chores","'Chore' is countable: 'a chore', 'many chores'.","Chore = 'bore' with a ch — because chores are boring."),
+C("errand","/ˈerənd/","Daily Life",2,"A short trip to do a specific task.","Going out to buy or deliver something quickly.","I have a few errands to run before lunch.","task, mission","","run errands, quick errand","We 'run' errands, we don't 'do' errands.","'Err-AND' — an ERRAND is an AND-list of quick jobs."),
+C("commute","/kəˈmjuːt/","Daily Life",2,"The regular journey between home and work.","Travelling to and from your job each day.","My commute takes forty minutes by train.","journey, trip","","daily commute, long commute, commute to work","Commute is both noun and verb: 'I commute' / 'a commute'.","COMMUTE = COMe + MOVE toward work."),
+C("neighborhood","/ˈneɪbərhʊd/","Daily Life",1,"The area around where you live.","The streets and community close to your home.","It's a quiet neighborhood with friendly people.","area, district, community","","quiet neighborhood, friendly neighborhood","UK spelling is 'neighbourhood' (extra u).","NEIGHBOR-hood = where your neighbours live."),
+C("appointment","/əˈpɔɪntmənt/","Daily Life",2,"An arranged time to meet or visit someone.","A fixed time to see a doctor, dentist, etc.","I have a dentist appointment at three.","meeting, booking","","make an appointment, doctor's appointment","'Make/have an appointment', not 'take an appointment'.","AP-POINT-ment fixes a POINT in time."),
+C("tidy","/ˈtaɪdi/","Daily Life",1,"Neat and in order; to make neat.","Everything in its right place, not messy.","Please keep your desk tidy.","neat, organized","messy, untidy, cluttered","tidy up, keep tidy, tidy room","'Tidy up' means to clean; 'tidy' alone is the adjective.","TIDY rhymes with 'nicely laid-y'."),
+C("leftover","/ˈleftoʊvər/","Daily Life",1,"Food that remains after a meal.","Extra food you keep to eat later.","We had pizza leftovers for lunch.","remains, scraps","","eat leftovers, leftover food","Usually plural: 'leftovers'.","LEFT + OVER = what was LEFT OVER on the plate."),
+
+/* FAMILY */
+C("relative","/ˈrelətɪv/","Family",1,"A member of your family.","Anyone related to you by blood or marriage.","All my relatives came to the wedding.","family member, kin","","close relative, distant relative","'Relative' (family) vs 'relatively' (fairly).","RELATIVE = someone you RELATE to by blood."),
+C("sibling","/ˈsɪblɪŋ/","Family",2,"A brother or sister.","A child of the same parents as you.","I have three siblings — two sisters and a brother.","brother, sister","","younger sibling, sibling rivalry","'Sibling' covers both genders; use it when sex isn't specified.","SIB-LING — a young SIB (brother/sister) sapling."),
+C("spouse","/spaʊs/","Family",2,"A husband or wife.","Your marriage partner.","You can bring your spouse to the party.","partner, husband, wife","","spouse and children","'Spouse' is formal and gender-neutral.","SPOUSE rhymes with HOUSE — the one you share a house with."),
+C("toddler","/ˈtɑːdlər/","Family",2,"A very young child who is learning to walk.","A child roughly one to three years old.","The toddler took her first steps today.","infant, child","","cheeky toddler, toddler tantrum","A 'toddler' is older than a 'baby' but younger than a 'child'.","A TODDLER TODDLES (walks unsteadily)."),
+C("grandparent","/ˈɡrænperənt/","Family",1,"The parent of your parent.","Your father's or mother's mother or father.","My grandparents live in the countryside.","grandma, grandpa","","visit grandparents","No space: 'grandparent', 'grandmother'.","GRAND + PARENT = a 'grander', older parent."),
+C("in-law","/ˈɪn lɔː/","Family",2,"A relative through marriage.","Family gained when you marry, like a mother-in-law.","My in-laws are visiting this weekend.","relative by marriage","blood relative","mother-in-law, in-laws","Plural adds -s to the first word: 'sisters-in-law'.","Family you get IN by LAW (marriage), not by birth."),
+C("upbringing","/ˈʌpbrɪŋɪŋ/","Family",3,"The way you were raised as a child.","The care and values your family gave you growing up.","She had a strict but loving upbringing.","childhood, rearing","","strict upbringing, happy upbringing","Uncountable: 'an upbringing' is fine, but not 'upbringings'.","How you were BROUGHT UP → your UP-BRINGING."),
+C("household","/ˈhaʊshoʊld/","Family",2,"All the people who live together in one home.","A home and the group living in it as a unit.","There are five people in our household.","home, family unit","","household chores, household income","'Household' = the group/home; 'house' = the building.","HOUSE + HOLD = everyone the house HOLDS."),
+
+/* TRAVEL */
+C("itinerary","/aɪˈtɪnəreri/","Travel",3,"A detailed plan of a trip.","The schedule of where you go and when.","Our itinerary includes three cities in five days.","schedule, plan, route","","detailed itinerary, travel itinerary","Tricky spelling: i-tin-er-ar-y.","An ITINERARY tells you where the ROAD (Latin 'iter') goes."),
+C("layover","/ˈleɪoʊvər/","Travel",2,"A short stop between flights.","Waiting at an airport before your next plane.","We had a two-hour layover in Dubai.","stopover, connection","direct flight","long layover, short layover","'Layover' (US) = 'stopover' (UK).","You LAY OVER (wait) between flights."),
+C("luggage","/ˈlʌɡɪdʒ/","Travel",1,"The bags you take when travelling.","Suitcases and bags with your belongings.","Please don't leave your luggage unattended.","baggage, bags, suitcases","","hand luggage, carry luggage","Uncountable! Say 'a piece of luggage', not 'a luggage'.","LUGGAGE is what you LUG (drag) around."),
+C("destination","/ˌdestɪˈneɪʃn/","Travel",2,"The place you are travelling to.","The final point of your journey.","Paris is a popular holiday destination.","endpoint, goal","origin, departure point","final destination, travel destination","'Destination' = end place; 'destiny' = fate.","Your DESTINATION is your travel DESTINY."),
+C("boarding","/ˈbɔːrdɪŋ/","Travel",2,"Getting on a plane, train, or ship.","The process of entering the vehicle before departure.","Boarding begins thirty minutes before takeoff.","embarking","disembarking","boarding pass, boarding gate","'Boarding pass', not 'boarding ticket'.","You go on BOARD → BOARDING."),
+C("souvenir","/ˌsuːvəˈnɪr/","Travel",2,"An object kept to remember a place.","A small gift or item from a trip.","I bought a fridge magnet as a souvenir.","memento, keepsake","","buy a souvenir, souvenir shop","French spelling: sou-ve-nir.","SOUVENIR helps you REMEMBER (French 'se souvenir')."),
+C("sightseeing","/ˈsaɪtsiːɪŋ/","Travel",2,"Visiting interesting places as a tourist.","Going around to see famous or beautiful spots.","We spent the day sightseeing in Rome.","touring, exploring","","go sightseeing, sightseeing tour","We 'go sightseeing', we don't 'do sightseeing'.","SIGHT + SEEING = SEEING the SIGHTS."),
+C("jet lag","/ˈdʒet læɡ/","Travel",2,"Tiredness after flying across time zones.","Your body clock being out of sync after a long flight.","I always get jet lag flying to Asia.","fatigue, time-zone fatigue","","bad jet lag, get over jet lag","Two words as a noun: 'jet lag'; 'jet-lagged' (adj) has a hyphen.","The JET is fast but your body LAGS behind."),
+
+/* FOOD */
+C("cuisine","/kwɪˈziːn/","Food",2,"A style of cooking from a place or culture.","The typical food of a country or region.","I love spicy Thai cuisine.","cooking, food style","","local cuisine, fine cuisine","'Cuisine' = a style of food, not a single dish.","CUISINE comes from the same root as 'kitchen'."),
+C("recipe","/ˈresəpi/","Food",1,"Instructions for making a dish.","A list of ingredients and steps to cook something.","Can you share your pasta recipe?","instructions, formula","","follow a recipe, secret recipe","Pronounced 'RESS-uh-pee', not 'ree-SIPE'.","A RECIPE is a RECEIPT for making food."),
+C("ingredient","/ɪnˈɡriːdiənt/","Food",2,"One of the foods used to make a dish.","Something you combine when cooking.","Flour is the main ingredient in bread.","component, element","","key ingredient, fresh ingredients","Countable: 'three ingredients'.","INGREDIENTS go IN and GRADE up the dish."),
+C("flavor","/ˈfleɪvər/","Food",1,"The taste of food or drink.","How something tastes on your tongue.","This ice cream has a rich chocolate flavor.","taste","","strong flavor, add flavor","UK spelling 'flavour' (extra u).","FLAVOR is what you SAVOUR."),
+C("appetizer","/ˈæpətaɪzər/","Food",2,"A small dish before the main meal.","A starter that opens your appetite.","We shared an appetizer of garlic bread.","starter, hors d'oeuvre","main course","order an appetizer","'Appetizer' (US) = 'starter' (UK).","An APPETIZER wakes up your APPETITE."),
+C("beverage","/ˈbevərɪdʒ/","Food",2,"A drink.","Any liquid you drink, hot or cold.","Would you like a hot beverage?","drink, refreshment","","cold beverage, alcoholic beverage","Formal word for 'drink' — common on menus.","BEVERAGE — you BEVER (imagine 'imbibe') a beverage."),
+C("seasoning","/ˈsiːzənɪŋ/","Food",2,"Salt, pepper, or herbs added to food.","Things that add flavour when cooking.","Add seasoning to taste.","spice, flavoring","","add seasoning, light seasoning","'Seasoning' (flavour) vs 'season' (time of year).","SEASONING gives food its SEASON (best flavour)."),
+C("nutritious","/nuːˈtrɪʃəs/","Food",2,"Full of things the body needs to be healthy.","Food that gives good nourishment.","Spinach is very nutritious.","healthy, nourishing","unhealthy, junk","nutritious meal, nutritious food","Adjective is 'nutritious'; the noun is 'nutrition'.","NUTRITIOUS food NURTURES you."),
+
+/* BUSINESS */
+C("revenue","/ˈrevənuː/","Business",2,"The total money a business earns.","Income from selling products or services.","The company's revenue grew by 20%.","income, earnings, turnover","expense, cost","annual revenue, generate revenue","'Revenue' (money in) is not the same as 'profit' (money left).","REVENUE = the money that keeps RE-coming in."),
+C("client","/ˈklaɪənt/","Business",1,"A person or company that pays for services.","Someone who buys your professional help.","We signed a new client this week.","customer, account","","loyal client, key client","'Client' often buys services; 'customer' buys products.","A CLIENT LEANS (relies) on your work."),
+C("negotiate","/nɪˈɡoʊʃieɪt/","Business",3,"To discuss to reach an agreement.","To talk through terms until both sides agree.","We negotiated a better price.","bargain, discuss","","negotiate a deal, negotiate terms","'Negotiate WITH someone' and 'negotiate a price'.","NEGOTIATE — you NAVIGATE toward a deal."),
+C("strategy","/ˈstrætədʒi/","Business",2,"A plan to achieve a long-term goal.","The big-picture approach to winning.","Our growth strategy targets new markets.","plan, approach, game plan","","business strategy, marketing strategy","'Strategy' (the plan) vs 'tactic' (a single step).","A STRATEGY is a GENERAL's plan (Greek 'stratos' = army)."),
+C("competitor","/kəmˈpetɪtər/","Business",2,"A rival business or person.","Someone trying to win the same customers.","Our main competitor lowered its prices.","rival, opponent","partner, ally","direct competitor, beat the competitor","'Competitor' (rival) vs 'competition' (the rivals as a group).","A COMPETITOR COMPETES for your customers."),
+C("profit","/ˈprɑːfɪt/","Business",1,"Money left after costs are paid.","What you keep once you subtract expenses.","The bakery made a small profit last month.","gain, earnings","loss","net profit, make a profit","Don't confuse 'profit' with 'prophet' (a religious figure).","PROFIT is what benefits you — it's FOR your FIT."),
+C("stakeholder","/ˈsteɪkhoʊldər/","Business",3,"Anyone affected by a business decision.","People with an interest in a project's outcome.","We updated all stakeholders on the launch.","party, participant","","key stakeholder, stakeholder buy-in","A stakeholder isn't always an owner — customers count too.","They HOLD a STAKE (interest) in the outcome."),
+C("deadline","/ˈdedlaɪn/","Business",1,"The latest time to finish something.","The final moment a task must be done.","The deadline for the report is Friday.","due date, cutoff","","meet a deadline, tight deadline","We 'meet' or 'miss' a deadline.","Cross the DEAD-LINE late and the task is 'dead'."),
+
+/* TECHNOLOGY */
+C("device","/dɪˈvaɪs/","Technology",1,"A piece of electronic equipment.","A phone, tablet, laptop, or similar gadget.","This app works on any mobile device.","gadget, machine","","mobile device, smart device","'Device' (gadget) vs 'devise' (to invent).","A DEVICE is DEVISED (invented) to help you."),
+C("software","/ˈsɔːftwer/","Technology",1,"Programs that run on a computer.","The apps and code, not the physical parts.","We installed new accounting software.","program, application","hardware","install software, software update","Uncountable: 'a piece of software', not 'a software'.","SOFT-ware is the SOFT (non-physical) part."),
+C("download","/ˈdaʊnloʊd/","Technology",1,"To copy data from the internet to a device.","Getting a file from online onto your computer.","Please download the file before the meeting.","save, retrieve","upload","download an app, free download","'Download' (get) vs 'upload' (send).","DOWN-load = data comes DOWN to you."),
+C("update","/ˈʌpdeɪt/","Technology",1,"A newer version with improvements.","A change that makes software current.","The latest update fixed the bug.","upgrade, patch","","software update, install an update","'Update' (make current) vs 'upgrade' (make better/higher).","UP-DATE brings it UP to DATE."),
+C("network","/ˈnetwɜːrk/","Technology",2,"Connected computers or people.","A system of links that share information.","The office network is down.","system, web, grid","","wireless network, network connection","Also a verb: 'to network' (build contacts).","A NET of WORK — everything connected in a mesh."),
+C("storage","/ˈstɔːrɪdʒ/","Technology",2,"Space to keep digital data.","Where files are saved on a device or cloud.","I'm running out of storage on my phone.","space, memory","","cloud storage, free up storage","'Storage' (space) vs 'store' (to keep).","STORAGE is where you STORE your files."),
+C("browser","/ˈbraʊzər/","Technology",1,"A program used to view websites.","The app you open to go online, like Chrome.","Open the link in your browser.","web browser","","web browser, browser tab","'Browser' (the app) vs 'browse' (the action).","A BROWSER lets you BROWSE the web."),
+C("encryption","/ɪnˈkrɪpʃn/","Technology",3,"Coding data so only authorised people can read it.","Scrambling information to keep it secret.","The app uses end-to-end encryption.","coding, ciphering","decryption","strong encryption, data encryption","Noun 'encryption'; verb 'encrypt'.","EN-CRYPT — put it in a secret CRYPT."),
+
+/* AI */
+C("algorithm","/ˈælɡərɪðəm/","AI",3,"A set of steps a computer follows to solve a problem.","The recipe of rules that a program uses.","The algorithm ranks posts by relevance.","procedure, formula, method","","recommendation algorithm, sorting algorithm","Tricky spelling: al-go-rithm (no 'y').","An ALGORITHM keeps a RHYTHM of logical steps."),
+C("dataset","/ˈdeɪtəset/","AI",2,"A collection of data used together.","The examples a model learns from.","We trained the model on a large dataset.","data collection","","training dataset, clean dataset","One word: 'dataset'.","A DATA + SET — a set of data."),
+C("model","/ˈmɑːdl/","AI",2,"A system trained to make predictions.","In AI, the program that has learned patterns.","This model can translate fifty languages.","system, network","","train a model, language model","In AI, 'model' means the trained system, not an example shape.","A MODEL has MODELLED (learned) the patterns."),
+C("prompt","/prɑːmpt/","AI",2,"The instruction you give an AI.","The text you type to ask an AI to do something.","A clear prompt gives a better answer.","instruction, query, input","","write a prompt, prompt engineering","'Prompt' (input) is also an adjective meaning 'quick'.","A PROMPT PROMPTS (triggers) the AI to respond."),
+C("training","/ˈtreɪnɪŋ/","AI",2,"Teaching a model using data.","The process where an AI learns from examples.","Training the model took several days.","learning, tuning","","model training, training data","'Training' (learning phase) vs 'inference' (using phase).","TRAINING teaches the model like a TRAINER."),
+C("inference","/ˈɪnfərəns/","AI",3,"Using a trained model to make predictions.","When the AI produces an answer from new input.","The chatbot's inference is nearly instant.","prediction, deduction","","run inference, fast inference","'Inference' = using the model; 'training' = building it.","INFERENCE is when the model INFERS an answer."),
+C("hallucination","/həˌluːsɪˈneɪʃn/","AI",3,"When AI produces false but confident information.","An AI making up something that isn't true.","Always check facts to catch AI hallucinations.","fabrication, error","","AI hallucination, reduce hallucinations","In AI it means false output, not a human seeing things.","The AI HALLUCINATES — it 'sees' facts that aren't there."),
+C("automation","/ˌɔːtəˈmeɪʃn/","AI",2,"Making a task run by machine, without people.","Letting technology do work automatically.","Automation saves the team hours each week.","mechanization","manual work","workflow automation, automation tool","Noun 'automation'; verb 'automate'.","AUTO-mation makes things run AUTO-matically."),
+
+/* WORK */
+C("colleague","/ˈkɑːliːɡ/","Work",1,"A person you work with.","Someone in the same workplace or team.","My colleagues are very supportive.","coworker, teammate","","close colleague, senior colleague","Silent 'ue': col-LEEG.","A COLLEAGUE is a LEAGUE-mate at work."),
+C("productivity","/ˌproʊdʌkˈtɪvəti/","Work",3,"How much useful work you get done.","The rate of output for the effort put in.","Short breaks can boost productivity.","efficiency, output","","increase productivity, high productivity","'Productivity' = how much; 'production' = the act of making.","PRODUCTIVITY = how PRODUCTIVE you are."),
+C("overtime","/ˈoʊvərtaɪm/","Work",2,"Extra hours worked beyond normal time.","Working past your scheduled finish.","She worked overtime to meet the deadline.","extra hours","","work overtime, paid overtime","'Work overtime' (no preposition), not 'work in overtime'.","OVER + TIME = time OVER your normal hours."),
+C("promotion","/prəˈmoʊʃn/","Work",2,"A move to a higher job position.","Being given a better role at work.","He got a promotion to team lead.","advancement, raise","demotion","get a promotion, well-deserved promotion","'Promotion' (better job) can also mean marketing a product.","A PROMOTION PROMOTES you upward."),
+C("feedback","/ˈfiːdbæk/","Work",2,"Comments about how well you did.","Useful information to help you improve.","Thanks for the honest feedback.","comments, input, review","","give feedback, constructive feedback","Uncountable: 'some feedback', not 'a feedback'.","FEED-BACK feeds information BACK to you."),
+C("workflow","/ˈwɜːrkfloʊ/","Work",3,"The sequence of steps to complete work.","How a task moves from start to finish.","We streamlined our design workflow.","process, procedure","","smooth workflow, workflow automation","One word: 'workflow'.","WORK + FLOW = how the WORK FLOWS through steps."),
+C("delegate","/ˈdelɪɡeɪt/","Work",3,"To give a task to someone else.","Trusting a teammate to handle part of the work.","Good managers delegate effectively.","assign, hand off","hoard, micromanage","delegate tasks, delegate responsibility","Verb 'DEL-uh-gate'; noun 'DEL-uh-gut' (a representative).","DELEGATE — you send a task to a DELEGATE."),
+C("multitask","/ˈmʌltitæsk/","Work",2,"To do several things at once.","Handling more than one job at a time.","I find it hard to multitask under pressure.","juggle","focus","multitask well, ability to multitask","Research shows true multitasking lowers quality — use with care.","MULTI (many) + TASK = many tasks at once."),
+
+/* MEETINGS */
+C("agenda","/əˈdʒendə/","Meetings",2,"A list of topics for a meeting.","The plan of what will be discussed.","The first item on the agenda is the budget.","schedule, plan, list","","set an agenda, meeting agenda","'Agenda' is singular though it looks plural.","An AGENDA lists the things to be DONE (Latin 'agere')."),
+C("minutes","/ˈmɪnɪts/","Meetings",2,"The written record of a meeting.","Notes of what was decided and said.","Can you take the minutes today?","notes, record, summary","","take minutes, meeting minutes","'Minutes' (record) is different from 'minute' (60 seconds).","MINUTES record the tiny details, MINUTE by MINUTE."),
+C("attendee","/əˌtenˈdiː/","Meetings",2,"A person who is present at an event.","Someone who attends a meeting or session.","All attendees received a summary.","participant, guest","absentee","meeting attendee, list of attendees","'Attendee' (comes) vs 'attendant' (serves/helps).","ATTENDEE — the one who ATTENDS."),
+C("brainstorm","/ˈbreɪnstɔːrm/","Meetings",2,"To share many ideas quickly as a group.","Generating lots of ideas without judging them.","Let's brainstorm names for the product.","ideate, think up","","brainstorm ideas, brainstorming session","Also a noun: 'a brainstorm(ing) session'.","A STORM of ideas from your BRAIN."),
+C("follow-up","/ˈfɑːloʊ ʌp/","Meetings",2,"A later action to continue something.","A message or step after a meeting.","I'll send a follow-up email tomorrow.","continuation","","follow-up email, follow-up meeting","Noun/adj uses a hyphen: 'a follow-up'; verb is two words: 'follow up'.","You FOLLOW UP to keep things moving."),
+C("adjourn","/əˈdʒɜːrn/","Meetings",3,"To end or pause a meeting.","To close a session, often to continue later.","The meeting was adjourned until Monday.","suspend, end, pause","convene, open","adjourn the meeting","'Adjourn' (pause a meeting) — silent-ish, ah-JERN.","AD-JOURN — put the meeting off to another DAY (French 'jour')."),
+C("consensus","/kənˈsensəs/","Meetings",3,"General agreement among a group.","When most or all people agree.","We reached a consensus on the design.","agreement, accord","disagreement","reach a consensus, build consensus","Spelled with two 's's in the middle: con-SEN-sus.","CON (together) + SENSE — everyone shares the same sense."),
+C("action item","/ˈækʃn ˌaɪtəm/","Meetings",2,"A task assigned during a meeting.","Something specific someone must do next.","Each action item has an owner and a due date.","task, to-do","","assign action items, list of action items","Two words; usually plural in notes: 'action items'.","An ACTION ITEM is an ITEM requiring ACTION."),
+
+/* UI/UX */
+C("usability","/ˌjuːzəˈbɪləti/","UI/UX",3,"How easy something is to use.","Whether people can reach their goal without struggle.","Good usability keeps users happy.","ease of use","","poor usability, usability testing","'Usability' (ease) vs 'utility' (usefulness).","USABILITY = how USABLE it is."),
+C("wireframe","/ˈwaɪərfreɪm/","UI/UX",3,"A basic layout sketch of a screen.","A simple black-and-white plan before design.","I'll share the wireframes before we add color.","mockup, blueprint, skeleton","","low-fidelity wireframe, wireframe a screen","A 'wireframe' is rough; a 'prototype' is interactive.","A WIREFRAME shows the FRAME, like a WIRE skeleton."),
+C("prototype","/ˈproʊtətaɪp/","UI/UX",2,"An early interactive model of a product.","A clickable draft used to test ideas.","We tested the prototype with five users.","model, mockup, draft","final product","interactive prototype, build a prototype","'Prototype' (early model) vs 'archetype' (a perfect example).","PROTO (first) + TYPE = the FIRST version."),
+C("accessibility","/əkˌsesəˈbɪləti/","UI/UX",3,"Designing so everyone, including disabled people, can use it.","Making products usable for all abilities.","We improved accessibility with better contrast.","inclusivity, a11y","","web accessibility, accessibility standards","Often shortened to 'a11y' by designers.","ACCESSIBILITY = making it ACCESSIBLE to all."),
+C("interface","/ˈɪntərfeɪs/","UI/UX",2,"The part of a system users interact with.","The screens, buttons and controls people touch.","The interface is clean and intuitive.","UI, front end","","user interface, clean interface","'Interface' = where user and system meet.","INTER (between) + FACE = the FACE between you and the machine."),
+C("onboarding","/ˈɑːnbɔːrdɪŋ/","UI/UX",3,"Guiding new users to their first success.","The first-time experience that teaches the product.","A smooth onboarding boosts retention.","introduction, setup","offboarding","user onboarding, onboarding flow","In UX it means guiding users; in HR it means starting a job.","ONBOARDING brings a new user ON BOARD."),
+C("hierarchy","/ˈhaɪərɑːrki/","UI/UX",3,"An order of importance in a design.","Arranging elements so the eye knows what matters most.","Visual hierarchy guides the reader's eye.","order, ranking, structure","","visual hierarchy, clear hierarchy","Tricky spelling: hi-er-ar-chy.","HIERARCHY ranks things HIGHER and lower."),
+C("affordance","/əˈfɔːrdəns/","UI/UX",3,"A visual clue about how to use something.","A design hint, like a button that looks pressable.","The raised button is a clear affordance.","cue, signal, hint","","strong affordance, button affordance","Advanced UX term; means the 'use-hint' an object gives.","An AFFORDANCE tells you what an object AFFORDS (allows)."),
+
+/* SAAS */
+C("subscription","/səbˈskrɪpʃn/","SaaS",2,"A regular payment for ongoing access.","Paying monthly or yearly to keep using a service.","We offer a monthly subscription plan.","plan, membership","one-off purchase","monthly subscription, cancel a subscription","'Subscription' (recurring) vs 'purchase' (one-time).","You SUBSCRIBE and keep paying → SUBSCRIPTION."),
+C("churn","/tʃɜːrn/","SaaS",3,"The rate at which customers leave.","How many users cancel over a period.","We cut churn by improving support.","attrition, turnover","retention","reduce churn, churn rate","'Churn' = losing customers; low churn is good.","Customers CHURN out like butter in a CHURN."),
+C("dashboard","/ˈdæʃbɔːrd/","SaaS",2,"A screen showing key data at a glance.","A control panel with your main metrics.","The dashboard shows sales in real time.","control panel, overview","","admin dashboard, analytics dashboard","In software it's a data screen, not a car part.","A DASHBOARD shows your key numbers, like a car's."),
+C("deployment","/dɪˈplɔɪmənt/","SaaS",3,"Releasing software so people can use it.","Putting new code live for users.","The deployment went smoothly last night.","release, rollout, launch","","code deployment, deploy to production","'Deployment' (release) vs 'development' (building).","DEPLOYMENT puts your work into PLAY."),
+C("scalability","/ˌskeɪləˈbɪləti/","SaaS",3,"The ability to grow without breaking.","Handling more users without losing quality.","Cloud tools give us great scalability.","growth capacity","","high scalability, scalability issues","'Scalability' (can grow) vs 'stability' (won't crash).","SCALABILITY = how well it SCALES up."),
+C("integration","/ˌɪntɪˈɡreɪʃn/","SaaS",3,"Connecting two systems so they work together.","Linking apps so data flows between them.","Our tool has a Slack integration.","connection, link","","third-party integration, integrate with","'Integration' (connect) vs 'integrity' (honesty).","INTEGRATION makes separate apps INTEGRAL (one whole)."),
+C("retention","/rɪˈtenʃn/","SaaS",3,"Keeping customers over time.","The opposite of churn — users who stay.","Great onboarding improves retention.","loyalty","churn, attrition","user retention, retention rate","'Retention' (keeping) vs 'attention' (focus).","RETENTION means you RETAIN your users."),
+C("freemium","/ˈfriːmiəm/","SaaS",3,"A free basic plan with paid upgrades.","Free to start; you pay for extra features.","The app uses a freemium model.","free tier","paid-only","freemium model, freemium plan","Blend of 'free' + 'premium' — informal but common.","FREE + preMIUM = FREEMIUM."),
+
+/* HEALTH */
+C("symptom","/ˈsɪmptəm/","Health",2,"A sign that you are ill.","Something you feel that shows a health problem.","A fever is a common symptom of flu.","sign, indication","","mild symptom, show symptoms","'Symptom' (what you feel) vs 'cause' (the reason).","A SYMPTOM is a SIGN pointing to illness."),
+C("remedy","/ˈremədi/","Health",2,"A cure or treatment for a problem.","Something that fixes an illness or issue.","Honey is a natural remedy for a sore throat.","cure, treatment, fix","","home remedy, natural remedy","'Remedy' can fix problems beyond health too.","A REMEDY REMEDIES (fixes) what's wrong."),
+C("nutrition","/nuːˈtrɪʃn/","Health",2,"The food your body needs to stay healthy.","Getting the right vitamins and energy from food.","Good nutrition supports your immune system.","nourishment, diet","","balanced nutrition, poor nutrition","'Nutrition' (the science/food) vs 'nutritious' (adjective).","NUTRITION NURTURES your body."),
+C("immune","/ɪˈmjuːn/","Health",3,"Protected against a disease.","Your body's defence being able to resist illness.","Vaccines help you become immune.","resistant, protected","vulnerable","immune system, immune to","'Immune TO' a disease.","IMMUNE — your body is a fortress that's IMMOVABLE to germs."),
+C("chronic","/ˈkrɑːnɪk/","Health",3,"Lasting a long time; ongoing.","A condition that continues for months or years.","She manages a chronic illness.","long-term, persistent","acute, temporary","chronic pain, chronic condition","'Chronic' (long-lasting) vs 'acute' (sudden/severe).","CHRONIC lasts a long time (Greek 'chronos' = time)."),
+C("recover","/rɪˈkʌvər/","Health",1,"To get well again after illness.","To return to normal health.","It took a week to recover from the cold.","heal, get better","worsen, relapse","recover from, fully recover","'Recover FROM' an illness.","RE + COVER — you get your health back, re-COVERED."),
+C("prescription","/prɪˈskrɪpʃn/","Health",3,"A doctor's written order for medicine.","The paper that lets you get specific drugs.","Pick up your prescription at the pharmacy.","script, medication order","","fill a prescription, prescription drug","'Prescription' (medicine order) vs 'subscription' (payment).","A doctor PRE-SCRIBES (writes before) → PRESCRIPTION."),
+C("wellbeing","/ˈwelbiːɪŋ/","Health",2,"The state of being healthy and happy.","Feeling good in body and mind.","The company cares about staff wellbeing.","welfare, health","","mental wellbeing, sense of wellbeing","Often written 'wellbeing' or 'well-being'.","WELL + BEING = the state of BEING WELL."),
+
+/* EDUCATION */
+C("curriculum","/kəˈrɪkjələm/","Education",3,"The subjects taught in a course or school.","The full plan of what students learn.","Coding is now part of the curriculum.","syllabus, program","","school curriculum, core curriculum","Plural is 'curricula' or 'curriculums'.","A CURRICULUM is the COURSE you run (Latin 'currere' = to run)."),
+C("assignment","/əˈsaɪnmənt/","Education",2,"A task given to students.","Work you must complete for a class.","The assignment is due next Monday.","task, homework, project","","hand in an assignment, written assignment","'Assignment' (a task) vs 'homework' (uncountable).","An ASSIGNMENT is work ASSIGNED to you."),
+C("lecture","/ˈlektʃər/","Education",2,"A formal talk to teach a subject.","A teacher speaking to a class or audience.","The professor gave a great lecture on physics.","talk, presentation","","attend a lecture, boring lecture","'Lecture' (a talk) can also mean a scolding.","A LECTURE is a READING aloud (Latin 'lectura')."),
+C("scholarship","/ˈskɑːlərʃɪp/","Education",3,"Money given to a student to study.","Financial support awarded for talent or need.","She won a scholarship to study abroad.","grant, award, bursary","","full scholarship, win a scholarship","'Scholarship' (money) also means deep academic knowledge.","A SCHOLAR-SHIP carries a SCHOLAR through study."),
+C("semester","/sɪˈmestər/","Education",2,"Half of a school or college year.","One of the two main study periods.","I'm taking four classes this semester.","term","","spring semester, next semester","'Semester' (US) ≈ 'term' (UK).","SEMESTER = SIX (Latin 'sex-mensis', six months) months."),
+C("tutor","/ˈtuːtər/","Education",2,"A teacher who helps one or a few students.","Someone giving extra, personal lessons.","I hired a tutor for my exams.","teacher, coach, mentor","","private tutor, maths tutor","'Tutor' (personal teacher) vs 'teacher' (class teacher).","A TUTOR gives you TAILORED lessons."),
+C("literacy","/ˈlɪtərəsi/","Education",3,"The ability to read and write.","Basic reading and writing skill; also skill in an area.","Digital literacy is essential today.","reading skill","illiteracy","digital literacy, low literacy","'Literacy' now extends to areas like 'financial literacy'.","LITERACY comes from LETTERS (Latin 'littera')."),
+C("enroll","/ɪnˈroʊl/","Education",2,"To officially join a course or school.","To sign up as a student.","I enrolled in an English course.","register, sign up, join","withdraw, drop out","enroll in, enroll on a course","UK often spells it 'enrol'; enroll IN/ON a course.","EN + ROLL — your name goes on the ROLL (list)."),
+
+/* SHOPPING */
+C("discount","/ˈdɪskaʊnt/","Shopping",1,"A reduction in price.","Money taken off the normal cost.","They offered a 20% discount.","reduction, deal, markdown","surcharge","big discount, get a discount","'Discount' (noun) vs 'discount' (verb, dis-COUNT).","A DISCOUNT COUNTS the price DOWN."),
+C("receipt","/rɪˈsiːt/","Shopping",1,"A paper proving you paid.","Proof of a purchase you can keep.","Keep the receipt in case you return it.","proof of purchase","","ask for a receipt, keep the receipt","Silent 'p': ri-SEET.","You RECEIVE a RECEIPT when you pay."),
+C("refund","/ˈriːfʌnd/","Shopping",2,"Money returned for a returned item.","Getting your money back.","I got a full refund for the broken phone.","reimbursement, money back","charge","full refund, request a refund","'Refund' (noun) vs 'refund' (verb, re-FUND).","RE + FUND — the funds come back to you."),
+C("bargain","/ˈbɑːrɡɪn/","Shopping",2,"Something bought cheaply for good value.","A great deal for a low price.","These shoes were a real bargain.","deal, steal","rip-off","great bargain, bargain price","'Bargain' (a deal) can also be a verb (to haggle).","A BARGAIN — you BARGE IN and grab a deal."),
+C("warranty","/ˈwɔːrənti/","Shopping",3,"A promise to repair or replace a product.","A guarantee for a set time after buying.","The laptop has a two-year warranty.","guarantee","","under warranty, extended warranty","'Warranty' (formal promise) ≈ 'guarantee' (everyday word).","A WARRANTY WARRANTS (guarantees) a repair."),
+C("checkout","/ˈtʃekaʊt/","Shopping",1,"The place or step where you pay.","Finishing a purchase, online or in a store.","Proceed to checkout to complete your order.","till, payment","","self-checkout, checkout page","One word as a noun; 'check out' (verb) is two words.","At CHECKOUT you CHECK OUT with your goods."),
+C("browse","/braʊz/","Shopping",1,"To look at goods without buying yet.","Casually looking around a shop or site.","I'm just browsing, thanks.","look around, window-shop","","browse the shelves, browse online","'Browse' (look) vs 'buy' (purchase).","BROWSE like a cow grazing — nibbling, not committing."),
+C("in stock","/ɪn ˈstɑːk/","Shopping",2,"Available to buy right now.","The item is present and ready to sell.","The blue one is back in stock.","available","out of stock, sold out","in stock, back in stock","'In stock' (available) vs 'out of stock' (unavailable).","IN STOCK — it's IN the store's STOCK."),
+
+/* FINANCE */
+C("budget","/ˈbʌdʒɪt/","Finance",2,"A plan for spending money.","A limit on how much you'll spend.","Stick to your monthly budget.","plan, allowance","","tight budget, on a budget","'Budget' (plan) can also be an adjective ('budget hotel').","A BUDGET keeps your spending in a BAG (its old French root)."),
+C("invest","/ɪnˈvest/","Finance",2,"To put money in hoping to gain more.","Using money now to earn more later.","She invests in index funds.","fund, back","spend, waste","invest in, invest wisely","'Invest IN' something.","INVEST — put money IN a VEST (safe pocket) to grow."),
+C("interest","/ˈɪntrəst/","Finance",2,"Extra money paid for borrowing or saving.","A percentage added to a loan or savings.","The loan has a 5% interest rate.","charge, yield","","interest rate, high interest","In finance, 'interest' = money; also means 'curiosity'.","INTEREST — the bank's payment holds your INTEREST."),
+C("savings","/ˈseɪvɪŋz/","Finance",1,"Money you keep instead of spending.","Cash set aside for the future.","I put part of my salary into savings.","reserves, nest egg","debt","savings account, life savings","Usually plural: 'savings'.","SAVINGS is what you SAVE for later."),
+C("expense","/ɪkˈspens/","Finance",2,"Money spent on something.","A cost you have to pay.","Rent is my biggest monthly expense.","cost, outlay","income, revenue","business expense, cut expenses","'Expense' (cost) vs 'expensive' (adjective).","An EXPENSE is money that EXITS your account."),
+C("loan","/loʊn/","Finance",2,"Money borrowed that must be repaid.","Cash lent to you, usually with interest.","He took out a loan for the car.","credit, advance","","take out a loan, repay a loan","'Loan' (the money) vs 'lend' (the action of giving).","A LOAN is money LENT that you own for now."),
+C("inflation","/ɪnˈfleɪʃn/","Finance",3,"A general rise in prices over time.","When money buys less than before.","Inflation pushed up the cost of food.","price rise","deflation","high inflation, inflation rate","'Inflation' (prices up) vs 'deflation' (prices down).","Prices INFLATE (blow up) like a balloon → INFLATION."),
+C("asset","/ˈæset/","Finance",3,"Something valuable that you own.","Property, money, or things worth value.","Their house is their biggest asset.","property, resource, holding","liability, debt","valuable asset, fixed asset","'Asset' (value you own) vs 'liability' (what you owe).","An ASSET ADDS value; a liability subtracts."),
+
+/* LEADERSHIP */
+C("vision","/ˈvɪʒn/","Leadership",2,"A clear picture of a future goal.","What a leader wants to build long term.","A strong leader shares a clear vision.","goal, dream, direction","","clear vision, share a vision","'Vision' (future picture) vs 'sight' (eyesight).","A leader's VISION lets the team SEE the future."),
+C("inspire","/ɪnˈspaɪər/","Leadership",2,"To make someone want to act or achieve.","To fill people with energy and belief.","Great leaders inspire their teams.","motivate, encourage","discourage, deflate","inspire confidence, inspire others","'Inspire' (fill with drive) vs 'aspire' (aim for).","IN + SPIRE — breathe SPIRIT INTO people."),
+C("integrity","/ɪnˈteɡrəti/","Leadership",3,"Being honest and having strong morals.","Doing the right thing even when no one watches.","People trust her because of her integrity.","honesty, principle","dishonesty","act with integrity, personal integrity","'Integrity' (honesty) vs 'integration' (joining).","INTEGRITY keeps your character INTEGRAL (whole)."),
+C("mentor","/ˈmentɔːr/","Leadership",2,"An experienced person who guides others.","A trusted advisor who helps you grow.","My mentor gave me career advice.","guide, advisor, coach","","find a mentor, act as a mentor","'Mentor' (guide) is also a verb: 'to mentor someone'.","A MENTOR guides you, like Mentor did in the Odyssey."),
+C("accountability","/əˌkaʊntəˈbɪləti/","Leadership",3,"Taking responsibility for outcomes.","Owning your results, good or bad.","Leaders model accountability.","responsibility, ownership","","hold accountable, culture of accountability","'Accountability' means answering for results, not just blame.","ACCOUNTABILITY — you can be counted on to ACCOUNT for results."),
+C("initiative","/ɪˈnɪʃətɪv/","Leadership",3,"The drive to act without being told.","Starting things on your own.","She showed initiative by fixing the process.","drive, enterprise, lead","passivity","take the initiative, show initiative","'Take the initiative' (act first).","INITIATIVE — you INITIATE (start) without waiting."),
+C("empower","/ɪmˈpaʊər/","Leadership",3,"To give someone the power to act.","Letting people make their own decisions.","Good managers empower their staff.","enable, authorize","restrict, control","empower employees, feel empowered","'Empower' (give power) vs 'overpower' (defeat).","EM + POWER — put POWER into someone."),
+C("resilience","/rɪˈzɪliəns/","Leadership",3,"The ability to recover from difficulty.","Bouncing back after setbacks.","Building a startup takes resilience.","toughness, grit","fragility","show resilience, build resilience","'Resilience' (bounce back) — noun; 'resilient' — adjective.","RESILIENCE lets you SPRING back (Latin 'resilire' = to leap back)."),
+
+/* EMOTIONS */
+C("anxious","/ˈæŋkʃəs/","Emotions",2,"Worried and nervous about something.","Feeling uneasy about what might happen.","I feel anxious before presentations.","nervous, worried, uneasy","calm, relaxed","anxious about, feel anxious","'Anxious about' the future; sometimes means 'eager'.","ANXIOUS — your mind is ANGSTy and tense."),
+C("grateful","/ˈɡreɪtfl/","Emotions",1,"Feeling thankful for something.","Appreciating a kindness you received.","I'm so grateful for your help.","thankful, appreciative","ungrateful, resentful","grateful for, deeply grateful","'Grateful FOR' something / 'grateful TO' someone.","GRATEFUL is full of GRATitude."),
+C("frustrated","/ˈfrʌstreɪtɪd/","Emotions",2,"Annoyed because you can't do something.","Upset when blocked from a goal.","I'm frustrated with this slow internet.","annoyed, irritated","satisfied, content","frustrated with, get frustrated","'Frustrated WITH' a thing/person.","FRUSTRATED — your plans are FRUSTRATED (blocked)."),
+C("content","/kənˈtent/","Emotions",2,"Quietly happy and satisfied.","At peace with what you have.","She felt content with a simple life.","satisfied, happy, at peace","discontent, unhappy","content with, perfectly content","Emotion is 'con-TENT'; the noun 'material' is 'CON-tent'.","CONTENT — you're CONTAINED, needing nothing more."),
+C("overwhelmed","/ˌoʊvərˈwelmd/","Emotions",3,"Feeling unable to cope with too much.","Buried under too many things or feelings.","I feel overwhelmed by my to-do list.","swamped, buried","in control","feel overwhelmed, overwhelmed by","'Overwhelmed BY/WITH' too much.","OVER + WHELM — a wave WHELMS (covers) you OVER."),
+C("confident","/ˈkɑːnfɪdənt/","Emotions",2,"Sure of yourself and your abilities.","Believing you can do something well.","He gave a confident presentation.","assured, self-assured","insecure, nervous","confident in, sound confident","'Confident' (adjective) vs 'confidence' (noun).","CONFIDENT — you have full FAITH (Latin 'fidere') in yourself."),
+C("empathy","/ˈempəθi/","Emotions",3,"Understanding another person's feelings.","Sensing what someone else feels as if it were yours.","Great designers have empathy for users.","compassion, understanding","indifference","show empathy, empathy for","'Empathy' (feel WITH) vs 'sympathy' (feel FOR).","EM + PATHY — you feel the PATHOS (emotion) INside them."),
+C("curious","/ˈkjʊriəs/","Emotions",1,"Wanting to learn or know more.","Eager to explore and ask questions.","Curious minds learn the fastest.","inquisitive, interested","indifferent, bored","curious about, naturally curious","'Curious ABOUT' something; can also mean 'strange'.","CURIOUS people are full of CURIOSITY."),
+
+/* NATURE */
+C("habitat","/ˈhæbɪtæt/","Nature",2,"The natural home of an animal or plant.","The place where a species normally lives.","The forest is home to many habitats.","home, environment","","natural habitat, destroy a habitat","'Habitat' (a home in nature) vs 'habit' (a behaviour).","A HABITAT is where a creature HABITUALLY lives."),
+C("climate","/ˈklaɪmət/","Nature",2,"The typical weather of a region over time.","The long-term weather pattern of a place.","The climate here is warm and dry.","weather pattern","","climate change, tropical climate","'Climate' (long-term) vs 'weather' (day-to-day).","CLIMATE is the weather you can CLAIM as usual."),
+C("species","/ˈspiːʃiːz/","Nature",3,"A group of similar living things.","A type of animal or plant that can breed together.","Tigers are an endangered species.","kind, type, breed","","endangered species, rare species","'Species' is both singular and plural.","SPECIES share the same SPECIFIC traits."),
+C("landscape","/ˈlændskeɪp/","Nature",2,"The visible features of an area of land.","The overall look of the countryside.","The mountain landscape was breathtaking.","scenery, terrain, view","","stunning landscape, rural landscape","'Landscape' also means a horizontal page/screen layout.","LAND + SCAPE — the SHAPE of the LAND you see."),
+C("sustainable","/səˈsteɪnəbl/","Nature",3,"Able to continue without harming the future.","Using resources so they last for a long time.","We use sustainable materials.","eco-friendly, green","wasteful, harmful","sustainable energy, sustainable growth","'Sustainable' (lasting) — adjective; 'sustainability' — noun.","SUSTAINABLE things can SUSTAIN (keep going) forever."),
+C("wildlife","/ˈwaɪldlaɪf/","Nature",2,"Animals living in their natural state.","Wild creatures and plants of an area.","The park protects local wildlife.","fauna, animals","","protect wildlife, wildlife reserve","Uncountable: 'wildlife', never 'wildlifes'.","WILD + LIFE = LIFE in the WILD."),
+C("ecosystem","/ˈiːkoʊsɪstəm/","Nature",3,"A community of living things and their environment.","How plants, animals and surroundings work together.","Coral reefs are fragile ecosystems.","biome, environment","","fragile ecosystem, marine ecosystem","'Ecosystem' also describes tech/business networks now.","An ECO + SYSTEM — a SYSTEM of the ECOlogy."),
+C("erosion","/ɪˈroʊʒn/","Nature",3,"The slow wearing away of land.","When wind or water gradually removes soil or rock.","Erosion is reshaping the coastline.","wearing away, corrosion","","soil erosion, coastal erosion","'Erosion' (noun); 'erode' (verb).","EROSION ERODES the land bit by bit."),
+
+/* CULTURE */
+C("tradition","/trəˈdɪʃn/","Culture",2,"A custom passed down over generations.","Something people keep doing over the years.","Family gatherings are a New Year tradition.","custom, ritual, practice","","old tradition, family tradition","'Tradition' (long-held custom) vs 'trend' (recent fashion).","A TRADITION is TRANSMITTED (handed down) over time."),
+C("heritage","/ˈherɪtɪdʒ/","Culture",3,"Traditions and history passed down.","The valued culture inherited from the past.","The city is proud of its heritage.","legacy, inheritance","","cultural heritage, rich heritage","'Heritage' (inherited culture) vs 'inheritance' (money/property).","HERITAGE is what you INHERIT from your ancestors."),
+C("custom","/ˈkʌstəm/","Culture",2,"A usual way of doing things in a culture.","An accepted habit of a group of people.","It's a custom to remove shoes indoors here.","tradition, practice, norm","","local custom, ancient custom","'Custom' (cultural habit) vs 'costume' (clothes).","A CUSTOM is what people are ACCUSTOMED to doing."),
+C("diversity","/dəˈvɜːrsəti/","Culture",3,"A mix of different people or things.","Variety of backgrounds, cultures, or ideas.","Our team values diversity.","variety, range, mix","uniformity, sameness","cultural diversity, embrace diversity","'Diversity' (variety) vs 'diverse' (adjective).","DIVERSITY — many DIVERSE things together."),
+C("festival","/ˈfestɪvl/","Culture",1,"A special day or period of celebration.","A cultural or religious event with festivities.","The lantern festival lights up the whole city.","celebration, feast, event","","music festival, celebrate a festival","'Festival' (celebration) — countable.","A FESTIVAL is FESTIVE fun."),
+C("etiquette","/ˈetɪkət/","Culture",3,"The rules of polite behaviour.","Manners expected in a social situation.","Business etiquette varies by country.","manners, protocol, decorum","rudeness","proper etiquette, business etiquette","French spelling: e-ti-quette; final 'te' is quiet.","ETIQUETTE is the TICKET to polite society."),
+C("ritual","/ˈrɪtʃuəl/","Culture",3,"A set of actions done in a fixed way.","A ceremony or repeated meaningful routine.","Lighting candles is part of the ritual.","ceremony, rite, custom","","daily ritual, sacred ritual","'Ritual' can be sacred or just a personal routine.","A RITUAL is a repeated RITE."),
+C("identity","/aɪˈdentəti/","Culture",3,"Who a person or group is.","The qualities that make someone or a culture unique.","Language is part of a nation's identity.","character, self","","cultural identity, sense of identity","'Identity' (who you are) vs 'identify' (to recognise).","IDENTITY is what makes you IDENTICAL to yourself."),
+
+/* ACADEMIC ENGLISH */
+C("analyze","/ˈænəlaɪz/","Academic English",3,"To examine something in detail.","To break a topic into parts to understand it.","We analyze the data before drawing conclusions.","examine, study, dissect","ignore, overlook","analyze data, carefully analyze","UK spelling 'analyse'; noun is 'analysis'.","ANALYZE — break it into LAZY little parts to study."),
+C("hypothesis","/haɪˈpɑːθəsɪs/","Academic English",3,"A proposed explanation to be tested.","An educated guess you check with evidence.","Our hypothesis was confirmed by the results.","theory, proposition","conclusion, fact","test a hypothesis, form a hypothesis","Plural is 'hypotheses' (hy-POTH-uh-seez).","A HYPOTHESIS is a THESIS you place UNDER (hypo) testing."),
+C("evidence","/ˈevɪdəns/","Academic English",3,"Facts that support a claim.","Proof used to show something is true.","There is strong evidence for this theory.","proof, data, support","","clear evidence, provide evidence","Uncountable: 'a piece of evidence', not 'an evidence'.","EVIDENCE makes the truth EVIDENT."),
+C("significant","/sɪɡˈnɪfɪkənt/","Academic English",3,"Important or large enough to matter.","Notable; big enough to be meaningful.","There was a significant improvement.","important, notable, considerable","minor, trivial","significant difference, statistically significant","In science, 'significant' has a precise statistical meaning.","SIGNIFICANT results SIGNIFY (mean) something."),
+C("conclude","/kənˈkluːd/","Academic English",3,"To decide something after thinking.","To reach a final judgement from evidence.","We conclude that the method works.","deduce, infer, end","begin, introduce","conclude that, conclude a study","'Conclude' (verb) vs 'conclusion' (noun).","CONCLUDE — you CLOSE (Latin 'claudere') the argument."),
+C("framework","/ˈfreɪmwɜːrk/","Academic English",3,"A basic structure for ideas or work.","A supporting set of concepts to organise thinking.","We used a clear framework for the study.","structure, model, system","","theoretical framework, apply a framework","'Framework' also means a coding library (React, etc.).","A FRAMEWORK is the FRAME that WORK sits on."),
+C("critique","/krɪˈtiːk/","Academic English",3,"A detailed, careful evaluation.","A reasoned review of strengths and weaknesses.","She wrote a critique of the article.","review, evaluation, analysis","praise","offer a critique, critical critique","'Critique' (balanced review) vs 'criticize' (find fault).","A CRITIQUE is what a CRITIC carefully writes."),
+C("methodology","/ˌmeθəˈdɑːlədʒi/","Academic English",3,"The system of methods used in research.","The overall approach and procedures of a study.","The paper explains its methodology clearly.","approach, procedure, method","","research methodology, sound methodology","'Methodology' (the whole system) vs 'method' (one technique).","METHODOLOGY is the LOGIC behind your METHODS.")
+];
+CARDS.forEach(function(c,i){c.id="w"+i;});
+
+/* load custom cards */
+(function(){try{var cus=JSON.parse(Store.get("vm_custom")||"[]");if(Array.isArray(cus)){cus.forEach(function(c,i){c.id="c"+i;CARDS.push(c);});}}catch(e){}})();
+
+/* ===================== STATE ===================== */
+var defaultState={xp:0,streak:0,best:0,lastGoalDate:null,lastActive:null,goal:20,today:0,todayDate:null,
+  totalAns:0,correctAns:0,srs:{},xpHist:{},theme:"light"};
+var S=loadState();
+function loadState(){try{var s=JSON.parse(Store.get("vm_state"));if(s&&typeof s==="object"){for(var k in defaultState)if(!(k in s))s[k]=JSON.parse(JSON.stringify(defaultState[k]));return s;}}catch(e){}return JSON.parse(JSON.stringify(defaultState));}
+function saveState(){try{Store.set("vm_state",JSON.stringify(S));}catch(e){}}
+function saveCustom(){try{var cus=CARDS.filter(function(c){return c.id.charAt(0)==="c";}).map(function(c){return {word:c.word,ipa:c.ipa,cat:c.cat,diff:c.diff,meaning:c.meaning,explain:c.explain,example:c.example,syn:c.syn,ant:c.ant,coll:c.coll,mistake:c.mistake,trick:c.trick};});Store.set("vm_custom",JSON.stringify(cus));}catch(e){}}
+
+/* ===================== SPACED REPETITION (SM-2 lite) ===================== */
+function prog(id){var p=S.srs[id];if(!p){p={ease:2.5,interval:0,reps:0,lapses:0,due:0,status:"new"};S.srs[id]=p;}return p;}
+function statusOf(id){var p=S.srs[id];return p?p.status:"new";}
+function reviewCard(id,correct){
+  var p=prog(id),now=Date.now();
+  if(correct){
+    p.reps++;
+    if(p.reps===1)p.interval=1;
+    else if(p.reps===2)p.interval=3;
+    else p.interval=Math.round(p.interval*p.ease);
+    p.ease=Math.min(2.8,p.ease+0.06);
+    p.status=(p.reps>=5||p.interval>=21)?"mastered":"review";
+  }else{
+    p.reps=Math.max(0,p.reps-1);p.lapses++;p.interval=0;
+    p.ease=Math.max(1.3,p.ease-0.2);p.status="learning";
+  }
+  p.due=now+p.interval*DAY;
+  saveState();
+}
+function isDue(id){var p=S.srs[id];if(!p)return false;if(p.status==="mastered")return p.due<=Date.now();return p.due<=Date.now();}
+function counts(){var learned=0,review=0,mastered=0;CARDS.forEach(function(c){var st=statusOf(c.id);if(st!=="new")learned++;if(st==="mastered")mastered++;else if(st!=="new"&&isDue(c.id))review++;});return {learned:learned,mastered:mastered,review:review,total:CARDS.length,newCount:CARDS.length-learned};}
+function dueQueue(){var due=CARDS.filter(function(c){return statusOf(c.id)!=="new"&&isDue(c.id);});var nw=CARDS.filter(function(c){return statusOf(c.id)==="new";});shuffle(due);shuffle(nw);return due.concat(nw).slice(0,Math.max(S.goal,due.length));}
+
+/* ===================== STATS / XP / STREAK ===================== */
+function rollDay(){var t=dkey();if(S.todayDate!==t){S.todayDate=t;S.today=0;
+  if(S.lastActive){var g=daysBetween(S.lastActive,t);if(g>1&&S.lastGoalDate&&daysBetween(S.lastGoalDate,t)>1){/* streak will reset on next goal */}}
+  saveState();}}
+function record(correct,xp){
+  rollDay();S.totalAns++;if(correct)S.correctAns++;S.today++;
+  if(correct){S.xp+=xp;S.xpHist[dkey()]=(S.xpHist[dkey()]||0)+xp;}
+  S.lastActive=dkey();
+  if(S.today>=S.goal&&S.lastGoalDate!==dkey()){
+    if(S.lastGoalDate&&daysBetween(S.lastGoalDate,dkey())===1)S.streak++;else S.streak=1;
+    S.lastGoalDate=dkey();if(S.streak>S.best)S.best=S.streak;
+    toast("🔥","Daily goal reached!","Streak: "+S.streak+" day"+(S.streak>1?"s":""));
+  }
+  saveState();refreshTop();
+}
+function displayStreak(){if(!S.lastGoalDate)return 0;var d=daysBetween(S.lastGoalDate,dkey());return d<=1?S.streak:0;}
+function accuracy(){return S.totalAns?Math.round(S.correctAns/S.totalAns*100):0;}
+
+/* ===================== SPEECH ===================== */
+var speechOn=("speechSynthesis"in window);
+function speak(t,rate){if(!speechOn)return;try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=rate||.9;
+  var vs=window.speechSynthesis.getVoices(),en=vs.filter(function(v){return /en[-_]/i.test(v.lang);});if(en.length){var p=en.find(function(v){return /female|samantha|zira|google us/i.test(v.name);});u.voice=p||en[0];}
+  window.speechSynthesis.speak(u);}catch(e){}}
+
+/* ===================== HELPERS ===================== */
+var $=function(s,r){return (r||document).querySelector(s);};
+function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function norm(s){return (s||"").toLowerCase().replace(/[^a-z']/g,"").trim();}
+function catInfo(name){return CATS.find(function(c){return c[0]===name;})||["","📘","#0D9488"];}
+function poolFor(cat){return cat&&cat!=="All"?CARDS.filter(function(c){return c.cat===cat;}):CARDS.slice();}
+function distractors(card,field,n){var others=CARDS.filter(function(c){return c.id!==card.id;});shuffle(others);return others.slice(0,n).map(function(c){return c[field];});}
+
+/* ===================== NAV ===================== */
+var route={view:"dashboard",arg:null};
+var MODES=[
+ ["flashcards","Flashcards","🃏","#0D9488","Flip cards and rate your recall."],
+ ["match","Match the Word","🔗","#EC4899","Pair words with their meanings."],
+ ["mcq","Multiple Choice","✅","#3B82F6","Choose the correct meaning."],
+ ["fill","Fill in the Blank","✏️","#F97316","Complete the example sentence."],
+ ["drag","Drag & Drop","🖐️","#8B5CF6","Drag words onto definitions."],
+ ["sentence","Sentence Builder","🧱","#0EA5E9","Rebuild the scrambled sentence."],
+ ["spell","Spelling Challenge","🔤","#DB2777","Hear it, then spell it."],
+ ["timed","Timed Quiz","⏱️","#EF4444","Score as many as you can in 60s."],
+ ["daily","Daily Review","📅","#22C55E","Your spaced-repetition queue."],
+ ["random","Random Practice","🎲","#7C3AED","A surprise mix of everything."]
+];
+function renderNav(){var nav=$("#nav");nav.innerHTML="";
+  nav.appendChild(navItem("dashboard",null,"🏠","Dashboard"));
+  nav.appendChild(navItem("browse",null,"🗂️","Browse Words"));
+  nav.appendChild(navItem("stats",null,"📊","Progress & Stats"));
+  nav.appendChild(el("div","nav-group","Learning Modes"));
+  MODES.forEach(function(m){var it=navItem("mode",m[0],m[2],m[1]);
+    if(m[0]==="daily"){var d=counts().review;if(d>0)it.appendChild(el("span","badge",d));}
+    nav.appendChild(it);});
+  nav.appendChild(el("div","nav-group","Manage"));
+  nav.appendChild(navItem("add",null,"➕","Add a Word"));
+}
+function navItem(view,arg,icon,label){var b=el("button","nav-item","<span class='ic'>"+icon+"</span><span>"+label+"</span>");
+  if(route.view===view&&route.arg===(arg||null))b.classList.add("active");
+  b.onclick=function(){go(view,arg);closeDrawer();};return b;}
+function go(view,arg){route={view:view,arg:arg||null};renderNav();
+  if(view==="dashboard")renderDashboard();
+  else if(view==="browse")renderBrowse(arg);
+  else if(view==="stats")renderStats();
+  else if(view==="add")renderAdd();
+  else if(view==="mode")startSession(arg);
+  window.scrollTo(0,0);}
+
+/* ===================== DASHBOARD ===================== */
+var activeDeck="All";
+function renderDashboard(){
+  var v=$("#view");v.innerHTML="";var c=counts();
+  var goalPct=Math.min(100,Math.round(S.today/S.goal*100));
+  var hour=new Date().getHours(),greet=hour<12?"Good morning":hour<18?"Good afternoon":"Good evening";
+  var hero=el("div","hero");
+  hero.innerHTML="<div class='h-txt'><div style='font-size:.78rem;font-weight:800;opacity:.85;letter-spacing:.05em'>"+greet.toUpperCase()+" 👋</div>"+
+    "<h2>"+S.today+" of "+S.goal+" words today</h2><p>"+(c.review>0?c.review+" words are due for review. Keep your streak alive!":"You're all caught up. Learn something new!")+"</p>"+
+    "<div class='cta-row'><button class='btn wht' id='startDaily'>▶ Start daily review</button><button class='btn ghost' id='quickRandom'>🎲 Random</button></div></div>"+
+    ring(goalPct,S.today+"/"+S.goal,"today's goal");
+  v.appendChild(hero);
+  $("#startDaily",hero).onclick=function(){go("mode","daily");};
+  $("#quickRandom",hero).onclick=function(){go("mode","random");};
+
+  var sg=el("div","grid g4");sg.style.marginTop="16px";
+  sg.appendChild(statEl("⚡",S.xp,"Total XP"));
+  sg.appendChild(statEl("🔥",displayStreak(),"Streak"));
+  sg.appendChild(statEl("📘",c.learned,"Learned"));
+  sg.appendChild(statEl("🏆",c.mastered,"Mastered"));
+  sg.appendChild(statEl("🔁",c.review,"To review"));
+  sg.appendChild(statEl("🎯",accuracy()+"%","Accuracy"));
+  v.appendChild(sg);
+
+  var st=el("div","section-title");st.innerHTML="<h2>Learning modes</h2>";
+  var selWrap=el("div","sel");selWrap.innerHTML="<span class='muted' style='font-size:.82rem;font-weight:700'>Deck:</span>";
+  var sel=el("select","deck");sel.innerHTML="<option>All</option>"+CATS.map(function(c){return "<option>"+c[0]+"</option>";}).join("");
+  sel.value=activeDeck;sel.onchange=function(){activeDeck=sel.value;};selWrap.appendChild(sel);st.appendChild(selWrap);
+  v.appendChild(st);
+  var mg=el("div","grid modes");
+  MODES.forEach(function(m){var card=el("button","mode-card");
+    card.innerHTML="<div class='m-ic' style='background:"+m[3]+"22;color:"+m[3]+"'>"+m[2]+"</div><h3>"+m[1]+"</h3><p>"+m[4]+"</p>";
+    card.onclick=function(){go("mode",m[0]);};mg.appendChild(card);});
+  v.appendChild(mg);
+
+  v.appendChild(el("div","section-title","<h2>Browse by category</h2>"));
+  var cg=el("div","grid cats");
+  CATS.slice(0,10).forEach(function(cat){cg.appendChild(catCard(cat));});
+  var more=el("button","cat-card");more.style.justifyContent="center";more.style.alignItems="center";more.innerHTML="<div style='font-size:1.6rem'>➕</div><b>See all 20</b>";
+  more.onclick=function(){go("browse");};cg.appendChild(more);
+  v.appendChild(cg);
+}
+function statEl(em,val,lbl){var s=el("div","stat");s.innerHTML="<div class='em'>"+em+"</div><b>"+val+"</b><span>"+lbl+"</span>";return s;}
+function catCard(cat){var pool=poolFor(cat[0]);var mastered=pool.filter(function(c){return statusOf(c.id)==="mastered";}).length;
+  var b=el("button","cat-card");
+  b.innerHTML="<div class='c-ic' style='background:"+cat[2]+"22;color:"+cat[2]+"'>"+cat[1]+"</div><b>"+cat[0]+"</b><div class='c-meta'>"+pool.length+" words · "+mastered+" mastered</div><div class='bar "+(mastered===pool.length&&pool.length?"g":"")+"'><i style='width:"+(pool.length?mastered/pool.length*100:0)+"%'></i></div>";
+  b.onclick=function(){go("browse",cat[0]);};return b;}
+function ring(pct,big,small){var r=52,c=2*Math.PI*r,off=c-(pct/100)*c;
+  return "<div class='ring-wrap'><svg width='130' height='130' viewBox='0 0 130 130'><circle class='ring-bg' cx='65' cy='65' r='"+r+"' fill='none' stroke-width='12'/><circle class='ring-fg' cx='65' cy='65' r='"+r+"' fill='none' stroke-width='12' stroke-dasharray='"+c+"' stroke-dashoffset='"+off+"'/></svg><div class='ring-center'><span class='big'>"+big+"</span><small>"+small+"</small></div></div>";}
+
+/* ===================== BROWSE ===================== */
+function renderBrowse(cat){
+  var v=$("#view");v.innerHTML="";
+  var head=el("div","page-head");head.innerHTML="<div class='eyebrow'>Dictionary</div><h1>🗂️ Browse Words</h1><p>Tap any word to see its full card — meaning, examples, synonyms, mistakes and a memory trick.</p>";
+  v.appendChild(head);
+  var chips=el("div","grid");chips.style.gridTemplateColumns="repeat(auto-fill,minmax(120px,1fr))";chips.style.marginBottom="18px";
+  var allChip=el("button","cat-card");allChip.style.padding="12px";allChip.innerHTML="<b style='font-size:.9rem'>All ("+CARDS.length+")</b>";
+  if(!cat||cat==="All")allChip.style.borderColor="var(--brand)";allChip.onclick=function(){go("browse","All");};chips.appendChild(allChip);
+  CATS.forEach(function(ct){var b=el("button","cat-card");b.style.padding="12px";b.innerHTML="<b style='font-size:.85rem'>"+ct[1]+" "+ct[0]+"</b>";
+    if(cat===ct[0])b.style.borderColor="var(--brand)";b.onclick=function(){go("browse",ct[0]);};chips.appendChild(b);});
+  v.appendChild(chips);
+  var pool=cat&&cat!=="All"?poolFor(cat):CARDS.slice();
+  var list=el("div","grid");list.style.gap="10px";
+  pool.forEach(function(c){var row=el("button","word-row");var st=statusOf(c.id);
+    row.innerHTML="<span class='status-dot "+st+"'></span><div class='w-main'><b>"+c.word+"</b><span class='w-ipa'>"+c.ipa+"</span><span class='diff d"+c.diff+"' style='margin-left:8px'>"+["","Beginner","Intermediate","Advanced"][c.diff]+"</span><div class='w-mean'>"+c.meaning+"</div></div>";
+    row.onclick=function(){openCard(c);};list.appendChild(row);});
+  v.appendChild(list);
+}
+function openCard(c){
+  var m=$("#modal"),ci=catInfo(c.cat);
+  m.innerHTML="<div class='modal-head' style='position:relative'><button class='mclose' id='mClose'>✕</button>"+
+    "<div class='w'>"+c.word+" <button class='play' id='mPlay'>🔊</button></div>"+
+    "<div class='ipa'>"+c.ipa+"</div><div style='margin-top:8px;display:flex;gap:8px;flex-wrap:wrap'><span class='diff d"+c.diff+"'>"+["","Beginner","Intermediate","Advanced"][c.diff]+"</span><span style='background:rgba(255,255,255,.2);padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:800'>"+ci[1]+" "+c.cat+"</span></div></div>"+
+    "<div class='modal-body'>"+
+    field("Meaning",null,"<p>"+c.meaning+"</p>")+
+    field("Simple explanation","💡","<p>"+c.explain+"</p>")+
+    field("Example","🗨️","<p class='ex'>"+c.example+"</p>")+
+    (c.syn.length?field("Synonyms","↔️","<div class='chips'>"+c.syn.map(function(x){return "<span>"+x+"</span>";}).join("")+"</div>"):"")+
+    (c.ant.length?field("Antonyms","⛔","<div class='chips ant'>"+c.ant.map(function(x){return "<span>"+x+"</span>";}).join("")+"</div>"):"")+
+    (c.coll.length?field("Collocations","🔗","<div class='chips coll'>"+c.coll.map(function(x){return "<span>"+x+"</span>";}).join("")+"</div>"):"")+
+    "<div class='mistake-box'><div class='lbl'>⚠️ Common mistake</div><p style='font-size:.9rem'>"+c.mistake+"</p></div>"+
+    "<div class='trick-box'><div class='lbl' style='font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px'>🧠 Memory trick</div><p style='font-size:.92rem'>"+c.trick+"</p></div>"+
+    "</div>";
+  $("#modalScrim").classList.add("show");
+  $("#mClose",m).onclick=closeModal;$("#mPlay",m).onclick=function(){speak(c.word);};
+  speak(c.word);
+}
+function field(label,icon,html){return "<div class='field'><div class='lbl'>"+(icon?icon+" ":"")+label+"</div>"+html+"</div>";}
+function closeModal(){$("#modalScrim").classList.remove("show");if(speechOn)try{window.speechSynthesis.cancel();}catch(e){}}
+$("#modalScrim").onclick=function(e){if(e.target===$("#modalScrim"))closeModal();};
+
+/* ===================== STATS ===================== */
+function renderStats(){
+  var v=$("#view");v.innerHTML="";var c=counts();
+  v.appendChild((function(){var h=el("div","page-head");h.innerHTML="<div class='eyebrow'>Your journey</div><h1>📊 Progress & Stats</h1><p>Spaced repetition schedules reviews at the perfect time so words stick for good.</p>";return h;})());
+  var sg=el("div","grid g4");
+  sg.appendChild(statEl("⚡",S.xp,"Total XP"));
+  sg.appendChild(statEl("🔥",displayStreak(),"Current streak"));
+  sg.appendChild(statEl("🏅",S.best,"Best streak"));
+  sg.appendChild(statEl("📘",c.learned,"Words learned"));
+  sg.appendChild(statEl("🏆",c.mastered,"Mastered"));
+  sg.appendChild(statEl("🔁",c.review,"Due to review"));
+  sg.appendChild(statEl("🎯",accuracy()+"%","Accuracy"));
+  sg.appendChild(statEl("🗂️",c.total,"Total words"));
+  v.appendChild(sg);
+
+  v.appendChild(el("div","section-title","<h2>XP this week</h2>"));
+  var cc=el("div","card");cc.appendChild(weekChart());v.appendChild(cc);
+
+  v.appendChild(el("div","section-title","<h2>Mastery progress</h2>"));
+  var mp=el("div","card");
+  var mpct=Math.round(c.mastered/c.total*100),lpct=Math.round(c.learned/c.total*100);
+  mp.innerHTML="<div style='display:flex;justify-content:space-between;font-weight:800;margin-bottom:6px'><span>Learned "+c.learned+"/"+c.total+"</span><span style='color:var(--brand)'>"+lpct+"%</span></div><div class='bar'><i style='width:"+lpct+"%'></i></div>"+
+    "<div style='display:flex;justify-content:space-between;font-weight:800;margin:14px 0 6px'><span>Mastered "+c.mastered+"/"+c.total+"</span><span style='color:var(--green)'>"+mpct+"%</span></div><div class='bar g'><i style='width:"+mpct+"%'></i></div>";
+  v.appendChild(mp);
+
+  v.appendChild(el("div","section-title","<h2>Daily goal</h2>"));
+  var gc=el("div","card");gc.innerHTML="<p class='muted' style='margin-bottom:10px'>Words to review or learn each day. You've done <b style='color:var(--text)'>"+S.today+"</b> today.</p>";
+  var row=el("div");row.style.cssText="display:flex;gap:8px;flex-wrap:wrap";
+  [10,20,30,50].forEach(function(g){var b=el("button","btn sm "+(S.goal===g?"":"ghost"),g+" / day");b.onclick=function(){S.goal=g;saveState();renderStats();refreshTop();};row.appendChild(b);});
+  gc.appendChild(row);v.appendChild(gc);
+
+  v.appendChild(el("div","section-title","<h2>Data</h2>"));
+  var dc=el("div","card");dc.style.display="flex";dc.style.gap="10px";dc.style.flexWrap="wrap";
+  var exp=el("button","btn ghost sm","⬇ Export my words");exp.onclick=exportData;
+  var imp=el("button","btn ghost sm","⬆ Import words");imp.onclick=importData;
+  var reset=el("button","btn ghost sm","↺ Reset progress");reset.onclick=function(){if(confirm("Reset all XP, streak and review progress? Your added words stay.")){var th=S.theme,goal=S.goal;S=JSON.parse(JSON.stringify(defaultState));S.theme=th;S.goal=goal;saveState();refreshTop();renderStats();toast("↺","Progress reset","Fresh start!");}};
+  dc.appendChild(exp);dc.appendChild(imp);dc.appendChild(reset);v.appendChild(dc);
+  var note=el("p","muted");note.style.cssText="font-size:.8rem;margin-top:14px";note.innerHTML="Starter deck: <b>"+CARDS.length+" curated words</b> with accurate IPA and full detail. Use <b>Add a Word</b> or <b>Import</b> to grow your deck toward 5,000+ — the engine scales to any size.";
+  v.appendChild(note);
+}
+function weekChart(){var wrap=el("div","chart"),days=[];
+  for(var i=6;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);var k=dkey(d);days.push({xp:S.xpHist[k]||0,lbl:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d.getDay()],today:i===0});}
+  var max=Math.max(20,Math.max.apply(null,days.map(function(d){return d.xp;})));
+  days.forEach(function(d){var col=el("div","col"+(d.today?" today":""));col.innerHTML="<span class='v'>"+(d.xp||"")+"</span><div class='b' style='height:0'></div><small>"+d.lbl+"</small>";wrap.appendChild(col);
+    setTimeout(function(){$(".b",col).style.height=Math.max(4,d.xp/max*100)+"%";},60);});
+  return wrap;}
+function exportData(){var data={custom:CARDS.filter(function(c){return c.id.charAt(0)==="c";}),state:S};
+  var blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});var url=URL.createObjectURL(blob);
+  var a=el("a");a.href=url;a.download="vocabulary-master-backup.json";a.click();setTimeout(function(){URL.revokeObjectURL(url);},1000);
+  toast("⬇","Exported","Your words & progress saved to a file.");}
+function importData(){var inp=el("input");inp.type="file";inp.accept="application/json";
+  inp.onchange=function(){var f=inp.files[0];if(!f)return;var r=new FileReader();
+    r.onload=function(){try{var d=JSON.parse(r.result);var added=0;
+      if(Array.isArray(d)||d.custom){var arr=Array.isArray(d)?d:d.custom;arr.forEach(function(c){if(c.word&&c.meaning){c.id="c"+Math.random().toString(36).slice(2,8);c.syn=c.syn||[];c.ant=c.ant||[];c.coll=c.coll||[];c.diff=c.diff||1;CARDS.push(c);added++;}});}
+      if(d.state&&d.state.srs){S=Object.assign(S,d.state);}
+      saveCustom();saveState();refreshTop();renderStats();toast("⬆","Imported","Added "+added+" words.");
+    }catch(e){toast("⚠️","Import failed","That file wasn't valid JSON.");}};
+    r.readAsText(f);};
+  inp.click();}
+
+/* ===================== ADD WORD ===================== */
+function renderAdd(){
+  var v=$("#view");v.innerHTML="";
+  v.appendChild((function(){var h=el("div","page-head");h.innerHTML="<div class='eyebrow'>Grow your deck</div><h1>➕ Add a Word</h1><p>Add your own vocabulary. Only word and meaning are required — the rest makes the card richer.</p>";return h;})());
+  var card=el("div","card");
+  function inp(id,label,ph,ta){return "<div class='form-row'><label>"+label+"</label>"+(ta?"<textarea class='text-in' id='"+id+"' placeholder='"+ph+"' style='min-height:70px'></textarea>":"<input class='text-in' id='"+id+"' placeholder='"+ph+"'>")+"</div>";}
+  card.innerHTML=
+    "<div class='grid g2'><div>"+inp("f_word","Word *","e.g. resilient")+inp("f_ipa","IPA","/rɪˈzɪliənt/")+
+    "<div class='form-row'><label>Category</label><select class='deck' id='f_cat' style='width:100%'>"+CATS.map(function(c){return "<option>"+c[0]+"</option>";}).join("")+"</select></div>"+
+    "<div class='form-row'><label>Difficulty</label><select class='deck' id='f_diff' style='width:100%'><option value='1'>Beginner</option><option value='2'>Intermediate</option><option value='3'>Advanced</option></select></div></div>"+
+    "<div>"+inp("f_mean","Meaning *","short definition")+inp("f_explain","Simple explanation","explain it plainly")+inp("f_ex","Example sentence","use the word in a sentence")+"</div></div>"+
+    inp("f_syn","Synonyms (comma separated)","big, large, huge")+inp("f_ant","Antonyms (comma separated)","small, tiny")+
+    inp("f_coll","Collocations (comma separated)","highly resilient, stay resilient")+
+    inp("f_mistake","Common mistake","a tip on what learners get wrong")+
+    inp("f_trick","Memory trick","a fun way to remember it");
+  var save=el("button","btn block","➕ Add word to deck");save.style.marginTop="6px";
+  save.onclick=function(){
+    var w=$("#f_word").value.trim(),mean=$("#f_mean").value.trim();
+    if(!w||!mean){toast("⚠️","Missing info","Word and meaning are required.");return;}
+    var sp=function(id){return $(id).value.split(",").map(function(x){return x.trim();}).filter(Boolean);};
+    var card2={id:"c"+Math.random().toString(36).slice(2,8),word:w,ipa:$("#f_ipa").value.trim()||"/ /",cat:$("#f_cat").value,diff:parseInt($("#f_diff").value,10),
+      meaning:mean,explain:$("#f_explain").value.trim()||mean,example:$("#f_ex").value.trim()||("Here is "+w+"."),
+      syn:sp("#f_syn"),ant:sp("#f_ant"),coll:sp("#f_coll"),mistake:$("#f_mistake").value.trim()||"—",trick:$("#f_trick").value.trim()||"—"};
+    CARDS.push(card2);saveCustom();toast("✅","Word added!",'"'+w+'" is now in your deck.');go("browse",card2.cat);
+  };
+  card.appendChild(save);v.appendChild(card);
+}
+
+/* ===================== SESSION ENGINE ===================== */
+var SES=null;
+function startSession(mode){
+  var pool;
+  if(mode==="daily"){pool=dueQueue();if(!pool.length)pool=shuffle(CARDS.slice()).slice(0,S.goal);}
+  else pool=poolFor(activeDeck);
+  if(!pool.length){go("dashboard");return;}
+  pool=shuffle(pool.slice());
+  var perRound=(mode==="match")?5:(mode==="drag")?4:1;
+  var limit=(mode==="daily")?pool.length:(mode==="timed")?9999:12;
+  SES={mode:mode,pool:pool,idx:0,limit:limit,correct:0,total:0,xp:0,perRound:perRound,timed:mode==="timed",timeLeft:60,timer:null};
+  $("#player").classList.add("show");document.body.style.overflow="hidden";
+  if(SES.timed){$("#plTimer").style.display="inline";startTimer();}else{$("#plTimer").style.display="none";}
+  renderRound();
+}
+function closeSession(){if(SES&&SES.timer)clearInterval(SES.timer);$("#player").classList.remove("show");document.body.style.overflow="";if(speechOn)try{window.speechSynthesis.cancel();}catch(e){}SES=null;
+  if(route.view==="dashboard")renderDashboard();else if(route.view==="stats")renderStats();else if(route.view==="browse")renderBrowse(route.arg);renderNav();}
+$("#plClose").onclick=function(){if(SES&&SES.total>0&&!SES.ended){if(!confirm("End this session now?"))return;}closeSession();};
+function startTimer(){SES.timer=setInterval(function(){SES.timeLeft--;var t=$("#plTimer");t.textContent="⏱ "+SES.timeLeft+"s";t.classList.toggle("low",SES.timeLeft<=10);
+  if(SES.timeLeft<=0){clearInterval(SES.timer);endSession();}},1000);}
+
+function sessionDone(){if(SES.timed)return SES.timeLeft<=0||SES.idx>=SES.pool.length;return SES.idx>=SES.pool.length||SES.total>=SES.limit;}
+function renderRound(){
+  if(sessionDone())return endSession();
+  var mode=SES.mode;
+  var pct=SES.timed?Math.round((60-SES.timeLeft)/60*100):Math.round(SES.total/Math.min(SES.limit,SES.pool.length)*100);
+  $("#plProg").style.width=pct+"%";
+  $("#plCount").textContent=SES.timed?("Score "+SES.correct):((SES.total+1)+" · ✓"+SES.correct);
+  var inner=$("#plInner"),foot=$("#plFoot");inner.innerHTML="";foot.innerHTML="";
+  var m=mode;
+  if(m==="daily"||m==="random")m=pick(["mcq","fill","flashcards","spell","sentence"]);
+  if(m==="match")return roundMatch(inner,foot);
+  if(m==="drag")return roundDrag(inner,foot);
+  var card=SES.pool[SES.idx];
+  if(m==="flashcards")roundFlash(inner,foot,card);
+  else if(m==="mcq"||m==="timed")roundMCQ(inner,foot,card);
+  else if(m==="fill")roundFill(inner,foot,card);
+  else if(m==="sentence")roundSentence(inner,foot,card);
+  else if(m==="spell")roundSpell(inner,foot,card);
+  else roundMCQ(inner,foot,card);
+}
+function contBtn(foot,onNext){var b=el("button","btn ghost block","Continue  →");b.disabled=true;b.onclick=onNext;foot.appendChild(b);return b;}
+function feedbackEl(inner){var f=el("div","feedback");inner.appendChild(f);return f;}
+function grade(card,correct,fb,explainHtml,isPrimary){
+  var xp=correct?10:0;SES.total++;if(correct){SES.correct++;SES.xp+=10;}
+  if(isPrimary!==false)reviewCard(card.id,correct);
+  record(correct,xp);
+  fb.className="feedback show "+(correct?"good":"bad");
+  fb.innerHTML="<b>"+(correct?"✓ "+pick(["Correct!","Nice!","Well done!","Exactly!","Great recall!"])+" +10 XP":"✗ Not quite")+"</b><div class='ft'>"+(explainHtml||"")+"</div>";
+  fb.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function advance(){SES.idx++;renderRound();$(".pl-scroll").scrollTop=0;}
+
+/* ---- FLASHCARDS ---- */
+function roundFlash(inner,foot,card){
+  inner.appendChild(el("div","step-tag","Flashcard"));
+  var f=el("div","flash");
+  f.innerHTML="<div class='flash-in'><div class='flash-face flash-front'><div class='big'>"+card.word+"</div><div class='mono' style='color:var(--brand)'>"+card.ipa+"</div><div class='muted' style='font-size:.8rem;margin-top:8px'>tap to flip · 🔊</div></div>"+
+    "<div class='flash-face flash-back'><div class='big'>"+card.meaning+"</div><div class='m'>"+card.explain+"</div><div class='e'>"+card.example+"</div></div></div>";
+  f.onclick=function(){f.classList.toggle("flip");speak(card.word);};
+  inner.appendChild(f);inner.appendChild(el("div","flash-hint","Did you remember it?"));
+  var fb=feedbackEl(inner);
+  var row=el("div");row.style.cssText="display:flex;gap:12px";
+  var no=el("button","btn ghost block","😕 Didn't know");var yes=el("button","btn green block","😃 I knew it");
+  no.onclick=function(){if(fb.classList.contains("show"))return;grade(card,false,fb,"No worries — you'll see it again soon. It means: <b>"+card.meaning+"</b>.");lockFlash();};
+  yes.onclick=function(){if(fb.classList.contains("show"))return;grade(card,true,fb,"Scheduled further out. 🔊 <span class='mono'>"+card.ipa+"</span>");lockFlash();};
+  function lockFlash(){no.disabled=true;yes.disabled=true;var c=el("button","btn block",SES.idx>=SES.pool.length-1?"Finish  →":"Continue  →");c.onclick=advance;foot.innerHTML="";foot.appendChild(c);}
+  row.appendChild(no);row.appendChild(yes);foot.appendChild(row);
+  setTimeout(function(){speak(card.word);},250);
+}
+/* ---- MCQ ---- */
+function roundMCQ(inner,foot,card){
+  inner.appendChild(el("div","step-tag",SES.timed?"Timed · pick the meaning":"Multiple choice"));
+  inner.appendChild(el("div","q-title","What does <span style='color:var(--brand)'>"+card.word+"</span> mean?"));
+  var play=el("button","btn ghost sm","🔊 Hear it");play.style.marginBottom="14px";play.onclick=function(){speak(card.word);};inner.appendChild(play);
+  var opts=distractors(card,"meaning",3);opts.push(card.meaning);shuffle(opts);
+  var fb=feedbackEl(inner);var host=el("div");inner.insertBefore(host,fb);
+  var cont=SES.timed?null:contBtn(foot,advance);
+  opts.forEach(function(o,i){var b=el("button","opt","<span class='key'>"+String.fromCharCode(65+i)+"</span><span>"+o+"</span>");
+    b.onclick=function(){if(host.dataset.l)return;host.dataset.l="1";var ok=o===card.meaning;
+      b.classList.add(ok?"correct":"wrong");
+      if(!ok)Array.prototype.forEach.call(host.querySelectorAll(".opt"),function(x){if(x.textContent.slice(1).trim()===card.meaning)x.classList.add("correct");});
+      Array.prototype.forEach.call(host.querySelectorAll(".opt"),function(x){x.disabled=true;});
+      grade(card,ok,fb,(ok?"":"<b>"+card.word+"</b> = "+card.meaning+". ")+"🧠 "+card.trick);
+      if(SES.timed)setTimeout(advance,650);else{cont.disabled=false;cont.classList.remove("ghost");cont.textContent=SES.idx>=SES.pool.length-1?"Finish  →":"Continue  →";}
+    };host.appendChild(b);});
+}
+/* ---- FILL ---- */
+function roundFill(inner,foot,card){
+  inner.appendChild(el("div","step-tag","Fill in the blank"));
+  var re=new RegExp("\\b"+card.word.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b","i");
+  var sentence=re.test(card.example)?card.example.replace(re,"_____"):card.example+"  (word: "+card.meaning+")";
+  inner.appendChild(el("div","q-title sm",sentence));
+  inner.appendChild(el("p","muted","Meaning: "+card.meaning));
+  var input=el("input","text-in big");input.placeholder="type the word";input.autocapitalize="none";input.autocomplete="off";input.style.marginTop="14px";inner.appendChild(input);
+  var fb=feedbackEl(inner);
+  var check=el("button","btn block","Check");
+  check.onclick=function(){if(check.dataset.l)return;check.dataset.l="1";var ok=norm(input.value)===norm(card.word);
+    input.style.borderColor=ok?"var(--green)":"var(--red)";input.disabled=true;
+    grade(card,ok,fb,(ok?"":"Answer: <b>"+card.word+"</b>. ")+card.example);
+    var c=el("button","btn block",SES.idx>=SES.pool.length-1?"Finish  →":"Continue  →");c.onclick=advance;foot.innerHTML="";foot.appendChild(c);};
+  input.addEventListener("keydown",function(e){if(e.key==="Enter")check.click();});
+  foot.appendChild(check);setTimeout(function(){input.focus();},60);
+}
+/* ---- SENTENCE ---- */
+function roundSentence(inner,foot,card){
+  inner.appendChild(el("div","step-tag","Sentence builder"));
+  inner.appendChild(el("div","q-title sm","Rebuild the sentence in the correct order."));
+  var clean=card.example.replace(/[.?!]$/,"");var words=clean.split(" ");
+  var line=el("div","build-line"),bank=el("div","bank");inner.appendChild(line);inner.appendChild(bank);
+  var placed=[];var sh=words.map(function(w,i){return {w:w,i:i};});shuffle(sh);
+  sh.forEach(function(item){var chip=el("button","chip",item.w);
+    chip.onclick=function(){if(bank.dataset.l)return;chip.classList.add("used");var pc=el("button","chip placed",item.w);
+      pc.onclick=function(){if(bank.dataset.l)return;pc.remove();chip.classList.remove("used");placed=placed.filter(function(p){return p.pc!==pc;});sync();};
+      line.appendChild(pc);placed.push({w:item.w,pc:pc});sync();};bank.appendChild(chip);});
+  var fb=feedbackEl(inner);
+  var check=el("button","btn block","Check");check.disabled=true;
+  function sync(){check.disabled=placed.length!==words.length;}
+  check.onclick=function(){if(bank.dataset.l)return;bank.dataset.l="1";var built=placed.map(function(p){return p.w;}).join(" ");
+    var ok=norm(built)===norm(clean);grade(card,ok,fb,(ok?"":"Correct: <b>"+card.example+"</b>")||"Nice building!");
+    var c=el("button","btn block",SES.idx>=SES.pool.length-1?"Finish  →":"Continue  →");c.onclick=advance;foot.innerHTML="";foot.appendChild(c);};
+  foot.appendChild(check);
+}
+/* ---- SPELL ---- */
+function roundSpell(inner,foot,card){
+  inner.appendChild(el("div","step-tag","Spelling challenge"));
+  var ac=el("div","audio-card");var pb=el("button","play-btn","🔊");ac.appendChild(pb);
+  ac.appendChild(el("div","muted","Listen and spell the word"));
+  ac.appendChild(el("p",null,"<b>Meaning:</b> "+card.meaning));ac.appendChild(el("p","mono","("+card.ipa+")"));
+  inner.appendChild(ac);
+  pb.onclick=function(){pb.classList.add("playing");speak(card.word,.85);setTimeout(function(){pb.classList.remove("playing");},900+card.word.length*70);};
+  var input=el("input","text-in big");input.placeholder="spell it here";input.autocapitalize="none";input.autocomplete="off";inner.appendChild(input);
+  var fb=feedbackEl(inner);
+  var check=el("button","btn block","Check spelling");
+  check.onclick=function(){if(check.dataset.l)return;check.dataset.l="1";var ok=norm(input.value)===norm(card.word);input.disabled=true;input.style.borderColor=ok?"var(--green)":"var(--red)";
+    grade(card,ok,fb,(ok?"Perfect spelling!":"It's spelled <b>"+card.word+"</b>.")+" "+card.trick);
+    var c=el("button","btn block",SES.idx>=SES.pool.length-1?"Finish  →":"Continue  →");c.onclick=advance;foot.innerHTML="";foot.appendChild(c);};
+  input.addEventListener("keydown",function(e){if(e.key==="Enter")check.click();});
+  foot.appendChild(check);setTimeout(function(){speak(card.word,.85);input.focus();},300);
+}
+/* ---- MATCH ---- */
+function roundMatch(inner,foot){
+  var group=SES.pool.slice(SES.idx,SES.idx+SES.perRound);
+  if(group.length<2){SES.idx+=group.length;return renderRound();}
+  inner.appendChild(el("div","step-tag","Match the word"));
+  inner.appendChild(el("div","q-title sm","Tap a word, then its meaning."));
+  var left=group.map(function(c,i){return {t:c.word,i:i,card:c};});
+  var right=group.map(function(c,i){return {t:c.meaning,i:i};});
+  shuffle(left);shuffle(right);
+  var grid=el("div","match-grid");var lc=el("div","mcol"),rc=el("div","mcol");grid.appendChild(lc);grid.appendChild(rc);inner.appendChild(grid);
+  var fb=feedbackEl(inner);
+  var sel=null,matched=0,done=false;
+  function tile(item,col){var t=el("button","mtile",item.t);t.dataset.i=item.i;
+    t.onclick=function(){if(done||t.classList.contains("matched"))return;
+      if(!sel){sel=t;t.classList.add("sel");if(item.card)speak(item.card.word);return;}
+      if(sel===t){t.classList.remove("sel");sel=null;return;}
+      if(sel.parentNode===t.parentNode){sel.classList.remove("sel");sel=t;t.classList.add("sel");return;}
+      if(sel.dataset.i===t.dataset.i){sel.classList.add("matched");t.classList.add("matched");sel=null;matched++;
+        var card=group[parseInt(t.dataset.i,10)];reviewCard(card.id,true);record(true,10);SES.correct++;SES.xp+=10;
+        if(matched===group.length){done=true;SES.total+=group.length;
+          fb.className="feedback show good";fb.innerHTML="<b>✓ All matched! +"+(group.length*10)+" XP</b>";
+          var c=el("button","btn block",(SES.idx+group.length)>=SES.pool.length?"Finish  →":"Continue  →");
+          c.onclick=function(){SES.idx+=group.length;renderRound();};foot.appendChild(c);}
+      }else{var bad=sel;t.classList.add("miss");bad.classList.add("miss");SES.total++;record(false,0);
+        var wc=group[parseInt(sel.dataset.i,10)];if(wc)reviewCard(wc.id,false);
+        setTimeout(function(){t.classList.remove("miss");bad.classList.remove("miss","sel");},420);sel=null;}
+    };return t;}
+  left.forEach(function(it){lc.appendChild(tile(it,lc));});
+  right.forEach(function(it){rc.appendChild(tile(it,rc));});
+}
+/* ---- DRAG & DROP ---- */
+function roundDrag(inner,foot){
+  var group=SES.pool.slice(SES.idx,SES.idx+SES.perRound);
+  if(group.length<2){SES.idx+=group.length;return renderRound();}
+  inner.appendChild(el("div","step-tag","Drag & drop"));
+  inner.appendChild(el("div","q-title sm","Drag each word onto its meaning."));
+  var bank=el("div","dd-bank");var words=group.slice();shuffle(words);
+  words.forEach(function(c){var w=el("div","dd-word",c.word);w.dataset.id=c.id;bank.appendChild(w);makeDraggable(w);});
+  inner.appendChild(bank);
+  var drops=group.map(function(c){var d=el("div","dd-drop");d.dataset.id=c.id;d.innerHTML="<div class='def'>"+c.meaning+"</div>";inner.appendChild(d);return d;});
+  var fb=feedbackEl(inner);
+  var solved=0,total2=group.length;
+  function makeDraggable(node){
+    node.addEventListener("pointerdown",function(e){
+      if(node.classList.contains("gone"))return;e.preventDefault();
+      var ghost=el("div","dd-ghost",node.textContent);document.body.appendChild(ghost);
+      var move=function(ev){ghost.style.left=ev.clientX+"px";ghost.style.top=ev.clientY+"px";
+        var t=document.elementFromPoint(ev.clientX,ev.clientY);var drop=t&&t.closest?t.closest(".dd-drop"):null;
+        Array.prototype.forEach.call(document.querySelectorAll(".dd-drop"),function(d){d.classList.toggle("over",d===drop&&!d.classList.contains("filled"));});};
+      var up=function(ev){document.removeEventListener("pointermove",move);document.removeEventListener("pointerup",up);ghost.remove();
+        var t=document.elementFromPoint(ev.clientX,ev.clientY);var drop=t&&t.closest?t.closest(".dd-drop"):null;
+        Array.prototype.forEach.call(document.querySelectorAll(".dd-drop"),function(d){d.classList.remove("over");});
+        if(drop&&!drop.classList.contains("filled")){
+          var card=CARDS.find(function(c){return c.id===node.dataset.id;});
+          if(drop.dataset.id===node.dataset.id){drop.classList.add("filled");drop.innerHTML="<div class='slot'>✓ "+node.textContent+"</div><div class='def'>"+card.meaning+"</div>";
+            node.classList.add("gone");reviewCard(card.id,true);record(true,10);SES.correct++;SES.xp+=10;SES.total++;solved++;
+            if(solved===total2){fb.className="feedback show good";fb.innerHTML="<b>✓ All correct! +"+(total2*10)+" XP</b>";
+              var c=el("button","btn block",(SES.idx+group.length)>=SES.pool.length?"Finish  →":"Continue  →");c.onclick=function(){SES.idx+=group.length;renderRound();};foot.appendChild(c);}
+          }else{drop.classList.add("miss");setTimeout(function(){drop.classList.remove("miss");},420);reviewCard(node.dataset.id,false);record(false,0);SES.total++;}
+        }
+        move(ev);};
+      move(e);document.addEventListener("pointermove",move);document.addEventListener("pointerup",up);
+    });
+  }
+  var skip=el("button","btn ghost block","Skip round →");skip.onclick=function(){SES.idx+=group.length;renderRound();};foot.appendChild(skip);
+}
+
+/* ---- END ---- */
+function endSession(){
+  if(!SES)return;SES.ended=true;if(SES.timer)clearInterval(SES.timer);
+  var inner=$("#plInner"),foot=$("#plFoot");inner.innerHTML="";foot.innerHTML="";
+  $("#plProg").style.width="100%";
+  var acc=SES.total?Math.round(SES.correct/SES.total*100):0;
+  inner.innerHTML="<div class='done-screen'><div class='trophy'>"+(acc>=80?"🏆":acc>=50?"🎉":"💪")+"</div><h2>"+(SES.timed?"Time's up!":"Session complete!")+"</h2>"+
+    "<div class='reward-row'><div class='r'><b>+"+SES.xp+"</b><span>XP earned</span></div><div class='r'><b>"+SES.correct+"/"+SES.total+"</b><span>Correct</span></div><div class='r'><b>"+acc+"%</b><span>Accuracy</span></div><div class='r'><b>🔥 "+displayStreak()+"</b><span>Streak</span></div></div></div>";
+  var again=el("button","btn ghost block","↻ Again");again.onclick=function(){startSession(SES.mode);};
+  var home=el("button","btn block","Done  →");home.onclick=closeSession;
+  foot.appendChild(again);foot.appendChild(home);
+  if(SES.correct>0)confetti();
+}
+
+/* ===================== FX ===================== */
+function refreshTop(){$("#p-xp").textContent=S.xp+" XP";$("#p-streak").textContent=displayStreak();}
+function toast(icon,title,sub){var t=el("div","toast","<div class='ti'>"+icon+"</div><div><b>"+title+"</b><span>"+sub+"</span></div>");$("#toasts").appendChild(t);
+  setTimeout(function(){t.style.transition="opacity .4s,transform .4s";t.style.opacity="0";t.style.transform="translateX(120%)";setTimeout(function(){t.remove();},400);},3200);}
+function confetti(){if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  var c=el("div","confetti");document.body.appendChild(c);var cols=["#0D9488","#14B8A6","#F59E0B","#EC4899","#3B82F6","#FB7A3C"];
+  for(var i=0;i<70;i++){var p=el("i");p.style.left=Math.random()*100+"%";p.style.background=cols[i%cols.length];p.style.animationDuration=(1.6+Math.random()*1.6)+"s";p.style.animationDelay=(Math.random()*.4)+"s";p.style.transform="rotate("+Math.random()*360+"deg)";if(Math.random()>.5)p.style.borderRadius="50%";c.appendChild(p);}
+  setTimeout(function(){c.remove();},3600);}
+
+/* ===================== THEME + DRAWER ===================== */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);$("#themeBtn").textContent=t==="dark"?"☀️":"🌙";S.theme=t;saveState();}
+$("#themeBtn").onclick=function(){applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");};
+function openDrawer(){$("#sidebar").classList.add("open");$("#scrim").classList.add("show");}
+function closeDrawer(){$("#sidebar").classList.remove("open");$("#scrim").classList.remove("show");}
+$("#hamb").onclick=openDrawer;$("#scrim").onclick=closeDrawer;
+
+/* ===================== INIT ===================== */
+(function init(){
+  applyTheme(S.theme||((window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)?"dark":"light"));
+  rollDay();refreshTop();renderNav();renderDashboard();
+  if(speechOn)try{window.speechSynthesis.getVoices();}catch(e){}
+})();
+</script>
+</body>
+</html>

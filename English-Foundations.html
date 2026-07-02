@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>English Foundations</title>
+<style>
+/* ============================ TOKENS ============================ */
+:root{
+  --brand:#6C5CE7; --brand-2:#8B7CF6; --brand-ink:#4C3FD1;
+  --green:#16B364; --green-soft:#DCFCE7;
+  --red:#EF4759; --red-soft:#FEE2E4;
+  --amber:#F59E0B; --flame:#FB7A3C;
+  --radius:18px; --radius-sm:12px; --radius-lg:26px;
+  --sp:clamp(16px,4vw,26px);
+  --tap:46px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  --ease:cubic-bezier(.22,.7,.24,1);
+}
+:root[data-theme="light"]{
+  --bg:#F4F5FB; --bg-2:#ECEDF7; --surface:#FFFFFF; --surface-2:#F8F9FE;
+  --text:#191A2E; --muted:#6A6F8A; --faint:#9AA0BC; --line:#E8E9F3; --line-2:#DEE0EE;
+  --shadow:0 1px 2px rgba(24,26,52,.04),0 10px 26px -14px rgba(24,26,52,.16);
+  --shadow-lg:0 2px 8px rgba(24,26,52,.06),0 26px 60px -24px rgba(24,26,52,.28);
+  --brand-tint:#EEEBFF;
+}
+:root[data-theme="dark"]{
+  --bg:#0E0F1A; --bg-2:#12131F; --surface:#181A28; --surface-2:#1F2233;
+  --text:#EDEEF6; --muted:#A2A7C0; --faint:#6E7492; --line:#262A3D; --line-2:#2F344A;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px -16px rgba(0,0,0,.6);
+  --shadow-lg:0 2px 10px rgba(0,0,0,.4),0 30px 70px -28px rgba(0,0,0,.75);
+  --brand-tint:#221E45; --green-soft:#0E3A24; --red-soft:#3A1620;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--sans);
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea{font-family:inherit;font-size:1rem}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:8px}
+h1,h2,h3,h4{margin:0;line-height:1.15;letter-spacing:-.02em;font-weight:800}
+p{margin:0}
+.muted{color:var(--muted)}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:9px}
+
+/* ============================ APP SHELL ============================ */
+.app{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
+@media(max-width:900px){.app{grid-template-columns:1fr}}
+
+/* Sidebar */
+.sidebar{
+  background:var(--surface);border-right:1px solid var(--line);
+  padding:22px 16px;position:sticky;top:0;height:100vh;overflow-y:auto;
+  display:flex;flex-direction:column;gap:6px;z-index:60;
+}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 8px 16px}
+.brand .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  display:grid;place-items:center;font-size:22px;box-shadow:0 6px 16px -6px var(--brand)}
+.brand b{font-size:1.12rem;font-weight:800;letter-spacing:-.03em;display:block;line-height:1.1}
+.brand span{font-size:.72rem;color:var(--faint);font-weight:600;letter-spacing:.04em}
+.nav-group{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);padding:14px 12px 6px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;
+  font-weight:600;font-size:.93rem;color:var(--muted);min-height:44px;
+  transition:background .16s,color .16s,transform .1s;width:100%;text-align:left}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}
+.nav-item:active{transform:scale(.98)}
+.nav-item.active{background:var(--brand-tint);color:var(--brand-ink);font-weight:700}
+:root[data-theme="dark"] .nav-item.active{color:#C9C2FF}
+.nav-item .ic{font-size:1.15rem;width:24px;text-align:center;flex:none}
+.nav-item .dot{margin-left:auto;font-size:.66rem;font-weight:800;color:var(--green)}
+
+/* Main */
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 86%, transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;padding:12px var(--sp)}
+.hamb{display:none;width:44px;height:44px;border-radius:12px;background:var(--surface);
+  border:1px solid var(--line);font-size:1.2rem;place-items:center}
+@media(max-width:900px){.hamb{display:grid}}
+.topbar .stat-pills{display:flex;gap:8px;margin-left:auto;align-items:center;flex-wrap:wrap}
+.pill{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);
+  padding:7px 12px;border-radius:999px;font-weight:800;font-size:.86rem;box-shadow:var(--shadow)}
+.pill .em{font-size:1rem}
+.pill.xp{color:var(--brand-ink)} .pill.streak{color:var(--flame)} .pill.lvl{color:var(--green)}
+:root[data-theme="dark"] .pill.xp{color:#C9C2FF}
+.icon-btn{width:44px;height:44px;border-radius:12px;background:var(--surface);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:1.15rem;box-shadow:var(--shadow)}
+.view{padding:var(--sp);max-width:1120px;width:100%;margin:0 auto;animation:viewIn .4s var(--ease)}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* Sidebar mobile drawer */
+.scrim{position:fixed;inset:0;background:rgba(10,10,25,.5);backdrop-filter:blur(2px);z-index:59;display:none;opacity:0;transition:opacity .25s}
+.scrim.show{display:block;opacity:1}
+@media(max-width:900px){
+  .sidebar{position:fixed;left:0;top:0;width:280px;transform:translateX(-104%);transition:transform .28s var(--ease);box-shadow:var(--shadow-lg)}
+  .sidebar.open{transform:none}
+}
+
+/* ============================ COMPONENTS ============================ */
+.page-head{margin-bottom:22px}
+.page-head .eyebrow{font-size:.74rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
+.page-head h1{font-size:clamp(1.7rem,4.5vw,2.4rem);margin-top:6px}
+.page-head p{color:var(--muted);margin-top:8px;max-width:60ch}
+
+.grid{display:grid;gap:16px}
+.cards{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:20px}
+
+/* Module / lesson card */
+.mod-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:20px;text-align:left;position:relative;overflow:hidden;
+  transition:transform .16s var(--ease),box-shadow .16s;display:flex;flex-direction:column;gap:10px}
+.mod-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.mod-card .m-ic{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:1.5rem;flex:none}
+.mod-card h3{font-size:1.08rem}
+.mod-card .m-desc{color:var(--muted);font-size:.9rem;flex:1}
+.mod-meta{display:flex;align-items:center;gap:10px;font-size:.78rem;font-weight:700;color:var(--faint)}
+.bar{height:8px;background:var(--bg-2);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-2));border-radius:999px;width:0;transition:width .6s var(--ease)}
+.bar.green i{background:linear-gradient(90deg,var(--green),#3ddc84)}
+
+.lesson-row{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;text-align:left;width:100%;
+  transition:transform .14s var(--ease),box-shadow .14s}
+.lesson-row:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.lesson-row .l-ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.3rem;flex:none;background:var(--brand-tint)}
+.lesson-row.done .l-ic{background:var(--green-soft)}
+.lesson-row .l-body{flex:1;min-width:0}
+.lesson-row .l-body b{font-size:1rem;display:block}
+.lesson-row .l-sub{font-size:.8rem;color:var(--muted);display:flex;gap:8px;align-items:center;margin-top:2px;flex-wrap:wrap}
+.diff{font-size:.68rem;font-weight:800;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
+.diff.Beginner{background:var(--green-soft);color:var(--green)}
+.diff.Intermediate{background:#FEF3C7;color:#B45309}
+.diff.Advanced{background:var(--red-soft);color:var(--red)}
+:root[data-theme="dark"] .diff.Intermediate{background:#3A2E10;color:#FBBf24}
+.l-go{width:38px;height:38px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:1rem;flex:none;box-shadow:0 6px 14px -6px var(--brand)}
+.lesson-row.done .l-go{background:var(--green);box-shadow:0 6px 14px -6px var(--green)}
+
+.btn{background:var(--brand);color:#fff;font-weight:800;border-radius:14px;padding:13px 22px;min-height:var(--tap);
+  box-shadow:0 8px 20px -8px var(--brand);transition:transform .12s,filter .15s;font-size:.95rem}
+.btn:hover{filter:brightness(1.06)} .btn:active{transform:scale(.97)}
+.btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line-2);box-shadow:none}
+.btn.green{background:var(--green);box-shadow:0 8px 20px -8px var(--green)}
+.btn.block{width:100%}
+.btn[disabled]{opacity:.5;pointer-events:none}
+
+/* Rings */
+.ring-wrap{position:relative;width:132px;height:132px;flex:none}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-bg{stroke:var(--bg-2)} .ring-fg{stroke:var(--brand);stroke-linecap:round;transition:stroke-dashoffset 1s var(--ease)}
+.ring-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring-center .big{font-size:1.7rem;font-weight:900;letter-spacing:-.04em}
+.ring-center small{font-size:.66rem;color:var(--muted);font-weight:700;letter-spacing:.05em}
+
+/* Dashboard hero */
+.hero{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-radius:var(--radius-lg);
+  padding:26px;display:flex;gap:26px;align-items:center;flex-wrap:wrap;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero .h-txt{flex:1;min-width:220px;z-index:1}
+.hero h2{font-size:1.5rem} .hero p{opacity:.9;margin-top:6px}
+.hero .ring-wrap .ring-bg{stroke:rgba(255,255,255,.25)} .hero .ring-fg{stroke:#fff}
+.hero .ring-center{color:#fff} .hero .ring-center small{color:rgba(255,255,255,.85)}
+.hero .goal{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap}
+.hero .goal .g{background:rgba(255,255,255,.16);border-radius:14px;padding:10px 14px;backdrop-filter:blur(4px)}
+.hero .goal .g b{font-size:1.2rem;display:block}
+.hero .goal .g span{font-size:.72rem;opacity:.85;font-weight:600}
+
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.stat .s-em{font-size:1.4rem} .stat b{font-size:1.7rem;font-weight:900;display:block;margin-top:6px;letter-spacing:-.03em}
+.stat span{color:var(--muted);font-size:.82rem;font-weight:600}
+
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:26px 0 14px}
+.section-title h2{font-size:1.2rem}
+.section-title a{color:var(--brand);font-weight:700;font-size:.86rem}
+
+/* Achievements */
+.ach{display:flex;gap:13px;align-items:center;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:15px;box-shadow:var(--shadow);opacity:.55;filter:grayscale(.7);transition:.3s}
+.ach.unlocked{opacity:1;filter:none}
+.ach .a-ic{width:48px;height:48px;border-radius:14px;background:var(--bg-2);display:grid;place-items:center;font-size:1.5rem;flex:none}
+.ach.unlocked .a-ic{background:linear-gradient(135deg,#FFE29A,#FFB347)}
+.ach b{font-size:.95rem;display:block} .ach span{font-size:.78rem;color:var(--muted)}
+
+/* Chart */
+.chart{display:flex;align-items:flex-end;gap:min(3vw,16px);height:150px;padding-top:10px}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+.chart .col .b{width:100%;max-width:34px;background:linear-gradient(180deg,var(--brand-2),var(--brand));border-radius:8px 8px 4px 4px;
+  min-height:4px;transition:height .7s var(--ease)}
+.chart .col.today .b{background:linear-gradient(180deg,#FFC46B,var(--flame))}
+.chart .col small{font-size:.68rem;color:var(--muted);font-weight:700}
+.chart .col .v{font-size:.66rem;color:var(--faint);font-weight:800}
+
+/* ============================ LESSON PLAYER ============================ */
+.player{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;flex-direction:column;animation:viewIn .3s var(--ease)}
+.player.show{display:flex}
+.pl-top{display:flex;align-items:center;gap:14px;padding:14px var(--sp);border-bottom:1px solid var(--line);background:var(--surface)}
+.pl-close{width:40px;height:40px;border-radius:12px;font-size:1.3rem;color:var(--muted);flex:none}
+.pl-prog{flex:1;height:14px;background:var(--bg-2);border-radius:999px;overflow:hidden}
+.pl-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#3ddc84);border-radius:999px;width:0;transition:width .45s var(--ease)}
+.pl-hearts{font-weight:800;color:var(--flame);font-size:.9rem;white-space:nowrap}
+.pl-scroll{flex:1;overflow-y:auto;padding:var(--sp);width:100%}
+.pl-inner{max-width:660px;margin:0 auto;padding-bottom:120px}
+.pl-foot{border-top:1px solid var(--line);background:var(--surface);padding:16px var(--sp);
+  position:sticky;bottom:0}
+.pl-foot .in{max-width:660px;margin:0 auto;display:flex;gap:12px;align-items:center}
+.step-tag{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--brand)}
+.q-title{font-size:1.35rem;font-weight:800;margin:8px 0 20px;letter-spacing:-.02em}
+.q-title.small{font-size:1.1rem}
+
+/* explanation / examples */
+.explain-box{background:var(--brand-tint);border-radius:var(--radius);padding:20px;margin-bottom:18px;border:1px solid transparent}
+:root[data-theme="dark"] .explain-box{border-color:var(--line)}
+.explain-box p{margin-bottom:8px}
+.eg{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:10px}
+.eg .eg-mark{font-size:1.2rem;flex:none}
+.eg b{font-weight:700} .eg .eg-note{color:var(--muted);font-size:.86rem;display:block;margin-top:2px}
+.hl{color:var(--brand);font-weight:800} 
+.hl-g{color:var(--green);font-weight:800} .hl-r{color:var(--red);font-weight:800;text-decoration:line-through}
+
+/* options */
+.opt{display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:var(--surface);
+  border:2px solid var(--line-2);border-radius:var(--radius-sm);padding:15px 18px;margin-bottom:11px;
+  font-weight:600;font-size:1rem;min-height:var(--tap);transition:transform .1s,border-color .15s,background .15s}
+.opt:hover{border-color:var(--brand)} .opt:active{transform:scale(.99)}
+.opt .key{width:28px;height:28px;border-radius:8px;background:var(--bg-2);display:grid;place-items:center;
+  font-size:.8rem;font-weight:800;flex:none;color:var(--muted)}
+.opt.correct{border-color:var(--green);background:var(--green-soft)} .opt.correct .key{background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)} .opt.wrong .key{background:var(--red);color:#fff}
+.opt.dim{opacity:.5} .opt[disabled]{pointer-events:none}
+
+.text-in{width:100%;background:var(--surface);border:2px solid var(--line-2);border-radius:var(--radius-sm);
+  padding:15px 18px;color:var(--text);transition:border-color .15s}
+.text-in:focus{border-color:var(--brand);outline:none}
+textarea.text-in{min-height:130px;resize:vertical;line-height:1.6}
+
+/* word bank (order) */
+.build-line{min-height:58px;border-bottom:2px dashed var(--line-2);display:flex;flex-wrap:wrap;gap:8px;
+  padding:10px 4px;margin-bottom:22px;align-content:flex-start}
+.bank{display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:var(--surface);border:2px solid var(--line-2);border-radius:12px;padding:9px 15px;font-weight:700;
+  transition:transform .1s,opacity .15s;box-shadow:var(--shadow)}
+.chip:active{transform:scale(.94)} .chip.used{opacity:0;pointer-events:none;width:0;padding:0;margin:0;border:0}
+.chip.placed{background:var(--brand-tint);border-color:var(--brand)}
+
+/* match */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.match-col{display:flex;flex-direction:column;gap:10px}
+.mtile{background:var(--surface);border:2px solid var(--line-2);border-radius:12px;padding:13px 15px;font-weight:600;text-align:center;transition:.14s;min-height:var(--tap)}
+.mtile.sel{border-color:var(--brand);background:var(--brand-tint)}
+.mtile.matched{border-color:var(--green);background:var(--green-soft);pointer-events:none;opacity:.75}
+.mtile.miss{border-color:var(--red);animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* flashcard */
+.flash{perspective:1400px;height:230px;margin-bottom:16px}
+.flash-in{position:relative;width:100%;height:100%;transition:transform .6s var(--ease);transform-style:preserve-3d;cursor:pointer}
+.flash.flip .flash-in{transform:rotateY(180deg)}
+.flash-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius-lg);display:grid;
+  place-content:center;text-align:center;gap:10px;padding:24px;box-shadow:var(--shadow-lg);border:1px solid var(--line)}
+.flash-front{background:var(--surface)}
+.flash-back{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;transform:rotateY(180deg)}
+.flash-face .big{font-size:2rem;font-weight:900;letter-spacing:-.03em}
+.flash-face .sub{opacity:.8;font-size:.9rem}
+.flash-hint{text-align:center;color:var(--faint);font-size:.8rem;font-weight:700;margin-bottom:14px}
+
+/* audio card */
+.audio-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px;
+  text-align:center;margin-bottom:20px;box-shadow:var(--shadow)}
+.play-btn{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:#fff;font-size:2rem;display:grid;place-items:center;margin:0 auto 12px;box-shadow:0 14px 30px -12px var(--brand);
+  transition:transform .12s}
+.play-btn:active{transform:scale(.92)} .play-btn.playing{animation:pulseRing 1.2s infinite}
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(108,92,231,.5)}70%{box-shadow:0 0 0 20px rgba(108,92,231,0)}100%{box-shadow:0 0 0 0 rgba(108,92,231,0)}}
+.speak-word{font-size:1.8rem;font-weight:900;margin-top:8px;letter-spacing:-.02em}
+.wave{display:flex;gap:4px;justify-content:center;height:30px;align-items:center;margin-top:10px}
+.wave span{width:4px;background:var(--brand);border-radius:4px;height:30%;animation:wv 1s infinite ease-in-out}
+.wave.off span{animation:none;height:20%}
+
+/* feedback banner */
+.feedback{border-radius:var(--radius);padding:16px 18px;margin-bottom:8px;font-weight:600;display:none;animation:fbIn .3s var(--ease)}
+@keyframes fbIn{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+.feedback.show{display:block}
+.feedback.good{background:var(--green-soft);color:var(--green);border:1px solid var(--green)}
+.feedback.bad{background:var(--red-soft);color:var(--red);border:1px solid var(--red)}
+.feedback b{display:block;font-size:1.05rem;margin-bottom:3px}
+.feedback .fb-txt{color:var(--text);font-weight:500;font-size:.9rem}
+
+/* review + complete */
+.review-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.review-list li{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 16px}
+.review-list li::before{content:"✓";color:var(--green);font-weight:900;flex:none}
+.complete{text-align:center;padding:20px 0}
+.complete .trophy{font-size:4.5rem;animation:pop .6s var(--ease)}
+@keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.complete h2{font-size:1.8rem;margin:10px 0}
+.xp-earned{display:inline-flex;align-items:center;gap:8px;background:var(--brand-tint);color:var(--brand-ink);
+  font-weight:800;padding:10px 20px;border-radius:999px;font-size:1.1rem;margin:8px 0 20px}
+:root[data-theme="dark"] .xp-earned{color:#C9C2FF}
+.reward-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+.reward-row .r{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 18px;box-shadow:var(--shadow)}
+.reward-row .r b{display:block;font-size:1.3rem}
+.reward-row .r span{font-size:.72rem;color:var(--muted);font-weight:700}
+
+/* toast */
+.toasts{position:fixed;top:16px;right:16px;z-index:200;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);
+  padding:14px 18px;display:flex;gap:12px;align-items:center;min-width:240px;animation:toastIn .4s var(--ease)}
+.toast .t-ic{font-size:1.6rem}
+.toast b{display:block;font-size:.92rem} .toast span{font-size:.78rem;color:var(--muted)}
+@keyframes toastIn{from{transform:translateX(120%)}to{transform:none}}
+
+/* confetti */
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:150;overflow:hidden}
+.confetti i{position:absolute;width:10px;height:14px;top:-20px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.9}}
+@keyframes wv{0%,100%{height:25%}50%{height:100%}}
+
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.empty .e-em{font-size:3rem}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.05s!important}}
+@media(max-width:560px){
+  .hero{flex-direction:column;text-align:center} .hero .h-txt{min-width:0}
+  .match-grid{gap:8px} .view{padding:16px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar" aria-label="Navigation">
+    <div class="brand">
+      <div class="logo">🌱</div>
+      <div><b>English<br>Foundations</b><span>Learn · Practice · Grow</span></div>
+    </div>
+    <nav id="nav"></nav>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <button class="hamb" id="hamb" aria-label="Menu">☰</button>
+      <div class="stat-pills">
+        <span class="pill lvl"><span class="em">⭐</span><span id="pill-lvl">Lvl 1</span></span>
+        <span class="pill xp"><span class="em">⚡</span><span id="pill-xp">0 XP</span></span>
+        <span class="pill streak"><span class="em">🔥</span><span id="pill-streak">0</span></span>
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+      </div>
+    </header>
+    <main id="view" class="view"></main>
+  </div>
+</div>
+
+<!-- LESSON PLAYER -->
+<div class="player" id="player" role="dialog" aria-modal="true">
+  <div class="pl-top">
+    <button class="pl-close" id="plClose" aria-label="Close lesson">✕</button>
+    <div class="pl-prog"><i id="plProg"></i></div>
+    <div class="pl-hearts" id="plHearts">💜 100%</div>
+  </div>
+  <div class="pl-scroll"><div class="pl-inner" id="plInner"></div></div>
+  <div class="pl-foot"><div class="in" id="plFoot"></div></div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+"use strict";
+/* ============================ SAFE STORAGE ============================ */
+var Store=(function(){
+  var mem={}, ok=false;
+  try{ var k="__ef_test__"; localStorage.setItem(k,"1"); localStorage.removeItem(k); ok=true; }catch(e){ ok=false; }
+  return {
+    get:function(k){ try{ if(ok){var v=localStorage.getItem(k);return v==null?null:v;} }catch(e){} return (k in mem)?mem[k]:null; },
+    set:function(k,v){ try{ if(ok){localStorage.setItem(k,v);return;} }catch(e){} mem[k]=v; }
+  };
+})();
+
+/* ============================ STATE ============================ */
+var todayStr=function(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();};
+var dayDiff=function(a,b){var pa=a.split("-").map(Number),pb=b.split("-").map(Number);
+  var da=new Date(pa[0],pa[1]-1,pa[2]),db=new Date(pb[0],pb[1]-1,pb[2]);return Math.round((db-da)/86400000);};
+
+var defaultState={xp:0,streak:0,best:0,lastActive:null,completed:{},achievements:{},theme:"light",
+  stats:{lessons:0,exercises:0,correct:0,quizzes:0},xpHistory:{}};
+var state=load();
+function load(){ try{var s=JSON.parse(Store.get("ef_state"));if(s&&typeof s==="object"){for(var k in defaultState){if(!(k in s))s[k]=JSON.parse(JSON.stringify(defaultState[k]));}return s;}}catch(e){} return JSON.parse(JSON.stringify(defaultState)); }
+function save(){ try{Store.set("ef_state",JSON.stringify(state));}catch(e){} }
+
+/* ============================ LEVEL MATH ============================ */
+function levelInfo(xp){var lvl=1,need=100,acc=0;while(xp>=acc+need){acc+=need;lvl++;need=100+(lvl-1)*40;}return {level:lvl,inLevel:xp-acc,need:need,pct:Math.round((xp-acc)/need*100)};}
+
+/* ============================ SPEECH ============================ */
+var speechOn=("speechSynthesis"in window);
+function speak(text,rate){ if(!speechOn)return false; try{ window.speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=rate||.92;u.pitch=1;
+  var vs=window.speechSynthesis.getVoices();var en=vs.filter(function(v){return /en[-_]/i.test(v.lang);});
+  if(en.length){var pref=en.find(function(v){return /female|samantha|zira|google us/i.test(v.name);});u.voice=pref||en[0];}
+  window.speechSynthesis.speak(u);return true;}catch(e){return false;} }
+if(speechOn){ window.speechSynthesis.onvoiceschanged=function(){}; }
+
+/* ============================ CONTENT HELPERS ============================ */
+var mcq=function(q,options,answer,explain){return {type:"mcq",q:q,options:options,answer:answer,explain:explain};};
+var fill=function(q,answer,explain,hint){return {type:"fill",q:q,answer:answer,explain:explain,hint:hint};};
+var order=function(answer,prompt,explain){return {type:"order",prompt:prompt,answer:answer,explain:explain};};
+var match=function(prompt,pairs){return {type:"match",prompt:prompt,pairs:pairs};};
+var flash=function(front,back,note){return {type:"flash",front:front,back:back,note:note};};
+var listen=function(prompt,text,options,answer,explain){return {type:"listen",prompt:prompt,text:text,options:options,answer:answer,explain:explain};};
+var say=function(prompt,text,tip){return {type:"speak",prompt:prompt,text:text,tip:tip};};
+var read=function(prompt,passage,qs){return {type:"reading",prompt:prompt,passage:passage,qs:qs};};
+var write=function(prompt,model,checklist){return {type:"writing",prompt:prompt,model:model,checklist:checklist};};
+
+/* ============================ MODULE CONTENT ============================ */
+var MODULES=[
+{id:"alphabet",group:"Learn",name:"Alphabet & Sounds",icon:"🔤",color:"#6C5CE7",desc:"Letters, their names and the sounds they make.",
+ lessons:[
+  {id:"al1",title:"The Alphabet A–Z",difficulty:"Beginner",xp:20,
+   explanation:"English has <b>26 letters</b>. Each has a <b>name</b> (how you say the letter) and a <b>sound</b> (how it works in words). Tap the audio button to hear them.",
+   examples:[["A","says /æ/ as in <b>apple</b>"],["B","says /b/ as in <b>ball</b>"],["C","says /k/ as in <b>cat</b>"]],
+   exercises:[
+     listen("Which letter makes this sound?","B",["B","D","P"],0,"B makes a /b/ sound, like in 'book'."),
+     mcq("Which of these is a <b>vowel</b>?",["E","T","M","K"],0,"The vowels are A, E, I, O, U (and sometimes Y)."),
+     fill("The letter after <b>G</b> is ___ (one letter).","h","A B C D E F G <b>H</b> — H comes right after G."),
+     mcq("How many letters are in the English alphabet?",["24","25","26","30"],2,"Exactly 26 letters, from A to Z.")
+   ],
+   quiz:[ mcq("Which group is ALL vowels?",["A E I O U","A B C D E","E F G H I"],0,"A, E, I, O, U are the five vowels."),
+          mcq("The last letter of the alphabet is:",["Y","Z","W","X"],1,"Z is the final letter."),
+          listen("Type nothing — just pick the letter you hear.","M",["N","M","W"],1,"M makes the /m/ humming sound.") ],
+   review:["English has 26 letters.","5 letters are vowels: A E I O U.","Every letter has a name and a sound."] },
+  {id:"al2",title:"Vowels vs Consonants",difficulty:"Beginner",xp:20,
+   explanation:"<b>Vowels</b> (A, E, I, O, U) are open sounds — your mouth is open. <b>Consonants</b> are the other 21 letters, made by blocking air with your lips, teeth or tongue.",
+   examples:[["Vowels","A E I O U — open, sung sounds"],["Consonants","B C D F G ... — blocked sounds"],["Tip","Every English word needs at least one vowel sound."]],
+   exercises:[
+     mcq("Which word has TWO vowels?",["cat","rain","dry","sky"],1,"'rain' has A and I. 'dry' and 'sky' use Y as a vowel sound."),
+     match("Match each letter to its type.",[["O","Vowel"],["T","Consonant"],["E","Vowel"],["R","Consonant"]]),
+     fill("Fill the missing vowel: b__g (a thing you carry).","a","'bag' — the vowel A completes the word."),
+     mcq("How many consonants are there?",["19","20","21","23"],2,"26 letters minus 5 vowels = 21 consonants.")
+   ],
+   quiz:[ mcq("Which is a consonant?",["I","U","N","A"],2,"N is a consonant; the rest are vowels."),
+          mcq("Y can act as a vowel in:",["yes","yellow","happy","you"],2,"In 'happy', Y makes the vowel /i/ sound.") ],
+   review:["Vowels: A E I O U.","There are 21 consonants.","Y can be a vowel sometimes (happy, sky)."] }
+ ]},
+
+{id:"pron",group:"Learn",name:"Pronunciation Basics",icon:"🗣️",color:"#EC4899",desc:"Vowel length, the TH sound, and word stress.",
+ lessons:[
+  {id:"pr1",title:"Short vs Long Vowels",difficulty:"Beginner",xp:20,
+   explanation:"Vowels can be <b>short</b> (quick) or <b>long</b> (held). Length changes the word! <b>ship</b> (short i) vs <b>sheep</b> (long ee).",
+   examples:[["Short i","sh<b>i</b>p, b<b>i</b>t, s<b>i</b>t"],["Long ee","sh<b>ee</b>p, b<b>ea</b>t, s<b>ea</b>t"],["Listen","Hold the long one twice as long."]],
+   exercises:[
+     listen("Which word did you hear?","sheep",["ship","sheep"],1,"The long 'ee' is held — sheep."),
+     listen("Which word did you hear?","bit",["bit","beat"],0,"Short quick 'i' — bit."),
+     mcq("Which word has a LONG vowel?",["cut","full","food","sit"],2,"'food' has a long /uː/ sound."),
+     say("Say both words clearly, holding the long vowel.","ship ... sheep","Smile more for the long 'ee'.")
+   ],
+   quiz:[ listen("Pick the word you hear.","full",["full","fool"],0,"Short u — full."),
+          mcq("'Beach' has a:",["short vowel","long vowel"],1,"Long /iː/ — beeeach.") ],
+   review:["Vowel length can change meaning.","Long vowels are held longer.","Practise minimal pairs like ship/sheep."] },
+  {id:"pr2",title:"The TH Sound",difficulty:"Intermediate",xp:25,
+   explanation:"For <b>TH</b>, put your tongue lightly between your teeth. There are two versions: soft <b>/θ/</b> (think) and buzzing <b>/ð/</b> (this).",
+   examples:[["/θ/ soft","<b>th</b>ink, <b>th</b>ree, mou<b>th</b>"],["/ð/ voiced","<b>th</b>is, <b>th</b>at, mo<b>th</b>er"],["Avoid","Don't replace TH with 'd', 'z', 't' or 'f'."]],
+   exercises:[
+     say("Tongue between teeth — say it slowly.","think ... three ... this","Feel the air on your tongue."),
+     mcq("Which word uses the buzzing /ð/ TH?",["think","three","mother","bath"],2,"'mother' buzzes; the others are soft."),
+     listen("Which word did you hear?","three",["tree","three"],1,"Tongue out for 'three'."),
+     fill("Complete: I ___ink it's correct. (add 2 letters)","th","'think' starts with the TH sound.")
+   ],
+   quiz:[ mcq("The TH in 'this' is:",["soft /θ/","voiced /ð/"],1,"'this' buzzes — voiced."),
+          mcq("Correct tongue position for TH?",["Behind top teeth","Between the teeth","On the roof of mouth"],1,"Lightly between the teeth.") ],
+   review:["Two TH sounds: /θ/ think, /ð/ this.","Tongue goes between the teeth.","Never swap TH for d/z/t/f."] }
+ ]},
+
+{id:"grammar",group:"Learn",name:"Essential Grammar",icon:"📐",color:"#0EA5E9",desc:"Present simple, articles, and past simple.",
+ lessons:[
+  {id:"gr1",title:"Present Simple",difficulty:"Beginner",xp:20,
+   explanation:"Use the <b>present simple</b> for habits and facts. Remember: with <b>he / she / it</b>, add <b>-s</b> to the verb.",
+   examples:[["I / you / we / they","I <b>work</b>. They <b>live</b> here."],["he / she / it","She <b>works</b>. It <b>rains</b> a lot."],["Negative","He <b>doesn't</b> work on Sundays."]],
+   exercises:[
+     mcq("She ___ in a bank.",["work","works","working","worked"],1,"He/she/it takes -s: 'works'."),
+     fill("Complete: It ___ (take) time. (one word)","takes","'it' needs -s → takes."),
+     mcq("Choose the correct negative.",["He not work.","He doesn't works.","He doesn't work.","He don't work."],2,"doesn't + base verb → doesn't work."),
+     order("They live in London.","Tap the words in the correct order.")
+   ],
+   quiz:[ mcq("My brother ___ English.",["speak","speaks","speaking"],1,"he → speaks."),
+          mcq("We ___ TV every night.",["watches","watch","watching"],1,"we → watch (no -s)."),
+          fill("Negative: I ___ like coffee. (2 words as one, e.g. don't)","don't","I/you/we/they use don't.") ],
+   review:["Present simple = habits & facts.","Add -s for he/she/it.","Negatives use don't / doesn't + base verb."] },
+  {id:"gr2",title:"Articles: a / an / the",difficulty:"Beginner",xp:20,
+   explanation:"<b>a/an</b> = one, non-specific. Use <b>an</b> before a vowel sound. <b>the</b> = specific, we both know which one.",
+   examples:[["a","<b>a</b> car, <b>a</b> job (one, general)"],["an","<b>an</b> apple, <b>an</b> hour (vowel sound)"],["the","<b>the</b> car we saw (specific)"]],
+   exercises:[
+     mcq("I saw ___ elephant.",["a","an","the","—"],1,"'elephant' starts with a vowel sound → an."),
+     fill("Close ___ door, please. (specific one)","the","A specific, known door → the."),
+     mcq("She's ___ honest person.",["a","an"],1,"'honest' sounds like it starts with a vowel (the h is silent) → an."),
+     mcq("I want to be ___ designer.",["a","an","the"],0,"One, general job → a designer.")
+   ],
+   quiz:[ mcq("___ sun is bright today.",["A","An","The"],2,"There's only one sun → the."),
+          mcq("He bought ___ umbrella.",["a","an","the"],1,"vowel sound → an umbrella.") ],
+   review:["a/an = one, general.","an before vowel sounds.","the = specific / known."] },
+  {id:"gr3",title:"Past Simple",difficulty:"Intermediate",xp:25,
+   explanation:"The <b>past simple</b> describes finished actions. Regular verbs add <b>-ed</b>; many common verbs are <b>irregular</b> (go→went, have→had).",
+   examples:[["Regular","work→work<b>ed</b>, play→play<b>ed</b>"],["Irregular","go→<b>went</b>, see→<b>saw</b>, buy→<b>bought</b>"],["Question","<b>Did</b> you go? (base verb after did)"]],
+   exercises:[
+     mcq("Yesterday I ___ to the market.",["go","goed","went","gone"],2,"go is irregular → went."),
+     fill("Complete: She ___ (finish) the project. (regular verb)","finished","Regular verb + ed → finished."),
+     mcq("Choose the correct question.",["Did you went home?","Did you go home?","You did go home?"],1,"After 'did', use the base verb: go."),
+     order("We watched a great film.","Put the sentence in order.")
+   ],
+   quiz:[ mcq("They ___ dinner at 8.",["have","had","haved"],1,"have is irregular → had."),
+          mcq("I ___ my keys this morning.",["loosed","lost","losed"],1,"lose → lost (irregular)."),
+          mcq("___ she call you?",["Did","Do","Does"],0,"Past question → Did.") ],
+   review:["Regular past = verb + ed.","Learn irregular verbs (went, saw, had).","Questions: Did + base verb."] }
+ ]},
+
+{id:"parts",group:"Learn",name:"Parts of Speech",icon:"🧩",color:"#14B8A6",desc:"Nouns, verbs, adjectives, adverbs and more.",
+ lessons:[
+  {id:"ps1",title:"Nouns, Verbs, Adjectives",difficulty:"Beginner",xp:20,
+   explanation:"<b>Noun</b> = a thing (dog, city, idea). <b>Verb</b> = an action (run, think). <b>Adjective</b> = describes a noun (happy, blue).",
+   examples:[["Noun","<b>designer</b>, <b>coffee</b>, <b>London</b>"],["Verb","<b>build</b>, <b>speak</b>, <b>learn</b>"],["Adjective","<b>clean</b> design, <b>fast</b> app"]],
+   exercises:[
+     mcq("Which word is a VERB?",["quickly","jump","table","blue"],1,"'jump' is an action → verb."),
+     mcq("Which word is an ADJECTIVE?",["run","beautiful","house","she"],1,"'beautiful' describes a noun."),
+     match("Match the word to its type.",[["happy","Adjective"],["city","Noun"],["write","Verb"],["idea","Noun"]]),
+     fill("In 'a fast car', the adjective is ___.","fast","'fast' describes the noun 'car'.")
+   ],
+   quiz:[ mcq("'She designs apps.' The verb is:",["She","designs","apps"],1,"'designs' is the action."),
+          mcq("Pick the noun.",["run","clever","freedom","slowly"],2,"'freedom' is a thing/idea → noun.") ],
+   review:["Noun = thing.","Verb = action.","Adjective = describes a noun."] },
+  {id:"ps2",title:"Adverbs, Pronouns & Prepositions",difficulty:"Intermediate",xp:25,
+   explanation:"<b>Adverb</b> describes a verb (usually -ly): run <b>quickly</b>. <b>Pronoun</b> replaces a noun: I, you, she, it, they. <b>Preposition</b> shows position/time: in, on, at, under.",
+   examples:[["Adverb","speak <b>clearly</b>, work <b>hard</b>"],["Pronoun","<b>She</b> called <b>them</b>."],["Preposition","<b>on</b> Monday, <b>at</b> 6pm, <b>in</b> July"]],
+   exercises:[
+     mcq("Which is an ADVERB?",["slow","slowly","slowness","slower"],1,"'slowly' describes how → adverb."),
+     mcq("See you ___ Monday.",["in","on","at"],1,"Days of the week use 'on'."),
+     fill("Replace 'Sara' with a pronoun: ___ is a designer.","she","'Sara' → she."),
+     mcq("The meeting is ___ 3pm.",["in","on","at"],2,"Clock times use 'at'.")
+   ],
+   quiz:[ mcq("'They speak ___.'",["quiet","quietly"],1,"describes the verb → quietly."),
+          mcq("I was born ___ 1998.",["in","on","at"],0,"Years use 'in'."),
+          mcq("Which is a pronoun?",["run","it","blue","desk"],1,"'it' replaces a noun.") ],
+   review:["Adverbs describe verbs (often -ly).","Pronouns replace nouns.","in/on/at for time & place."] }
+ ]},
+
+{id:"sentence",group:"Learn",name:"Sentence Structure",icon:"🏗️",color:"#F59E0B",desc:"Word order, questions and negatives.",
+ lessons:[
+  {id:"se1",title:"Word Order (Subject–Verb–Object)",difficulty:"Beginner",xp:20,
+   explanation:"English follows <b>Subject → Verb → Object</b>. <b>I (S) build (V) apps (O).</b> Keep this order and you'll sound natural.",
+   examples:[["Pattern","<b>She</b> + <b>reads</b> + <b>books</b>"],["Add detail","I design apps <b>every day</b>."],["Wrong","<span class='hl-r'>Apps I build.</span> → I build apps."]],
+   exercises:[
+     order("I love my job.","Build the sentence in SVO order."),
+     order("She writes clean code.","Tap the words in order."),
+     mcq("Which sentence is correct?",["Coffee I like.","I like coffee.","Like I coffee."],1,"Subject–Verb–Object → I like coffee."),
+     order("We build great products.","Arrange the words.")
+   ],
+   quiz:[ order("They watched a movie.","Put it in order."),
+          mcq("The correct order is:",["Object–Verb–Subject","Subject–Verb–Object","Verb–Subject–Object"],1,"English is S-V-O.") ],
+   review:["English = Subject–Verb–Object.","Keep the subject first.","Extra detail goes at the end."] },
+  {id:"se2",title:"Questions & Negatives",difficulty:"Intermediate",xp:25,
+   explanation:"For questions and negatives we usually use a helper verb (<b>do/does/did</b> or <b>be</b>). Question: <b>Do</b> you like it? Negative: I <b>don't</b> like it.",
+   examples:[["Question","<b>Do</b> you speak English?"],["Negative","She <b>doesn't</b> agree."],["With be","<b>Are</b> you ready? / I'm <b>not</b> sure."]],
+   exercises:[
+     mcq("Make it a question: 'You work here.'",["You work here?","Do you work here?","Work you here?"],1,"Add 'Do' at the front → Do you work here?"),
+     mcq("Negative: 'He likes tea.'",["He doesn't like tea.","He don't likes tea.","He not like tea."],0,"doesn't + base verb."),
+     order("Do you speak English?","Build the question."),
+     fill("She is a designer. Question: ___ she a designer?","is","Move 'is' to the front → Is she...?")
+   ],
+   quiz:[ mcq("Question form of 'They arrived.'",["Did they arrive?","Did they arrived?","Do they arrive?"],0,"Did + base verb."),
+          mcq("Negative of 'I can swim.'",["I can't swim.","I don't can swim.","I not swim."],0,"can → can't.") ],
+   review:["Use do/does/did for questions & negatives.","Base verb after do/does/did.","'be' moves to the front for questions."] }
+ ]},
+
+{id:"vocab",group:"Learn",name:"Everyday Vocabulary",icon:"📚",color:"#8B5CF6",desc:"Words for home, food and the workplace.",
+ lessons:[
+  {id:"vo1",title:"Around the Home",difficulty:"Beginner",xp:20,
+   explanation:"Learn the most common household words. Tap a card to flip it and hear it.",
+   examples:[["kitchen","where you cook"],["bedroom","where you sleep"],["living room","where you relax"]],
+   exercises:[
+     flash("kitchen","the room where you cook","🍳"),
+     flash("chair","a thing you sit on","🪑"),
+     mcq("You sleep in the:",["kitchen","bedroom","garage"],1,"The bedroom is for sleeping."),
+     match("Match the word to its meaning.",[["fridge","keeps food cold"],["sofa","soft long seat"],["lamp","gives light"]])
+   ],
+   quiz:[ mcq("Where do you cook food?",["bathroom","kitchen","bedroom"],1,"Cooking happens in the kitchen."),
+          mcq("A 'sofa' is a type of:",["light","seat","door"],1,"A sofa is a comfortable seat.") ],
+   review:["Home rooms: kitchen, bedroom, living room.","Furniture: chair, sofa, table, lamp.","Flip flashcards daily to remember."] },
+  {id:"vo2",title:"Food & Drink",difficulty:"Beginner",xp:20,
+   explanation:"Core food vocabulary you'll use every day, plus how to order.",
+   examples:[["breakfast","the first meal"],["thirsty","you want a drink"],["delicious","tastes very good"]],
+   exercises:[
+     flash("breakfast","the meal you eat in the morning","🥐"),
+     mcq("If you are 'thirsty', you need:",["food","a drink","sleep"],1,"Thirsty = you want water/a drink."),
+     match("Match food words.",[["apple","fruit"],["bread","bakery item"],["water","a drink"]]),
+     fill("Very tasty food is ___ (starts with d).","delicious","'delicious' means very tasty.")
+   ],
+   quiz:[ mcq("The morning meal is:",["dinner","lunch","breakfast"],2,"Breakfast is first."),
+          mcq("Which is a drink?",["rice","juice","cheese"],1,"Juice is a drink.") ],
+   review:["Meals: breakfast, lunch, dinner.","hungry (food) vs thirsty (drink).","delicious = very tasty."] }
+ ]},
+
+{id:"phrases",group:"Learn",name:"Common Phrases",icon:"💬",color:"#22C55E",desc:"Ready-made phrases for real situations.",
+ lessons:[
+  {id:"ph1",title:"Greetings & Introductions",difficulty:"Beginner",xp:20,
+   explanation:"Memorise these as whole <b>chunks</b> — don't translate them word by word. Say them out loud to own them.",
+   examples:[["Nice to meet you.","when you meet someone new"],["How's it going?","casual 'how are you?'"],["I'm a designer.","introduce your job"]],
+   exercises:[
+     flash("Nice to meet you.","A polite phrase when you meet someone the first time","🤝"),
+     mcq("Someone says 'How's it going?' A natural reply:",["Yes.","Not bad, you?","I am fine thank you very much for asking."],1,"Short and natural: 'Not bad, you?'"),
+     say("Introduce yourself out loud.","Hi, I'm Faruqi. Nice to meet you.","Smile and keep it relaxed."),
+     match("Match phrase to use.",[["See you later","leaving"],["Nice to meet you","first meeting"],["Long time no see","meeting again after ages"]])
+   ],
+   quiz:[ mcq("A casual greeting is:",["Good day to you, sir.","Hey, how's it going?"],1,"Casual and friendly."),
+          mcq("You're leaving. You say:",["See you later!","Nice to meet you!"],0,"'See you later' when leaving.") ],
+   review:["Learn phrases as chunks.","'How's it going?' = casual how are you.","Reply short and natural."] },
+  {id:"ph2",title:"Polite Requests",difficulty:"Intermediate",xp:25,
+   explanation:"Soften requests to sound polite and professional: <b>Could you...?</b>, <b>Would you mind...?</b>, <b>Can I...?</b>",
+   examples:[["Could you help me?","polite ask"],["Would you mind waiting?","very polite"],["Can I get a coffee?","ordering"]],
+   exercises:[
+     mcq("The most polite request:",["Give me the file.","Could you send me the file, please?","File now."],1,"'Could you... please?' is polite."),
+     flash("Would you mind...?","A very polite way to ask someone to do something","🙏"),
+     mcq("Reply to 'Would you mind waiting?' (you agree):",["Yes, I mind.","No problem at all.","Never."],1,"'No problem' politely agrees."),
+     say("Ask politely for the menu.","Excuse me, could I see the menu, please?","Warm, calm tone.")
+   ],
+   quiz:[ mcq("Ordering politely:",["Coffee.","Can I have a coffee, please?"],1,"Add 'Can I...please?'"),
+          mcq("'Could you...' is followed by the:",["base verb","past verb"],0,"Could you + base verb: 'Could you open...'.") ],
+   review:["Could you...? / Would you mind...? = polite.","Add 'please'.","Base verb after 'could you'."] }
+ ]},
+
+{id:"convo",group:"Learn",name:"Daily Conversation",icon:"☕",color:"#F97316",desc:"Handle real situations with confidence.",
+ lessons:[
+  {id:"cv1",title:"At a Café",difficulty:"Beginner",xp:20,
+   explanation:"A typical café exchange. Read the dialogue, then choose the best replies.",
+   examples:[["Staff","Hi, what can I get you?"],["You","Could I get a latte, please?"],["Staff","Sure, anything else?"]],
+   exercises:[
+     mcq("Staff: 'What can I get you?' Best reply:",["I am here.","Could I get a tea, please?","Give tea."],1,"Polite order with 'Could I... please?'"),
+     mcq("Staff: 'For here or to go?'",["To go, please.","Yes.","I don't know English."],0,"Answer the actual choice."),
+     mcq("Staff: 'That's £3.' You say:",["No.","Here you are.","Why?"],1,"'Here you are' when handing money."),
+     say("Order your favourite drink politely.","Hi, could I get a cappuccino, please?","Friendly and clear.")
+   ],
+   quiz:[ mcq("Polite way to order:",["I want coffee now.","Could I have a coffee, please?"],1,"Polite request wins."),
+          mcq("'Anything else?' means:",["Do you want more?","Goodbye"],0,"They're asking if you want more.") ],
+   review:["Order with 'Could I get...please?'","Answer the exact question asked.","'Here you are' when giving something."] },
+  {id:"cv2",title:"Meeting Someone New",difficulty:"Intermediate",xp:25,
+   explanation:"Networking basics: introduce yourself, ask a question back, and keep the chat going.",
+   examples:[["Open","Hi, I'm Faruqi. What do you do?"],["Listen","Oh nice! How did you get into that?"],["Exit","It was great talking — let's stay in touch."]],
+   exercises:[
+     mcq("Good opening line at an event:",["Give me your card.","Hi, I'm Faruqi — what do you do?","Nothing."],1,"Introduce + ask a friendly question."),
+     mcq("They say their job. You keep it going with:",["Ok.","That sounds interesting — how did you start?","Bye."],1,"A follow-up question keeps the chat alive."),
+     say("Introduce yourself and ask a question.","Hi, I'm a UI/UX designer. What brings you here?","Confident, relaxed pace."),
+     mcq("Polite way to end and stay connected:",["I'm leaving.","It was great talking — shall we connect on LinkedIn?"],1,"Warm close + next step.")
+   ],
+   quiz:[ mcq("Networking works best when you:",["only talk about yourself","ask questions and listen"],1,"Curiosity builds connection."),
+          mcq("A strong exit line:",["Let's stay in touch!","Whatever."],0,"Leaves the door open.") ],
+   review:["Open with name + a question.","Ask follow-up questions.","Exit warmly and suggest a next step."] }
+ ]},
+
+{id:"listening",group:"Practice",name:"Listening Practice",icon:"🎧",color:"#3B82F6",desc:"Train your ear with spoken audio cards.",
+ lessons:[
+  {id:"li1",title:"Numbers & Times",difficulty:"Beginner",xp:20,
+   explanation:"Press play, listen carefully, then answer. Replay as many times as you like.",
+   examples:[["Tip","Listen for key words only."],["Times","'half past six' = 6:30"],["Numbers","thirteen (13) vs thirty (30) — listen to the stress!"]],
+   exercises:[
+     listen("Listen and choose the number.","fourteen",["40","14","4"],1,"Fourteen = 14. (Forty = 40.)"),
+     listen("What time did you hear?","half past seven",["7:30","6:30","7:15"],0,"'half past seven' = 7:30."),
+     listen("Choose what you heard.","thirty",["13","30","3"],1,"Thirty = 30, stress on the FIRST part.")
+   ],
+   quiz:[ listen("Pick the number.","nineteen",["90","19"],1,"Nineteen = 19."),
+          listen("Pick the time.","quarter to nine",["8:45","9:15"],0,"'quarter to nine' = 8:45.") ],
+   review:["-teen vs -ty: listen to the stress.","half past = :30, quarter to = :45.","Replay to catch key words."] },
+  {id:"li2",title:"A Short Introduction",difficulty:"Intermediate",xp:25,
+   explanation:"Listen to a person introduce themselves, then answer questions about the details.",
+   examples:[["Focus","Catch the name, job and city."],["Skill","You don't need every word — get the gist."]],
+   exercises:[
+     listen("Listen, then answer: what is the job?","Hi, I'm Maria. I'm a teacher and I live in Madrid.",["doctor","teacher","designer"],1,"She says 'I'm a teacher'."),
+     listen("Where does she live?","Hi, I'm Maria. I'm a teacher and I live in Madrid.",["Madrid","Manchester","Milan"],0,"She lives in Madrid."),
+     listen("Listen: what does he do at weekends?","On weekends I usually play football with my friends.",["cook","play football","sleep all day"],1,"He plays football with friends.")
+   ],
+   quiz:[ listen("What's her name?","Hello, my name is Aisha and I work in marketing.",["Anna","Aisha","Alicia"],1,"Her name is Aisha."),
+          listen("Her field is:","Hello, my name is Aisha and I work in marketing.",["finance","marketing","design"],1,"She works in marketing.") ],
+   review:["Listen for gist, not every word.","Catch name, job, place.","Replaying builds your ear."] }
+ ]},
+
+{id:"reading",group:"Practice",name:"Reading Practice",icon:"📖",color:"#10B981",desc:"Read short texts and check understanding.",
+ lessons:[
+  {id:"rd1",title:"A Daily Routine",difficulty:"Beginner",xp:20,
+   explanation:"Read the short passage, then answer the questions. Re-read if you need to.",
+   examples:[["Strategy","Read the questions first, then find the answers."]],
+   exercises:[
+     read("Read and answer.","Tom gets up at 6am every day. He drinks a coffee, then goes for a run in the park. He starts work at nine and finishes at five. In the evening, he reads a book before bed.",
+       [ mcq("What time does Tom get up?",["5am","6am","9am"],1,"'gets up at 6am'."),
+         mcq("What does he do after coffee?",["works","goes for a run","reads"],1,"He goes for a run in the park."),
+         mcq("When does he read?",["morning","at work","in the evening"],2,"'In the evening, he reads a book'.") ])
+   ],
+   quiz:[ mcq("Reading tip that helps most:",["read every word twice","read the questions first"],1,"Scanning for answers is faster.") ],
+   review:["Read the questions first.","Scan for key words.","Re-read tricky parts."] },
+  {id:"rd2",title:"A Short Email",difficulty:"Intermediate",xp:25,
+   explanation:"Emails have a purpose. Find who it's from, what they want, and the action needed.",
+   examples:[["Look for","Greeting, request, deadline, sign-off."]],
+   exercises:[
+     read("Read the email and answer.","Hi Sam, Thanks for sending the designs. They look great! Could you make the buttons a little bigger and send the final version by Friday? Best, Lena",
+       [ mcq("What does Lena think of the designs?",["bad","great","unfinished"],1,"'They look great!'"),
+         mcq("What change does she request?",["smaller buttons","bigger buttons","new colours"],1,"'make the buttons a little bigger'."),
+         mcq("When is the deadline?",["today","Friday","next month"],1,"'by Friday'.") ])
+   ],
+   quiz:[ mcq("The main purpose of the email is to:",["complain","request a change","say goodbye"],1,"She requests bigger buttons by Friday.") ],
+   review:["Find the sender & purpose.","Spot the request and deadline.","Actions are often near the end."] }
+ ]},
+
+{id:"writing",group:"Practice",name:"Writing Practice",icon:"✍️",color:"#A855F7",desc:"Write, compare to a model, self-check.",
+ lessons:[
+  {id:"wr1",title:"Introduce Yourself",difficulty:"Beginner",xp:25,
+   explanation:"Write 3–4 sentences about yourself. Then compare with the model answer and tick what you included.",
+   examples:[["Include","Name, job, one interest, one goal."]],
+   exercises:[
+     write("Write 3–4 sentences introducing yourself (name, what you do, an interest, a goal).",
+       "Hi, I'm Faruqi. I'm a UI/UX designer and I'm building a SaaS product. In my free time I enjoy improving my English. My goal is to speak confidently in meetings and pitches.",
+       ["States your name","Says what you do","Adds an interest or hobby","Mentions a goal","Uses full sentences with capital letters"])
+   ],
+   quiz:[ mcq("A good self-introduction includes:",["only your name","name, job and a goal"],1,"Give a little rounded picture.") ],
+   review:["Cover name, job, interest, goal.","Full sentences, capital letters.","Compare with a model to improve."] },
+  {id:"wr2",title:"Write a Short Message",difficulty:"Intermediate",xp:25,
+   explanation:"Write a polite message to reschedule a meeting. Keep it clear: greeting, reason, new time, sign-off.",
+   examples:[["Structure","Hi + reason + request + thanks."]],
+   exercises:[
+     write("Write a short polite message asking to move a meeting from Monday to Wednesday.",
+       "Hi Alex, Something has come up on Monday, so I'm sorry for the short notice. Would it be possible to move our meeting to Wednesday afternoon instead? Let me know what works for you. Thanks so much, Faruqi",
+       ["Polite greeting","Gives a brief reason","Suggests a new day/time","Polite closing","No spelling of 'i' as lowercase"])
+   ],
+   quiz:[ mcq("A clear reschedule message should suggest:",["nothing","a specific new time"],1,"Offer a concrete alternative.") ],
+   review:["Greeting → reason → request → thanks.","Offer a specific new time.","Keep it short and polite."] }
+ ]},
+
+{id:"speaking",group:"Practice",name:"Speaking Practice",icon:"🎙️",color:"#EF4444",desc:"Shadow a model voice and speak aloud.",
+ lessons:[
+  {id:"sp1",title:"Shadowing: Introduce Yourself",difficulty:"Beginner",xp:25,
+   explanation:"<b>Shadowing</b>: press play, then say it out loud copying the rhythm. Do each line 2–3 times before continuing.",
+   examples:[["How","Listen → repeat → match the melody."]],
+   exercises:[
+     say("Shadow this line.","Hi, I'm a UI/UX designer.","Copy the rhythm, not just the words."),
+     say("Now this one.","I love turning complex problems into simple designs.","Pause slightly after 'problems'."),
+     say("And this.","One day I'd like to launch my own SaaS product.","Stress 'my own'.")
+   ],
+   quiz:[ mcq("Shadowing means:",["reading silently","speaking along with a model"],1,"Speak out loud, matching the model.") ],
+   review:["Listen, then repeat aloud.","Copy rhythm & stress.","Repeat each line 2–3 times."] },
+  {id:"sp2",title:"Describe Your Day",difficulty:"Intermediate",xp:25,
+   explanation:"Speak for ~30 seconds about your day using the model as a guide, then answer the reflection.",
+   examples:[["Frame","In the morning… then… after that… finally…"]],
+   exercises:[
+     say("Listen to the model, then describe YOUR morning aloud.","In the morning I check my messages, then I work on designs for a few hours.","Use 'then' and 'after that' to connect."),
+     say("Now describe your afternoon.","After lunch I usually have meetings and review feedback.","Speak slowly and clearly."),
+     mcq("To connect actions in order, use:",["and and and","then / after that / finally"],1,"Sequencers make you sound organised.")
+   ],
+   quiz:[ mcq("Good linking words for a routine:",["because, although","then, after that, finally"],1,"Sequencers connect steps.") ],
+   review:["Use sequencers: then, after that, finally.","Speak in short clear phrases.","Record yourself and listen back."] }
+ ]},
+
+{id:"pron-game",group:"Games",name:"Pronunciation Challenges",icon:"🎯",color:"#DB2777",desc:"Minimal-pair listening game.",
+ lessons:[
+  {id:"pg1",title:"Minimal Pairs Challenge",difficulty:"Intermediate",xp:30,
+   explanation:"Two words that differ by one sound. Listen and pick the right one — trust your ears!",
+   examples:[["ship / sheep","short i vs long ee"],["full / fool","short u vs long oo"]],
+   exercises:[
+     listen("Which word?","sheep",["ship","sheep"],1,"Long 'ee' held → sheep."),
+     listen("Which word?","fool",["full","fool"],1,"Long 'oo' → fool."),
+     listen("Which word?","bat",["bat","bet"],0,"Open 'a' → bat."),
+     listen("Which word?","rice",["rice","rise"],0,"Sharp /s/ ending → rice."),
+     listen("Which word?","think",["sink","think"],1,"Tongue between teeth → think.")
+   ],
+   quiz:[ listen("Final challenge!","beat",["bit","beat"],1,"Long 'ee' → beat."),
+          listen("Last one.","vine",["wine","vine"],1,"Teeth on lip /v/ → vine.") ],
+   review:["Minimal pairs differ by one sound.","Listen for vowel length.","Watch /θ/, /v/, /r/ vs /l/."] }
+ ]},
+
+{id:"grammar-quiz",group:"Games",name:"Grammar Quizzes",icon:"⚡",color:"#0891B2",desc:"Fast mixed grammar challenges.",
+ lessons:[
+  {id:"gq1",title:"Grammar Sprint · Beginner",difficulty:"Beginner",xp:25,
+   explanation:"A quick mix of everything you've learned. Answer fast and check your accuracy!",
+   examples:[["Mix","tenses, articles, word order."]],
+   exercises:[
+     mcq("She ___ to work by bus.",["go","goes","going"],1,"he/she/it → goes."),
+     mcq("I saw ___ owl in the tree.",["a","an","the"],1,"vowel sound → an owl."),
+     mcq("Yesterday we ___ a film.",["watch","watched","watching"],1,"past simple → watched."),
+     fill("Negative: They ___ live here. (2 words as one)","don't","they → don't."),
+     order("He speaks three languages.","Order the sentence.")
+   ],
+   quiz:[ mcq("___ you like coffee?",["Do","Does","Are"],0,"you → Do."),
+          mcq("This is ___ best day ever.",["a","the"],1,"'best' is specific → the."),
+          mcq("She ___ TV last night.",["watch","watched"],1,"past → watched.") ],
+   review:["he/she/it → verb + s.","an before vowel sounds.","past simple often ends -ed."] },
+  {id:"gq2",title:"Grammar Sprint · Intermediate",difficulty:"Advanced",xp:35,
+   explanation:"Tougher mix: prepositions, questions, and irregular verbs. Aim for high accuracy.",
+   examples:[["Push","Fewer hints — you've got this."]],
+   exercises:[
+     mcq("I've worked here ___ 2020.",["for","since"],1,"a starting point → since."),
+     mcq("She's lived in Dhaka ___ five years.",["for","since"],0,"a duration → for."),
+     mcq("Correct question:",["Did you went?","Where did you go?","Where you went?"],1,"Did + base verb, correct order."),
+     fill("Irregular past of 'buy' is ___.","bought","buy → bought."),
+     mcq("The keys are ___ the table.",["in","on","at"],1,"surface → on the table.")
+   ],
+   quiz:[ mcq("He ___ (already leave) when I arrived.",["already left","leaved"],0,"leave → left."),
+          mcq("Meeting ___ Monday ___ 10am.",["on / at","at / on","in / at"],0,"on Monday, at 10am."),
+          mcq("Negative of 'She can drive.'",["She can't drive.","She don't drive."],0,"can → can't.") ],
+   review:["for + duration, since + start point.","Questions: (Wh) + did + subject + base verb.","Learn irregular pasts by heart."] }
+ ]},
+
+{id:"vocab-game",group:"Games",name:"Vocabulary Games",icon:"🃏",color:"#7C3AED",desc:"Matching, flashcards and odd-one-out.",
+ lessons:[
+  {id:"vg1",title:"Match & Recall",difficulty:"Beginner",xp:25,
+   explanation:"Match words to meanings, flip flashcards, and spot the odd one out.",
+   examples:[["Warm up","Flip a card, then test yourself."]],
+   exercises:[
+     flash("delighted","very happy","😄"),
+     match("Match word → meaning.",[["exhausted","very tired"],["tiny","very small"],["ancient","very old"]]),
+     mcq("Odd one out:",["apple","banana","carrot","grape"],2,"A carrot is a vegetable; the rest are fruit."),
+     match("Match the opposites.",[["hot","cold"],["fast","slow"],["big","small"]]),
+     mcq("Odd one out:",["run","jump","swim","chair"],3,"'chair' is a thing; the rest are actions.")
+   ],
+   quiz:[ mcq("'exhausted' means:",["a little tired","very tired","excited"],1,"exhausted = very tired."),
+          mcq("Opposite of 'ancient':",["old","modern","huge"],1,"ancient ↔ modern.") ],
+   review:["Learn stronger synonyms (very tired → exhausted).","Practise opposites in pairs.","Odd-one-out trains categories."] }
+ ]}
+];
+
+var PROGRESS={id:"progress",group:"Progress",name:"Progress Dashboard",icon:"📊"};
+
+/* ============================ ACHIEVEMENTS ============================ */
+var ACHIEVEMENTS=[
+ {id:"first",icon:"🌱",name:"First Steps",desc:"Complete your first lesson",cond:function(s){return s.stats.lessons>=1;}},
+ {id:"five",icon:"📗",name:"Getting Serious",desc:"Complete 5 lessons",cond:function(s){return s.stats.lessons>=5;}},
+ {id:"ten",icon:"🎓",name:"Dedicated Learner",desc:"Complete 10 lessons",cond:function(s){return s.stats.lessons>=10;}},
+ {id:"streak3",icon:"🔥",name:"On Fire",desc:"Reach a 3-day streak",cond:function(s){return s.best>=3;}},
+ {id:"streak7",icon:"🚀",name:"Unstoppable",desc:"Reach a 7-day streak",cond:function(s){return s.best>=7;}},
+ {id:"xp100",icon:"⚡",name:"Century",desc:"Earn 100 XP",cond:function(s){return s.xp>=100;}},
+ {id:"xp500",icon:"💎",name:"XP Machine",desc:"Earn 500 XP",cond:function(s){return s.xp>=500;}},
+ {id:"lvl5",icon:"⭐",name:"Rising Star",desc:"Reach Level 5",cond:function(s){return levelInfo(s.xp).level>=5;}},
+ {id:"sharp",icon:"🎯",name:"Sharp Shooter",desc:"Answer 50 exercises",cond:function(s){return s.stats.exercises>=50;}},
+ {id:"quiz5",icon:"🏆",name:"Quiz Master",desc:"Pass 5 quizzes",cond:function(s){return s.stats.quizzes>=5;}}
+];
+
+/* ============================ HELPERS ============================ */
+var $=function(s,r){return (r||document).querySelector(s);};
+var el=function(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
+function allLessons(){var a=[];MODULES.forEach(function(m){m.lessons.forEach(function(l){a.push({m:m,l:l});});});return a;}
+function moduleProgress(m){var done=0;m.lessons.forEach(function(l){if(state.completed[l.id])done++;});return {done:done,total:m.lessons.length,pct:m.lessons.length?Math.round(done/m.lessons.length*100):0};}
+function overallProgress(){var t=0,d=0;MODULES.forEach(function(m){m.lessons.forEach(function(l){t++;if(state.completed[l.id])d++;});});return {done:d,total:t,pct:t?Math.round(d/t*100):0};}
+function norm(s){return (s||"").toLowerCase().replace(/[^a-z']/g,"").trim();}
+
+/* ============================ RENDER: SIDEBAR ============================ */
+var currentRoute={view:"dashboard",id:null};
+function renderNav(){
+  var nav=$("#nav");nav.innerHTML="";
+  nav.appendChild(makeNav("dashboard",null,"🏠","Dashboard"));
+  var groups=["Learn","Practice","Games"];
+  groups.forEach(function(g){
+    nav.appendChild(el("div","nav-group",g));
+    MODULES.filter(function(m){return m.group===g;}).forEach(function(m){
+      var p=moduleProgress(m);
+      var item=makeNav("module",m.id,m.icon,m.name);
+      if(p.pct===100)item.appendChild(el("span","dot","✓"));
+      else if(p.done>0)item.querySelector(".label").insertAdjacentHTML("beforeend"," <span style='color:var(--faint);font-size:.72rem;font-weight:700'>"+p.done+"/"+p.total+"</span>");
+      nav.appendChild(item);
+    });
+  });
+  nav.appendChild(el("div","nav-group","Progress"));
+  nav.appendChild(makeNav("progress",null,"📊","Progress & Stats"));
+}
+function makeNav(view,id,icon,label){
+  var b=el("button","nav-item","<span class='ic'>"+icon+"</span><span class='label'>"+label+"</span>");
+  if(currentRoute.view===view && currentRoute.id===id)b.classList.add("active");
+  b.onclick=function(){go(view,id);closeDrawer();};
+  return b;
+}
+
+/* ============================ ROUTER ============================ */
+function go(view,id){currentRoute={view:view,id:id||null};renderNav();
+  if(view==="dashboard")renderDashboard();
+  else if(view==="module")renderModule(id);
+  else if(view==="progress")renderProgress();
+  window.scrollTo(0,0);
+}
+
+/* ============================ RENDER: DASHBOARD ============================ */
+function renderDashboard(){
+  var v=$("#view");v.innerHTML="";
+  var li=levelInfo(state.xp),ov=overallProgress();
+  var hour=new Date().getHours();
+  var greet=hour<12?"Good morning":hour<18?"Good afternoon":"Good evening";
+
+  var hero=el("div","hero");
+  hero.innerHTML=
+    "<div class='h-txt'><div style='font-size:.8rem;font-weight:800;opacity:.85;letter-spacing:.05em'>"+greet.toUpperCase()+" 👋</div>"+
+    "<h2>Ready to learn some English?</h2><p>You're on Level "+li.level+" with a "+state.streak+"-day streak. Keep the momentum going!</p>"+
+    "<div class='goal'><div class='g'><b>"+ov.done+"/"+ov.total+"</b><span>Lessons done</span></div>"+
+    "<div class='g'><b>"+state.stats.exercises+"</b><span>Exercises</span></div>"+
+    "<div class='g'><b>"+accuracy()+"%</b><span>Accuracy</span></div></div></div>"+
+    ring(li.pct,"Lvl "+li.level,li.inLevel+"/"+li.need+" XP");
+  v.appendChild(hero);
+
+  // continue learning
+  v.appendChild(sectionTitle("Continue learning",null));
+  var next=pickNext(4);
+  var g=el("div","grid cards");
+  next.forEach(function(x){g.appendChild(lessonRowEl(x.m,x.l));});
+  v.appendChild(g);
+
+  // modules quick grid
+  v.appendChild(sectionTitle("Explore modules","See progress →",function(){go("progress");}));
+  var mg=el("div","grid cards");
+  MODULES.slice(0,8).forEach(function(m){mg.appendChild(moduleCardEl(m));});
+  v.appendChild(mg);
+
+  // achievements preview
+  v.appendChild(sectionTitle("Achievements",null));
+  var ag=el("div","grid g2");
+  ACHIEVEMENTS.slice(0,4).forEach(function(a){ag.appendChild(achEl(a));});
+  v.appendChild(ag);
+}
+function accuracy(){return state.stats.exercises?Math.round(state.stats.correct/state.stats.exercises*100):0;}
+function pickNext(n){
+  var out=[],all=allLessons();
+  all.forEach(function(x){if(!state.completed[x.l.id]&&out.length<n)out.push(x);});
+  if(out.length<n){all.forEach(function(x){if(out.length<n)out.push(x);});}
+  return out.slice(0,n);
+}
+
+/* ============================ RENDER: MODULE ============================ */
+function renderModule(id){
+  var m=MODULES.find(function(x){return x.id===id;});if(!m)return renderDashboard();
+  var v=$("#view");v.innerHTML="";var p=moduleProgress(m);
+  var head=el("div","page-head");
+  head.innerHTML="<div class='eyebrow'>"+m.group+" Module</div><h1>"+m.icon+" "+m.name+"</h1><p>"+m.desc+"</p>";
+  v.appendChild(head);
+  var barWrap=el("div","card");
+  barWrap.innerHTML="<div style='display:flex;justify-content:space-between;font-weight:800;margin-bottom:8px'><span>"+p.done+" of "+p.total+" lessons</span><span style='color:var(--brand)'>"+p.pct+"%</span></div><div class='bar "+(p.pct===100?"green":"")+"'><i style='width:"+p.pct+"%'></i></div>";
+  v.appendChild(barWrap);
+  var list=el("div","grid",null);list.style.marginTop="16px";
+  m.lessons.forEach(function(l){list.appendChild(lessonRowEl(m,l,true));});
+  v.appendChild(list);
+}
+
+/* ============================ RENDER: PROGRESS ============================ */
+function renderProgress(){
+  var v=$("#view");v.innerHTML="";
+  var li=levelInfo(state.xp),ov=overallProgress();
+  var head=el("div","page-head");
+  head.innerHTML="<div class='eyebrow'>Your journey</div><h1>📊 Progress & Stats</h1><p>Every lesson moves you forward. Here's the big picture.</p>";
+  v.appendChild(head);
+
+  var stats=el("div","grid g4");
+  stats.appendChild(statEl("⚡",state.xp,"Total XP"));
+  stats.appendChild(statEl("⭐","Lvl "+li.level,"Level"));
+  stats.appendChild(statEl("🔥",state.streak,"Day streak"));
+  stats.appendChild(statEl("🏅",state.best,"Best streak"));
+  stats.appendChild(statEl("📗",state.stats.lessons,"Lessons"));
+  stats.appendChild(statEl("✅",accuracy()+"%","Accuracy"));
+  stats.appendChild(statEl("✍️",state.stats.exercises,"Exercises"));
+  stats.appendChild(statEl("🏆",state.stats.quizzes,"Quizzes passed"));
+  v.appendChild(stats);
+
+  // chart
+  v.appendChild(sectionTitle("XP this week",null));
+  var chartCard=el("div","card");chartCard.appendChild(weekChart());v.appendChild(chartCard);
+
+  // completion by module
+  v.appendChild(sectionTitle("Completion by module",null));
+  var cg=el("div","grid g2");
+  MODULES.forEach(function(m){
+    var p=moduleProgress(m);
+    var c=el("div","card");
+    c.innerHTML="<div style='display:flex;align-items:center;gap:10px;margin-bottom:10px'><span style='font-size:1.3rem'>"+m.icon+"</span><b style='flex:1'>"+m.name+"</b><span style='font-weight:800;color:var(--brand)'>"+p.pct+"%</span></div><div class='bar "+(p.pct===100?"green":"")+"'><i style='width:"+p.pct+"%'></i></div>";
+    cg.appendChild(c);
+  });
+  v.appendChild(cg);
+
+  // achievements full
+  v.appendChild(sectionTitle("Achievements ("+ACHIEVEMENTS.filter(function(a){return state.achievements[a.id];}).length+"/"+ACHIEVEMENTS.length+")",null));
+  var ag=el("div","grid g2");
+  ACHIEVEMENTS.forEach(function(a){ag.appendChild(achEl(a));});
+  v.appendChild(ag);
+
+  var reset=el("button","btn ghost","↺ Reset all progress");
+  reset.style.marginTop="24px";
+  reset.onclick=function(){ if(confirm("Reset ALL progress, XP and achievements? This can't be undone.")){state=JSON.parse(JSON.stringify(defaultState));state.theme=document.documentElement.getAttribute("data-theme");save();refreshTop();go("progress");toast("↺","Progress reset","A fresh start!");} };
+  v.appendChild(reset);
+}
+function weekChart(){
+  var wrap=el("div","chart");
+  var days=[],labels=[];
+  for(var i=6;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);
+    var key=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+    days.push({key:key,xp:state.xpHistory[key]||0,lbl:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d.getDay()],today:i===0});}
+  var max=Math.max(10,Math.max.apply(null,days.map(function(d){return d.xp;})));
+  days.forEach(function(d){
+    var col=el("div","col"+(d.today?" today":""));
+    var h=Math.max(4,d.xp/max*100);
+    col.innerHTML="<span class='v'>"+(d.xp||"")+"</span><div class='b' style='height:0'></div><small>"+d.lbl+"</small>";
+    wrap.appendChild(col);
+    setTimeout(function(){$(".b",col).style.height=h+"%";},60);
+  });
+  return wrap;
+}
+
+/* ============================ SMALL BUILDERS ============================ */
+function sectionTitle(t,link,fn){var s=el("div","section-title");s.appendChild(el("h2",null,t));
+  if(link){var a=el("a",null,link);a.href="#";a.onclick=function(e){e.preventDefault();fn&&fn();};s.appendChild(a);}return s;}
+function statEl(em,val,lbl){var s=el("div","stat");s.innerHTML="<div class='s-em'>"+em+"</div><b>"+val+"</b><span>"+lbl+"</span>";return s;}
+function achEl(a){var un=!!state.achievements[a.id];var e=el("div","ach"+(un?" unlocked":""));
+  e.innerHTML="<div class='a-ic'>"+(un?a.icon:"🔒")+"</div><div><b>"+a.name+"</b><span>"+a.desc+"</span></div>";return e;}
+function moduleCardEl(m){var p=moduleProgress(m);var c=el("button","mod-card");
+  c.innerHTML="<div class='m-ic' style='background:"+m.color+"22;color:"+m.color+"'>"+m.icon+"</div>"+
+    "<h3>"+m.name+"</h3><p class='m-desc'>"+m.desc+"</p>"+
+    "<div class='mod-meta'><span>"+p.done+"/"+p.total+" lessons</span><span>·</span><span>"+p.pct+"%</span></div>"+
+    "<div class='bar "+(p.pct===100?"green":"")+"'><i style='width:"+p.pct+"%'></i></div>";
+  c.onclick=function(){go("module",m.id);};return c;}
+function lessonRowEl(m,l,plain){
+  var done=!!state.completed[l.id];
+  var r=el("button","lesson-row"+(done?" done":""));
+  r.innerHTML="<div class='l-ic'>"+(done?"✅":m.icon)+"</div>"+
+    "<div class='l-body'><b>"+l.title+"</b><div class='l-sub'><span class='diff "+l.difficulty+"'>"+l.difficulty+"</span><span>⚡ "+l.xp+" XP</span>"+(plain?"":"<span>· "+m.name+"</span>")+(done?"<span style='color:var(--green);font-weight:800'>· Done</span>":"")+"</div></div>"+
+    "<div class='l-go'>"+(done?"↻":"▶")+"</div>";
+  r.onclick=function(){openLesson(m,l);};return r;}
+function ring(pct,big,small){
+  var r=52,c=2*Math.PI*r,off=c-(pct/100)*c;
+  return "<div class='ring-wrap'><svg width='132' height='132' viewBox='0 0 132 132'>"+
+    "<circle class='ring-bg' cx='66' cy='66' r='"+r+"' fill='none' stroke-width='12'/>"+
+    "<circle class='ring-fg' cx='66' cy='66' r='"+r+"' fill='none' stroke-width='12' stroke-dasharray='"+c+"' stroke-dashoffset='"+off+"'/></svg>"+
+    "<div class='ring-center'><span class='big'>"+big+"</span><small>"+small+"</small></div></div>";
+}
+
+/* ============================ LESSON PLAYER ============================ */
+var PL={m:null,l:null,steps:[],idx:0,earned:0,correctCount:0,quizCorrect:0,quizTotal:0};
+function openLesson(m,l){
+  PL={m:m,l:l,steps:[],idx:0,earned:0,correctCount:0,quizCorrect:0,quizTotal:0};
+  PL.steps.push({kind:"intro"});
+  l.exercises.forEach(function(ex){PL.steps.push({kind:"ex",data:ex,quiz:false});});
+  if(l.quiz&&l.quiz.length){PL.steps.push({kind:"quizintro"});
+    l.quiz.forEach(function(ex){PL.steps.push({kind:"ex",data:ex,quiz:true});PL.quizTotal++;});}
+  PL.steps.push({kind:"complete"});
+  $("#player").classList.add("show");document.body.style.overflow="hidden";
+  renderStep();
+}
+function closeLesson(){$("#player").classList.remove("show");document.body.style.overflow="";if(speechOn)try{window.speechSynthesis.cancel();}catch(e){}}
+$("#plClose").onclick=function(){ if(PL.idx>0 && PL.idx<PL.steps.length-1){ if(!confirm("Leave the lesson? Progress in this lesson won't be saved."))return; } closeLesson(); };
+
+function renderStep(){
+  var step=PL.steps[PL.idx];
+  var pct=Math.round(PL.idx/(PL.steps.length-1)*100);
+  $("#plProg").style.width=pct+"%";
+  $("#plHearts").textContent="💜 "+(PL.correctCount+PL.quizCorrect)+" ✓";
+  var inner=$("#plInner"),foot=$("#plFoot");inner.innerHTML="";foot.innerHTML="";
+  if(step.kind==="intro")return renderIntro(inner,foot);
+  if(step.kind==="quizintro")return renderQuizIntro(inner,foot);
+  if(step.kind==="complete")return renderComplete(inner,foot);
+  if(step.kind==="ex")return renderExercise(inner,foot,step);
+}
+function footBtn(label,fn,cls){var b=el("button","btn "+(cls||"")+" block",label);b.onclick=fn;return b;}
+function nextStep(){PL.idx++;renderStep();$(".pl-scroll").scrollTop=0;}
+
+function renderIntro(inner,foot){
+  var l=PL.l;
+  inner.innerHTML="<div class='step-tag'>Lesson · <span class='diff "+l.difficulty+"' style='vertical-align:middle'>"+l.difficulty+"</span></div>"+
+    "<h2 class='q-title'>"+l.title+"</h2>"+
+    "<div class='explain-box'>"+l.explanation+"</div>"+
+    "<h3 style='font-size:1rem;margin:18px 0 12px'>Examples</h3>";
+  l.examples.forEach(function(e){
+    var d=el("div","eg");
+    d.innerHTML="<div class='eg-mark'>💡</div><div><b>"+e[0]+"</b><span class='eg-note'>"+e[1]+"</span></div>";
+    var pb=el("button","icon-btn","🔊");pb.style.marginLeft="auto";pb.setAttribute("aria-label","Hear example");
+    pb.onclick=function(){speak(stripHtml(e[0]));};
+    d.appendChild(pb);
+    inner.appendChild(d);
+  });
+  foot.appendChild(footBtn("Start lesson  →",nextStep));
+}
+function renderQuizIntro(inner,foot){
+  inner.innerHTML="<div class='complete'><div class='trophy'>🧠</div><h2>Quick Quiz!</h2><p class='muted'>Answer "+PL.quizTotal+" questions to lock in what you learned. You've got this.</p></div>";
+  foot.appendChild(footBtn("Start quiz  →",nextStep,"green"));
+}
+
+/* ---- EXERCISE ROUTER ---- */
+function renderExercise(inner,foot,step){
+  var ex=step.data;
+  var tag=step.quiz?"Quiz":"Practice";
+  inner.appendChild(el("div","step-tag",tag));
+  var host=el("div");inner.appendChild(host);
+  var feedback=el("div","feedback");inner.appendChild(feedback);
+  var answered=false;
+  var continueBtn;
+  function done(correct,explainHtml){
+    if(answered)return;answered=true;
+    if(!step.quiz){state.stats.exercises++;if(correct){state.stats.correct++;}}
+    else{if(correct)PL.quizCorrect++;}
+    if(correct){var g=step.quiz?5:10;PL.earned+=g;if(!step.quiz)PL.correctCount++;}
+    feedback.className="feedback show "+(correct?"good":"bad");
+    feedback.innerHTML="<b>"+(correct?"✓ "+pick(["Nice!","Correct!","Well done!","Exactly!","Perfect!"]):"✗ Not quite")+(correct&&!step.quiz?" +"+ (10)+" XP":"")+"</b><div class='fb-txt'>"+(explainHtml||"")+"</div>";
+    continueBtn.textContent = PL.idx>=PL.steps.length-2 ? "Finish  →" : "Continue  →";
+    continueBtn.classList.remove("ghost");continueBtn.classList.add(correct?"green":"");
+    continueBtn.disabled=false;
+    feedback.scrollIntoView({behavior:"smooth",block:"nearest"});
+  }
+  var t=ex.type;
+  if(t==="mcq")buildMCQ(host,ex,done);
+  else if(t==="fill")buildFill(host,ex,done);
+  else if(t==="order")buildOrder(host,ex,done);
+  else if(t==="match")buildMatch(host,ex,done);
+  else if(t==="flash")buildFlash(host,ex,done);
+  else if(t==="listen")buildListen(host,ex,done);
+  else if(t==="speak")buildSpeak(host,ex,done);
+  else if(t==="reading")buildReading(host,ex,done);
+  else if(t==="writing")buildWriting(host,ex,done);
+
+  continueBtn=footBtn("Continue  →",function(){nextStep();},"ghost");
+  continueBtn.disabled=true;
+  foot.appendChild(continueBtn);
+}
+
+/* ---- MCQ ---- */
+function buildMCQ(host,ex,done){
+  host.appendChild(el("h3","q-title",ex.q));
+  var opts=ex.options.map(function(o,i){return {o:o,i:i};});
+  opts.forEach(function(item,vis){
+    var b=el("button","opt","<span class='key'>"+String.fromCharCode(65+vis)+"</span><span>"+item.o+"</span>");
+    b.onclick=function(){
+      if(host.dataset.locked)return;host.dataset.locked="1";
+      var correct=item.i===ex.answer;
+      b.classList.add(correct?"correct":"wrong");
+      if(!correct){Array.prototype.forEach.call(host.querySelectorAll(".opt"),function(x,k){if(opts[k].i===ex.answer)x.classList.add("correct");});}
+      Array.prototype.forEach.call(host.querySelectorAll(".opt"),function(x){x.disabled=true;});
+      done(correct,ex.explain);
+    };
+    host.appendChild(b);
+  });
+}
+/* ---- FILL ---- */
+function buildFill(host,ex,done){
+  host.appendChild(el("h3","q-title small",ex.q));
+  var inp=el("input","text-in");inp.type="text";inp.placeholder=ex.hint?("Hint: "+ex.hint):"Type your answer…";inp.autocapitalize="none";inp.autocomplete="off";
+  host.appendChild(inp);
+  var check=el("button","btn","Check");check.style.marginTop="14px";
+  check.onclick=function(){if(host.dataset.locked)return;host.dataset.locked="1";
+    var ok=norm(inp.value)===norm(ex.answer);
+    inp.style.borderColor=ok?"var(--green)":"var(--red)";check.disabled=true;inp.disabled=true;
+    done(ok,(ok?"":"Answer: <b>"+ex.answer+"</b>. ")+ex.explain);};
+  inp.addEventListener("keydown",function(e){if(e.key==="Enter")check.click();});
+  host.appendChild(check);
+  setTimeout(function(){inp.focus();},50);
+}
+/* ---- ORDER ---- */
+function buildOrder(host,ex,done){
+  host.appendChild(el("h3","q-title small",ex.prompt));
+  var answer=ex.answer.replace(/[.?!]$/,"");var punct=ex.answer.slice(-1).match(/[.?!]/)?ex.answer.slice(-1):"";
+  var words=answer.split(" ");
+  var line=el("div","build-line");var bank=el("div","bank");
+  var placed=[];
+  var shuffled=words.map(function(w,i){return {w:w,i:i};});shuffle(shuffled);
+  host.appendChild(line);host.appendChild(bank);
+  shuffled.forEach(function(item){
+    var chip=el("button","chip",item.w);
+    chip.onclick=function(){if(host.dataset.locked)return;
+      chip.classList.add("used");
+      var pc=el("button","chip placed",item.w);
+      pc.onclick=function(){if(host.dataset.locked)return;pc.remove();chip.classList.remove("used");placed=placed.filter(function(p){return p.pc!==pc;});sync();};
+      line.appendChild(pc);placed.push({w:item.w,pc:pc});sync();};
+    bank.appendChild(chip);
+  });
+  var check=el("button","btn","Check");check.style.marginTop="16px";check.disabled=true;
+  function sync(){check.disabled=placed.length!==words.length;}
+  check.onclick=function(){if(host.dataset.locked)return;host.dataset.locked="1";
+    var built=placed.map(function(p){return p.w;}).join(" ");
+    var ok=norm(built)===norm(answer);check.disabled=true;
+    done(ok,(ok?"":"Correct: <b>"+ex.answer+"</b>. ")+(ex.explain||"Great sentence building!"));};
+  host.appendChild(check);
+}
+/* ---- MATCH ---- */
+function buildMatch(host,ex,done){
+  host.appendChild(el("h3","q-title small",ex.prompt));
+  var left=ex.pairs.map(function(p,i){return {t:p[0],i:i};});
+  var right=ex.pairs.map(function(p,i){return {t:p[1],i:i};});
+  shuffle(left);shuffle(right);
+  var grid=el("div","match-grid");var lc=el("div","match-col");var rc=el("div","match-col");
+  grid.appendChild(lc);grid.appendChild(rc);host.appendChild(grid);
+  var sel=null,matched=0;
+  function tile(item,col){var t=el("button","mtile",item.t);t.dataset.i=item.i;
+    t.onclick=function(){if(t.classList.contains("matched"))return;
+      if(!sel){sel=t;t.classList.add("sel");return;}
+      if(sel===t){t.classList.remove("sel");sel=null;return;}
+      if(sel.parentNode===t.parentNode){sel.classList.remove("sel");sel=t;t.classList.add("sel");return;}
+      if(sel.dataset.i===t.dataset.i){sel.classList.remove("sel");sel.classList.add("matched");t.classList.add("matched");sel=null;matched++;
+        if(matched===ex.pairs.length){done(true,"All matched correctly!");}}
+      else{var bad=sel;t.classList.add("miss");bad.classList.add("miss");
+        setTimeout(function(){t.classList.remove("miss");bad.classList.remove("miss","sel");},400);sel=null;}
+    };
+    return t;}
+  left.forEach(function(it){lc.appendChild(tile(it,lc));});
+  right.forEach(function(it){rc.appendChild(tile(it,rc));});
+}
+/* ---- FLASHCARD ---- */
+function buildFlash(host,ex,done){
+  host.appendChild(el("h3","q-title small","Tap the card to flip it, then continue."));
+  var f=el("div","flash");
+  f.innerHTML="<div class='flash-in'><div class='flash-face flash-front'><div style='font-size:2.2rem'>"+(ex.note||"🃏")+"</div><div class='big'>"+ex.front+"</div><div class='sub'>tap to reveal</div></div>"+
+    "<div class='flash-face flash-back'><div class='big'>"+ex.back+"</div><div class='sub'>"+ex.front+"</div></div></div>";
+  f.onclick=function(){f.classList.toggle("flip");if(f.classList.contains("flip"))speak(stripHtml(ex.front));};
+  host.appendChild(f);
+  host.appendChild(el("div","flash-hint","🔊 Card speaks when flipped"));
+  var b=el("button","btn green","Got it  ✓");b.style.width="100%";
+  b.onclick=function(){if(host.dataset.locked)return;host.dataset.locked="1";b.disabled=true;done(true,"Reviewed: <b>"+ex.front+"</b> — "+ex.back+".");};
+  host.appendChild(b);
+}
+/* ---- LISTEN ---- */
+function buildListen(host,ex,done){
+  host.appendChild(el("h3","q-title small",ex.prompt));
+  var card=el("div","audio-card");
+  var pb=el("button","play-btn","▶");
+  var wave=el("div","wave off");wave.innerHTML="<span></span><span></span><span></span><span></span><span></span>";
+  card.appendChild(pb);card.appendChild(wave);
+  var note=el("div","muted");note.style.fontSize=".82rem";note.style.marginTop="8px";
+  note.textContent=speechOn?"Tap to play. Replay as needed.":"Audio voice not available here — the text is shown below.";
+  card.appendChild(note);
+  if(!speechOn){var reveal=el("div","speak-word");reveal.textContent="“"+ex.text+"”";card.appendChild(reveal);}
+  host.appendChild(card);
+  function play(){wave.classList.remove("off");pb.classList.add("playing");pb.textContent="❚❚";
+    var ok=speak(ex.text);
+    setTimeout(function(){wave.classList.add("off");pb.classList.remove("playing");pb.textContent="▶";}, ok? Math.min(3000, 700+ex.text.length*70):200);}
+  pb.onclick=play;setTimeout(play,300);
+  var qh=el("div");qh.style.marginTop="6px";host.appendChild(qh);
+  buildMCQ(qh,{q:"",options:ex.options,answer:ex.answer,explain:ex.explain},function(c,e){done(c,e);});
+  // remove empty title from inner mcq
+  var t=qh.querySelector(".q-title");if(t)t.remove();
+}
+/* ---- SPEAK ---- */
+function buildSpeak(host,ex,done){
+  host.appendChild(el("h3","q-title small",ex.prompt));
+  var card=el("div","audio-card");
+  var pb=el("button","play-btn","🔊");
+  card.appendChild(pb);
+  card.appendChild(el("div","speak-word","“"+ex.text+"”"));
+  if(ex.tip)card.appendChild(el("div","muted","💡 "+ex.tip));
+  host.appendChild(card);
+  pb.onclick=function(){pb.classList.add("playing");speak(ex.text);setTimeout(function(){pb.classList.remove("playing");},Math.min(3500,900+ex.text.length*70));};
+  setTimeout(function(){speak(ex.text);},300);
+  host.appendChild(el("div","muted","Listen to the model, then say it out loud 2–3 times. Tap below when you've practised."));
+  var b=el("button","btn green","I said it  ✓");b.style.width="100%";b.style.marginTop="14px";
+  b.onclick=function(){if(host.dataset.locked)return;host.dataset.locked="1";b.disabled=true;done(true,"Great — speaking out loud is how fluency is built.");};
+  host.appendChild(b);
+}
+/* ---- READING ---- */
+function buildReading(host,ex,done){
+  host.appendChild(el("h3","q-title small",ex.prompt));
+  var pass=el("div","explain-box");pass.innerHTML="<p>"+ex.passage+"</p>";host.appendChild(pass);
+  var total=ex.qs.length,ans=0,correct=0;
+  ex.qs.forEach(function(q,i){
+    var wrap=el("div");wrap.style.marginTop="16px";
+    wrap.appendChild(el("div","step-tag","Question "+(i+1)));
+    host.appendChild(wrap);
+    var locked=false;
+    q.options.forEach(function(o,oi){
+      var b=el("button","opt","<span class='key'>"+String.fromCharCode(65+oi)+"</span><span>"+o+"</span>");
+      b.onclick=function(){if(locked)return;locked=true;var ok=oi===q.answer;
+        b.classList.add(ok?"correct":"wrong");
+        if(!ok){Array.prototype.forEach.call(wrap.querySelectorAll(".opt"),function(x,k){if(k===q.answer)x.classList.add("correct");});}
+        Array.prototype.forEach.call(wrap.querySelectorAll(".opt"),function(x){x.disabled=true;});
+        ans++;if(ok)correct++;
+        if(ans===total){done(correct===total,correct+" of "+total+" correct. "+(correct===total?"Full marks!":"Re-read to catch the details."));}
+      };
+      wrap.appendChild(b);
+    });
+  });
+}
+/* ---- WRITING ---- */
+function buildWriting(host,ex,done){
+  host.appendChild(el("h3","q-title small",ex.prompt));
+  var ta=el("textarea","text-in");ta.placeholder="Write your answer here…";host.appendChild(ta);
+  var b=el("button","btn","Compare with model");b.style.marginTop="14px";
+  b.onclick=function(){if(host.dataset.locked)return;
+    if(norm(ta.value).length<10){ta.style.borderColor="var(--red)";return;}
+    host.dataset.locked="1";b.remove();ta.disabled=true;
+    var model=el("div","explain-box");model.style.marginTop="16px";
+    model.innerHTML="<b style='display:block;margin-bottom:8px'>✍️ Model answer</b>"+ex.model;host.appendChild(model);
+    host.appendChild(el("h3",null,"Self-check — tick what your answer included:")).style.cssText="font-size:1rem;margin:18px 0 10px";
+    var checks=[];
+    ex.checklist.forEach(function(c,i){
+      var row=el("label","opt");row.style.cursor="pointer";
+      row.innerHTML="<span class='key'>☐</span><span>"+c+"</span>";
+      row.onclick=function(){var k=row.querySelector(".key");var on=row.classList.toggle("correct");k.textContent=on?"✓":"☐";checks[i]=on;update();};
+      host.appendChild(row);checks[i]=false;
+    });
+    var finish=el("button","btn green","Finish exercise");finish.style.marginTop="16px";finish.disabled=true;finish.style.width="100%";
+    function update(){finish.disabled=checks.filter(Boolean).length===0;}
+    finish.onclick=function(){finish.disabled=true;var score=checks.filter(Boolean).length;
+      done(true,"You matched "+score+" of "+ex.checklist.length+" points. Keep refining — writing improves fast with self-review.");};
+    host.appendChild(finish);
+  };
+  host.appendChild(b);
+}
+
+/* ---- COMPLETE ---- */
+function renderComplete(inner,foot){
+  var l=PL.l,m=PL.m;
+  var firstTime=!state.completed[l.id];
+  var bonus=firstTime?l.xp:Math.round(l.xp*0.3);
+  var totalXp=PL.earned+bonus;
+  // award
+  state.xp+=totalXp;
+  addXpHistory(totalXp);
+  if(firstTime){state.completed[l.id]=true;state.stats.lessons++;}
+  // quiz pass
+  if(PL.quizTotal>0 && PL.quizCorrect>=Math.ceil(PL.quizTotal*0.6)){state.stats.quizzes++;}
+  updateStreak();
+  var newAch=checkAchievements();
+  var beforeLvl=levelInfo(state.xp-totalXp).level, afterLvl=levelInfo(state.xp).level;
+  save();refreshTop();
+
+  inner.innerHTML="<div class='complete'><div class='trophy'>"+(firstTime?"🏆":"🎉")+"</div>"+
+    "<h2>"+(firstTime?"Lesson complete!":"Nice review!")+"</h2>"+
+    "<div class='xp-earned'>⚡ +"+totalXp+" XP</div>"+
+    "<div class='reward-row'>"+
+      "<div class='r'><b>"+ (PL.quizTotal?PL.quizCorrect+"/"+PL.quizTotal:"✓") +"</b><span>"+(PL.quizTotal?"Quiz score":"Completed")+"</span></div>"+
+      "<div class='r'><b>🔥 "+state.streak+"</b><span>Day streak</span></div>"+
+      "<div class='r'><b>⭐ "+afterLvl+"</b><span>Level</span></div>"+
+    "</div></div>";
+  if(afterLvl>beforeLvl){var lu=el("div","feedback good show");lu.innerHTML="<b>⭐ Level up! You reached Level "+afterLvl+"</b>";inner.appendChild(lu);}
+  var rv=el("div");rv.innerHTML="<h3 style='margin:10px 0 12px'>📌 Review — key takeaways</h3>";
+  var ul=el("ul","review-list");l.review.forEach(function(r){ul.appendChild(el("li",null,r));});rv.appendChild(ul);inner.appendChild(rv);
+
+  foot.innerHTML="";
+  var again=el("button","btn ghost","↻ Review again");again.onclick=function(){openLesson(m,l);};
+  var nxt=el("button","btn block","Continue  →");
+  var nextL=nextLessonAfter(m,l);
+  nxt.onclick=function(){closeLesson();if(nextL){openLesson(nextL.m,nextL.l);}else{go("module",m.id);}};
+  var wrap=el("div");wrap.style.cssText="display:flex;gap:12px;width:100%";
+  again.style.flex="1";nxt.style.flex="2";wrap.appendChild(again);wrap.appendChild(nxt);foot.appendChild(wrap);
+
+  confetti();
+  newAch.forEach(function(a,i){setTimeout(function(){toast(a.icon,"Achievement unlocked!",a.name);},400+i*700);});
+}
+function nextLessonAfter(m,l){
+  var idx=m.lessons.indexOf(l);
+  if(idx>=0&&idx<m.lessons.length-1)return {m:m,l:m.lessons[idx+1]};
+  return null;
+}
+
+/* ============================ GAMIFICATION LOGIC ============================ */
+function updateStreak(){
+  var t=todayStr();
+  if(state.lastActive===t){/* already counted today */}
+  else if(state.lastActive && dayDiff(state.lastActive,t)===1){state.streak++;}
+  else{state.streak=1;}
+  state.lastActive=t;
+  if(state.streak>state.best)state.best=state.streak;
+}
+function addXpHistory(x){var t=todayStr();state.xpHistory[t]=(state.xpHistory[t]||0)+x;}
+function checkAchievements(){var unlocked=[];ACHIEVEMENTS.forEach(function(a){if(!state.achievements[a.id]&&a.cond(state)){state.achievements[a.id]=true;unlocked.push(a);}});if(unlocked.length)save();return unlocked;}
+
+/* ============================ TOP BAR + TOAST + FX ============================ */
+function refreshTop(){var li=levelInfo(state.xp);
+  $("#pill-lvl").textContent="Lvl "+li.level;$("#pill-xp").textContent=state.xp+" XP";$("#pill-streak").textContent=state.streak;}
+function toast(icon,title,sub){var t=el("div","toast","<div class='t-ic'>"+icon+"</div><div><b>"+title+"</b><span>"+sub+"</span></div>");
+  $("#toasts").appendChild(t);setTimeout(function(){t.style.transition="opacity .4s,transform .4s";t.style.opacity="0";t.style.transform="translateX(120%)";setTimeout(function(){t.remove();},400);},3400);}
+function confetti(){if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  var c=el("div","confetti");document.body.appendChild(c);var colors=["#6C5CE7","#22C55E","#F59E0B","#EC4899","#3B82F6","#FB7A3C"];
+  for(var i=0;i<70;i++){var p=el("i");p.style.left=Math.random()*100+"%";p.style.background=colors[i%colors.length];
+    p.style.animationDuration=(1.6+Math.random()*1.6)+"s";p.style.animationDelay=(Math.random()*.4)+"s";
+    p.style.transform="rotate("+Math.random()*360+"deg)";if(Math.random()>.5)p.style.borderRadius="50%";c.appendChild(p);}
+  setTimeout(function(){c.remove();},3600);}
+
+/* ============================ UTILS ============================ */
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=a[i];a[i]=a[j];a[j]=tmp;}return a;}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function stripHtml(s){var d=el("div",null,s);return d.textContent||d.innerText||"";}
+
+/* ============================ THEME + DRAWER ============================ */
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);$("#themeBtn").textContent=t==="dark"?"☀️":"🌙";state.theme=t;save();}
+$("#themeBtn").onclick=function(){applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");};
+function openDrawer(){$("#sidebar").classList.add("open");$("#scrim").classList.add("show");}
+function closeDrawer(){$("#sidebar").classList.remove("open");$("#scrim").classList.remove("show");}
+$("#hamb").onclick=openDrawer;$("#scrim").onclick=closeDrawer;
+
+/* ============================ INIT ============================ */
+(function init(){
+  var initialTheme = state.theme || ((window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)?"dark":"light");
+  applyTheme(initialTheme);
+  // streak visual reset if long gap (display only until next lesson)
+  if(state.lastActive){var g=dayDiff(state.lastActive,todayStr());if(g>1)state.streak=0;save();}
+  refreshTop();renderNav();renderDashboard();
+  // warm up voices
+  if(speechOn){try{window.speechSynthesis.getVoices();}catch(e){}}
+})();
+</script>
+</body>
+</html>
