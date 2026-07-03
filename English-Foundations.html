@@ -334,6 +334,14 @@ textarea.text-in{min-height:130px;resize:vertical;line-height:1.6}
   .hero{flex-direction:column;text-align:center} .hero .h-txt{min-width:0}
   .match-grid{gap:8px} .view{padding:16px}
 }
+.res-cats{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));margin-top:4px}
+.res-cats .card .res-em{font-size:1.5rem}
+.res-cats .card .res-h{margin:6px 0 8px;font-size:1.02rem;font-weight:800}
+.res-link{display:block;padding:8px 0;color:var(--text,#132022);text-decoration:none;font-weight:700;border-top:1px solid var(--line,#e4ebea);font-size:.9rem}
+.res-link:first-of-type{border-top:none}
+.res-link:hover{color:#6C5CE7}
+.res-link small{display:block;color:var(--muted,#5C6B6D);font-weight:500;font-size:.78rem;margin-top:2px}
+.bn{font-weight:600;opacity:.8}
 </style>
 </head>
 <body>
@@ -764,6 +772,232 @@ var MODULES=[
    review:["Use sequencers: then, after that, finally.","Speak in short clear phrases.","Record yourself and listen back."] }
  ]},
 
+
+{id:"samistakes",group:"Learn",name:"Common Mistakes (S. Asia)",icon:"🎯",color:"#E11D48",desc:"Fix the errors Bangla/Hindi/Urdu speakers make most.",
+ lessons:[
+  {id:"sm1",title:"Articles: a, an, the",difficulty:"Beginner",xp:25,
+   explanation:"Bangla has no articles <span class='bn'>(a/an/the বাংলায় নেই)</span>, so we often drop or misuse them. Use <b>a/an</b> for one non-specific thing, and <b>the</b> for something specific or already known. Use <b>an</b> before a vowel <i>sound</i>.",
+   examples:[["a / an","one, not specific — <b>a</b> book, <b>an</b> hour <span class='bn'>(একটি)</span>"],["the","specific / known — <b>the</b> sun, <b>the</b> book you gave me <span class='bn'>(নির্দিষ্ট)</span>"],["No article","general plurals / uncountables — I like <b>rice</b> (not 'the rice')"]],
+   exercises:[
+     mcq("I saw ___ elephant at the zoo.",["a","an","the"],1,"'elephant' starts with a vowel sound → an."),
+     fill("She is ___ honest woman. (a/an)","an","'honest' sounds like 'onest' — a vowel sound → an."),
+     mcq("Which is correct?",["He is best student in class.","He is the best student in the class."],1,"'best' is specific and 'the class' is known → the."),
+     mcq("I love ___. (general)",["the music","music"],1,"General / uncountable → no article."),
+     order("The sun rises in the east.","Put the words in order.")
+   ],
+   quiz:[ mcq("Can you pass ___ salt? (it's on the table)",["a","the"],1,"Specific salt we both see → the."),
+          fill("It took ___ hour. (a/an)","an","'hour' has a silent h → vowel sound → an."),
+          mcq("I need ___ umbrella; it's raining.",["a","an"],1,"'umbrella' vowel sound → an.") ],
+   review:["Bangla has no a/an/the — don't drop them in English.","a/an = one, not specific; the = specific / known.","Use 'an' before a vowel SOUND (an hour, an MP)."] },
+
+  {id:"sm2",title:"Prepositions we get wrong",difficulty:"Beginner",xp:25,
+   explanation:"Bangla prepositions don't map one-to-one to English <span class='bn'>(শব্দে শব্দে অনুবাদ করো না)</span>. Learn these as fixed phrases, not by translation.",
+   examples:[["discuss (no 'about')","We discussed the plan. ✅ (not 'discussed about')"],["married TO","She is married to a doctor. ✅ (not 'married with')"],["good AT","He is good at maths. ✅ (not 'good in')"],["depend ON / listen TO","It depends on you. Listen to me. ✅"]],
+   exercises:[
+     mcq("Which is correct?",["We discussed about the issue.","We discussed the issue."],1,"'discuss' takes no 'about'."),
+     mcq("She is married ___ an engineer.",["with","to"],1,"married TO someone."),
+     mcq("I'm good ___ cooking.",["in","at"],1,"good AT an activity."),
+     fill("Please listen ___ the teacher.","to","listen TO someone."),
+     mcq("He is angry ___ me.",["on","with"],1,"angry WITH a person (angry ABOUT a thing).")
+   ],
+   quiz:[ mcq("Which is correct?",["Request you to do it.","I request you to do it."],1,"Use a subject: 'I request ...'."),
+          mcq("Everything depends ___ the weather.",["on","in"],0,"depend ON."),
+          mcq("Which is correct?",["Explain me the rule.","Explain the rule to me."],1,"explain something TO someone.") ],
+   review:["discuss / request / order + object (no 'about / for').","married to, good at, angry with, depend on, listen to.","Learn prepositions as fixed phrases, not by translation."] },
+
+  {id:"sm3",title:"Tenses: 'am having', 'since 3 years'",difficulty:"Intermediate",xp:30,
+   explanation:"Two big fixes. 1) <b>Stative verbs</b> (have, know, want, like, understand) do NOT take <b>-ing</b>. 2) Use <b>for</b> + a length of time, and <b>since</b> + a starting point.",
+   examples:[["have (own)","I have a car. ✅ (not 'I am having a car')"],["for + duration","I have lived here for 3 years. ✅ (not 'since 3 years')"],["since + start","I have lived here since 2021. ✅"],["stative","I understand now. ✅ (not 'I am understanding')"]],
+   exercises:[
+     mcq("Which is correct?",["I am having two brothers.","I have two brothers."],1,"'have' (own) is stative — no -ing."),
+     mcq("I've worked here ___ five years.",["since","for"],1,"for + a length of time."),
+     mcq("I've known her ___ 2019.",["for","since"],1,"since + a start point."),
+     fill("He ___ (know) the answer. (base + s)","knows","'know' is stative → knows, not 'is knowing'."),
+     mcq("Which is correct?",["I am wanting tea.","I want tea."],1,"'want' is stative.")
+   ],
+   quiz:[ mcq("She ___ a headache since morning.",["is having","has had"],1,"Duration up to now → present perfect."),
+          mcq("We've been friends ___ childhood.",["for","since"],1,"since a point in the past."),
+          mcq("Which is correct?",["I am liking this song.","I like this song."],1,"'like' is stative.") ],
+   review:["Stative verbs (have, know, like, want) don't take -ing.","for + duration (for 3 years); since + start (since 2021).","'I have a car', not 'I am having a car'."] },
+
+  {id:"sm4",title:"Tag questions & fillers",difficulty:"Intermediate",xp:30,
+   explanation:"In South Asia we often add <b>'isn't it?'</b> or <b>'na?'</b> to everything <span class='bn'>('তাই না?' মানেই isn't it? নয়)</span>. In English the tag must match the verb. Also go easy on 'only', 'itself' and 'na'.",
+   examples:[["Match the verb","You are coming, aren't you? / He can swim, can't he?"],["Positive → negative tag","She is a teacher, isn't she?"],["Avoid 'na?'","'You'll come na?' → 'You'll come, won't you?'"],["'only' overuse","'I did it yesterday only' → 'I did it just yesterday'."]],
+   exercises:[
+     mcq("You live in Dhaka, ___?",["isn't it","don't you"],1,"verb 'live' → don't you."),
+     mcq("She can drive, ___?",["isn't it","can't she"],1,"can → can't she."),
+     mcq("They are ready, ___?",["aren't they","isn't it"],0,"are → aren't they."),
+     fill("He works here, ___ he? (doesn't/isn't)","doesn't","'works' → doesn't he."),
+     mcq("More natural:",["Give me that pen na.","Could you pass me that pen?"],1,"A polite request instead of 'na'.")
+   ],
+   quiz:[ mcq("We should leave now, ___?",["shouldn't we","isn't it"],0,"should → shouldn't we."),
+          mcq("It's cold today, ___?",["isn't it","doesn't it"],0,"is → isn't it (correct here!)."),
+          mcq("Avoid saying:",["I only wanted to help.","I wanted to help itself."],1,"'itself' is not used this way.") ],
+   review:["A tag question must match the verb (do/does/is/can...).","'isn't it?' is not a universal tag.","Drop filler 'na?', extra 'only' and 'itself'."] },
+
+  {id:"sm5",title:"Words to drop in global English",difficulty:"Advanced",xp:30,
+   explanation:"Some words are common in South Asia but confuse international speakers. Learn the global version so colleagues everywhere understand you.",
+   examples:[["prepone → move earlier","'Prepone the meeting' → 'move the meeting earlier'."],["do the needful → be specific","'Do the needful' → 'Please arrange it / send it'."],["revert → reply","'Revert back' → 'reply' / 'get back to me'."],["out of station → out of town","'I'm out of station' → 'I'm out of town / away'."],["pass out → graduate","'I passed out in 2020' → 'I graduated in 2020'."]],
+   exercises:[
+     mcq("Global English for 'Please do the needful':",["Please do the needful.","Please go ahead and arrange it."],1,"Be specific about the action."),
+     mcq("'I'll revert back to you' → better:",["I'll get back to you.","I'll revert back soon."],0,"'get back to you' is standard."),
+     mcq("'My cousin brother' → ",["my cousin","my brother cousin"],0,"Just 'cousin'."),
+     fill("'Can we prepone the call?' → move it ___.","earlier","prepone = make earlier."),
+     mcq("'I passed out in 2019' (about college) → ",["I graduated in 2019.","I fainted in 2019."],0,"'pass out' means faint; use 'graduated'.")
+   ],
+   quiz:[ mcq("Neutral, global choice:",["Kindly do the needful.","Could you please approve this?"],1,"Specific and polite."),
+          mcq("'He is out of station' → ",["He is out of town.","He is out of station."],0,"'out of town' is understood everywhere."),
+          mcq("'Same to same' → ",["exactly the same","different"],0,"Say 'exactly the same' or 'identical'.") ],
+   review:["Avoid: prepone, do the needful, revert back, cousin brother, out of station, pass out (=graduate).","Be specific and polite instead.","This makes you clearer with international colleagues."] }
+ ]},
+
+{id:"clearpron",group:"Learn",name:"Clear Pronunciation",icon:"👄",color:"#0EA5E9",desc:"Master the English sounds South Asians find tricky.",
+ lessons:[
+  {id:"cp1",title:"V vs W",difficulty:"Beginner",xp:25,
+   explanation:"Bangla/Hindi often merge V and W. <b>V</b>: top teeth touch the bottom lip (voiced). <b>W</b>: round your lips, no teeth. 'van' vs 'one'.",
+   examples:[["V — teeth on lip","<b>v</b>an, <b>v</b>ery, ha<b>v</b>e <span class='bn'>(দাঁত ঠোঁটে)</span>"],["W — round lips","<b>w</b>in, <b>w</b>ater, a<b>w</b>ay <span class='bn'>(ঠোঁট গোল)</span>"],["Pairs","vine / wine, vet / wet, west / vest"]],
+   exercises:[
+     listen("Which word did you hear?","wine",["vine","wine"],1,"Round lips, no teeth → wine."),
+     listen("Which word did you hear?","vet",["vet","wet"],0,"Teeth on lip → vet."),
+     say("Say the pair slowly.","very ... well","Teeth touch lip for V; round lips for W."),
+     mcq("For /v/, your teeth touch your:",["bottom lip","tongue"],0,"Top teeth on the bottom lip."),
+     listen("Which word did you hear?","west",["vest","west"],1,"Round lips → west.")
+   ],
+   quiz:[ listen("Pick the word.","vine",["vine","wine"],0,"Teeth on lip → vine."),
+          mcq("For /w/ you:",["round your lips","touch teeth to lip"],0,"Round the lips, no teeth.") ],
+   review:["V = top teeth on bottom lip (voiced).","W = rounded lips, no teeth.","Practise pairs: vine/wine, vet/wet, west/vest."] },
+
+  {id:"cp2",title:"P, F and the puff of air",difficulty:"Beginner",xp:25,
+   explanation:"In Bangla, P / PH and F can blur. <b>F</b> = teeth on lip (like V but no voice). <b>P</b> = lips together with a small puff of air (aspiration) at the start of a word: 'pin'.",
+   examples:[["F — teeth on lip","<b>f</b>an, cof<b>f</b>ee, lea<b>f</b>"],["P — lips + puff","<b>p</b>in, <b>p</b>en, hap<b>p</b>y"],["Pairs","fan / pan, fine / pine, coffee / copy"]],
+   exercises:[
+     listen("Which word did you hear?","fan",["pan","fan"],1,"Teeth on lip → fan."),
+     listen("Which word did you hear?","pine",["fine","pine"],1,"Lips together + puff → pine."),
+     say("Hold a paper near your mouth and say it.","pin ... pin","The paper should move — that's aspiration."),
+     mcq("For /f/, your teeth touch your:",["bottom lip","tongue"],0,"Top teeth on the bottom lip."),
+     listen("Which word did you hear?","coffee",["copy","coffee"],1,"/f/ sound → coffee.")
+   ],
+   quiz:[ listen("Pick the word.","fine",["fine","pine"],0,"Teeth on lip → fine."),
+          mcq("English 'p' at the start of a word has:",["a puff of air","no air"],0,"Aspiration — a small puff.") ],
+   review:["F = teeth on lip (no voice).","P = lips together with a puff of air.","Practise: fan/pan, fine/pine, coffee/copy."] },
+
+  {id:"cp3",title:"The Z sound (zoo, not 'joo')",difficulty:"Intermediate",xp:25,
+   explanation:"Bangla often replaces /z/ with a 'j' sound. <b>/z/</b> is a buzzing sound — same mouth as /s/ but with your voice on. zoo, buzz, is, was.",
+   examples:[["Z — buzzing","<b>z</b>oo, <b>z</b>ero, bu<b>zz</b> <span class='bn'>(ভ্রমরের শব্দ)</span>"],["Hidden Z","the 's' in <b>is, was, cars, dogs</b> is /z/"],["Not J","'zero' is /z/, not 'jero'"]],
+   exercises:[
+     mcq("The 's' in 'dogs' sounds like:",["/s/","/z/"],1,"After a voiced sound → /z/ (dogz)."),
+     listen("Which word did you hear?","zip",["zip","sip"],0,"Buzzing /z/ → zip."),
+     say("Buzz like a bee, then say the word.","zzz ... zoo","Add voice to /s/ to get /z/."),
+     mcq("'was' ends with:",["/s/","/z/"],1,"'waz' — a /z/ sound."),
+     fill("Say 'zero' — it starts with the letter ___.","z","/z/ buzzing sound, not 'j'.")
+   ],
+   quiz:[ listen("Pick the word.","buzz",["bus","buzz"],1,"Buzzing end → buzz."),
+          mcq("The plural 'keys' ends in:",["/s/","/z/"],1,"Voiced → /z/.") ],
+   review:["/z/ is a buzzing sound (voiced /s/).","Many plural -s and 'is / was' are /z/.","zoo, zero, buzz — not 'joo, jero'."] },
+
+  {id:"cp4",title:"S, SH and the 'sh' trap",difficulty:"Intermediate",xp:25,
+   explanation:"Keep <b>/s/</b> (a snake's hiss) separate from <b>/ʃ/</b> ('sh', a quiet hush). Swapping them changes the word.",
+   examples:[["S — hiss","<b>s</b>ee, bu<b>s</b>, <b>s</b>ip"],["SH — hush","<b>sh</b>e, ca<b>sh</b>, <b>sh</b>ip"],["Pairs","see / she, sip / ship, sock / shock"]],
+   exercises:[
+     listen("Which word did you hear?","ship",["sip","ship"],1,"'sh' → ship."),
+     listen("Which word did you hear?","see",["see","she"],0,"Pure /s/ → see."),
+     mcq("'cash' ends in:",["/s/","/sh/"],1,"'sh' sound → cash."),
+     say("Say the pair.","sip ... ship","/s/ hiss vs /ʃ/ hush."),
+     listen("Which word did you hear?","shock",["sock","shock"],1,"'sh' → shock.")
+   ],
+   quiz:[ listen("Pick the word.","she",["see","she"],1,"'sh' → she."),
+          mcq("The 'sh' sound is made with:",["rounded lips, hushed air","teeth on lip"],0,"Rounded, hushed airflow.") ],
+   review:["/s/ = hiss; /ʃ/ ('sh') = hush.","Practise see/she, sip/ship, sock/shock.","Don't swap s and sh."] },
+
+  {id:"cp5",title:"Word stress & rhythm",difficulty:"Advanced",xp:30,
+   explanation:"Bangla is fairly even (syllable-timed); English is <b>stress-timed</b> — one syllable in a word is louder and longer, and small words are weak. Wrong stress can make a word hard to understand.",
+   examples:[["Stress a syllable","<b>PHO</b>-to, ba-<b>NA</b>-na, com-<b>PU</b>-ter"],["Noun vs verb","<b>RE</b>-cord (noun) vs re-<b>CORD</b> (verb)"],["Weak words","'I can GO' — 'can' is weak (kuhn), 'go' is strong"]],
+   exercises:[
+     mcq("The stress in 'banana' is on:",["ba","NA","last na"],1,"ba-NA-na — the middle syllable."),
+     mcq("The stress in 'photograph' is on:",["PHO","to","graph"],0,"PHO-to-graph."),
+     mcq("'record' as a VERB is stressed on:",["RE","cord"],1,"re-CORD (verb) vs RE-cord (noun)."),
+     say("Say it with strong stress.","com-PU-ter","Make one syllable longer and louder."),
+     mcq("In 'I can help', the strong word is:",["can","help"],1,"Content words are stressed; 'can' is weak.")
+   ],
+   quiz:[ mcq("The stress in 'important' is on:",["IM","por","POR (por)"],2,"im-POR-tant."),
+          mcq("English rhythm is:",["syllable-timed","stress-timed"],1,"Stressed beats are evenly spaced.") ],
+   review:["English stresses one syllable per word — make it longer & louder.","Some words change meaning with stress (REcord/reCORD).","Weak little words (can, to, of) are said quickly."] }
+ ]},
+
+{id:"speakconf",group:"Learn",name:"Speak with Confidence",icon:"💪",color:"#F97316",desc:"Real phrases for introductions, work, phone and interviews.",
+ lessons:[
+  {id:"sc1",title:"Introducing yourself",difficulty:"Beginner",xp:25,
+   explanation:"Avoid 'Myself Rahul' <span class='bn'>('Myself...' ইংরেজিতে ভুল)</span>. Introduce yourself the natural way.",
+   examples:[["Name","Hi, I'm Rahul. / My name is Rahul."],["Work","I work as a teacher. / I'm a software engineer."],["Origin","I'm from Dhaka. / I'm based in Dhaka."],["Reply","Nice to meet you. — Nice to meet you too."]],
+   exercises:[
+     mcq("Natural introduction:",["Myself Rahul.","Hi, I'm Rahul."],1,"Use 'I'm ...' or 'My name is ...'."),
+     mcq("Which is correct?",["I am doing job in a bank.","I work at a bank."],1,"'work at / for', not 'doing job'."),
+     fill("I'm ___ Dhaka. (preposition)","from","I'm from + place."),
+     order("My name is Ayesha.","Put the words in order."),
+     mcq("Reply to 'Nice to meet you.':",["Nice to meet you too.","Same to you only."],0,"Warm, standard reply.")
+   ],
+   quiz:[ mcq("Best choice:",["I am a fresher.","I'm a recent graduate."],1,"'fresher' is regional; use 'recent graduate'."),
+          mcq("'Where do you work?' →",["I work at a hospital.","I am in hospital."],0,"'in hospital' means you're a patient!") ],
+   review:["Use 'I'm ...' or 'My name is ...' — never 'Myself ...'.","'I work at / as ...', not 'doing job'.","'recent graduate', not 'fresher'."] },
+
+  {id:"sc2",title:"Small talk & greetings",difficulty:"Beginner",xp:25,
+   explanation:"Short, friendly exchanges build rapport before real talk. Keep them light and positive.",
+   examples:[["Greetings","How's it going? / How are you doing?"],["Replies","Pretty good, thanks — you? / Not bad!"],["Safe topics","weather, weekend, traffic, food"],["Ending","Good talking to you. / Catch you later."]],
+   exercises:[
+     mcq("Friendly reply to 'How's it going?':",["I am fine and you?","Pretty good, thanks — you?"],1,"Natural and warm."),
+     mcq("A good small-talk opener:",["What is your salary?","Busy day today?"],1,"Keep it light, not personal."),
+     fill("Nice ___ to you. (talking/talk)","talking","'Nice talking to you.'"),
+     match("Match greeting → reply.",[["How are you?","I'm good, thanks."],["See you!","See you!"],["Long time!","I know, it's been ages!"]]),
+     mcq("Polite way to end a chat:",["Ok bye.","It was great catching up!"],1,"A warmer close.")
+   ],
+   quiz:[ mcq("Avoid asking a new colleague:",["How was your weekend?","How much do you earn?"],1,"Money is too personal for small talk."),
+          mcq("'It's been ages!' means:",["long time no see","I'm tired"],0,"A long time since we met.") ],
+   review:["Small talk = short, friendly, low-stakes.","Avoid money / age / very personal questions early.","Useful: 'How's it going?', 'Good talking to you.'"] },
+
+  {id:"sc3",title:"Polite requests at work",difficulty:"Intermediate",xp:30,
+   explanation:"Replace commands and 'do the needful' with polite forms: <b>Could you...?</b>, <b>Would you mind...?</b>, <b>I'd like...</b>",
+   examples:[["Ask","Could you send me the file, please?"],["Softer","Would you mind checking this?"],["Your own request","I'd like to ... / I was hoping to ..."],["Instead of 'do the needful'","Please review and approve it."]],
+   exercises:[
+     mcq("Most polite:",["Send me the report.","Could you send me the report, please?"],1,"'Could you ... please?' is polite."),
+     mcq("Replace 'Please do the needful':",["Please arrange the payment.","Please do the needful fast."],0,"Say exactly what you need."),
+     mcq("'Would you mind ___ the door?'",["closing","to close"],0,"'Would you mind + -ing'."),
+     fill("I'd ___ to schedule a meeting. (like/liked)","like","'I'd like to ...'"),
+     mcq("Softest request:",["Give me five minutes.","Could I have five minutes, please?"],1,"A question is softer.")
+   ],
+   quiz:[ mcq("Polite email line:",["Kindly revert.","Please let me know your thoughts."],1,"Clear and standard."),
+          mcq("'Would you mind helping?' — a 'yes, happy to' reply is:",["Not at all.","Yes, I mind."],0,"'Not at all' = happy to help.") ],
+   review:["Use 'Could you...?' / 'Would you mind + -ing?'.","Say the exact action instead of 'do the needful'.","'I'd like to ...' for your own requests."] },
+
+  {id:"sc4",title:"On the phone",difficulty:"Intermediate",xp:30,
+   explanation:"Phone English uses set phrases. Learn them so you sound calm and clear.",
+   examples:[["Answer","Hello, this is Ayesha speaking."],["Ask for someone","Could I speak to Mr Khan, please?"],["Hold","One moment, please. / I'll put you through."],["Not clear","Sorry, could you repeat that? / You're breaking up."]],
+   exercises:[
+     mcq("Answering a work call:",["Who is this?","Hello, this is Sara speaking."],1,"Introduce yourself politely."),
+     mcq("Ask them to wait:",["Wait.","One moment, please."],1,"A polite hold."),
+     fill("Sorry, could you ___ that? (repeat)","repeat","Ask politely for a repeat."),
+     mcq("Bad line — say:",["Your voice is bad.","Sorry, you're breaking up."],1,"A standard phrase."),
+     order("Could I speak to the manager?","Put the request in order.")
+   ],
+   quiz:[ mcq("To connect a caller, say:",["I'll put you through.","I'll cut you."],0,"'put you through' = connect."),
+          mcq("Offering to help a caller:",["Can I take a message?","Tell me fast."],0,"A polite offer.") ],
+   review:["'This is ... speaking.' introduces you.","'Could I speak to ...?' / 'One moment, please.'","Ask: 'Could you repeat that?' when unclear."] },
+
+  {id:"sc5",title:"Meetings & interviews",difficulty:"Advanced",xp:30,
+   explanation:"Phrases to agree, disagree politely, ask for a repeat, and buy a little thinking time.",
+   examples:[["Agree","That's a good point. / I agree."],["Disagree politely","I see your point, but ... / I'm not sure I agree."],["Ask to repeat","Could you clarify that? / Sorry, I didn't catch that."],["Buy time","That's a great question — let me think for a moment."]],
+   exercises:[
+     mcq("Polite disagreement:",["You are wrong.","I see your point, but I think ..."],1,"Soften the disagreement."),
+     mcq("You didn't hear well:",["Say again?","Sorry, I didn't catch that."],1,"A polite request."),
+     mcq("In an interview, 'my strength is ...' →",["I'm a hard worker and I learn quickly.","I am too good."],0,"Specific and modest."),
+     fill("Let me ___ about that for a moment. (think)","think","Buy a little time politely."),
+     mcq("Agreeing warmly:",["That's a fair point.","Whatever you say."],0,"Positive and professional.")
+   ],
+   quiz:[ mcq("Ask for clarification:",["Could you clarify that?","Explain again fast."],0,"Polite and clear."),
+          mcq("A good interview closer:",["Thank you for your time.","Ok, bye."],0,"Professional and warm.") ],
+   review:["Agree: 'That's a good point.'","Disagree gently: 'I see your point, but ...'","Ask: 'Could you clarify?' / 'I didn't catch that.'"] }
+ ]},
+
+
 {id:"pron-game",group:"Games",name:"Pronunciation Challenges",icon:"🎯",color:"#DB2777",desc:"Minimal-pair listening game.",
  lessons:[
   {id:"pg1",title:"Minimal Pairs Challenge",difficulty:"Intermediate",xp:30,
@@ -873,6 +1107,7 @@ function renderNav(){
   });
   nav.appendChild(el("div","nav-group","Progress"));
   nav.appendChild(makeNav("progress",null,"📊","Progress & Stats"));
+  nav.appendChild(makeNav("resources",null,"📚","Resources"));
 }
 function makeNav(view,id,icon,label){
   var b=el("button","nav-item","<span class='ic'>"+icon+"</span><span class='label'>"+label+"</span>");
@@ -881,11 +1116,69 @@ function makeNav(view,id,icon,label){
   return b;
 }
 
+
+function renderResources(){
+  var v=$("#view");v.innerHTML="";
+  var head=el("div","page-head");
+  head.innerHTML="<h1>📚 Resources</h1><p class='sub'>Free, trusted tools to keep improving — hand-picked for South Asian learners. Links open in a new tab.</p>";
+  v.appendChild(head);
+  var tip=el("div","card");
+  tip.style.cssText="border-left:4px solid #6C5CE7;margin-bottom:18px";
+  tip.innerHTML="<b>💡 Tip for South Asian learners:</b> pick <i>one</i> listening source (BBC or VOA) and <b>shadow</b> it 10 minutes a day — repeat aloud right after the speaker. Your rhythm, pronunciation and confidence grow fastest this way <span class='bn'>(প্রতিদিন ১০ মিনিট শোনো ও সাথে সাথে বলো)</span>.";
+  v.appendChild(tip);
+  var G=[
+   ["📖","Learn English (free)",[
+     ["BBC Learning English","Lessons, video & audio for all levels","https://www.bbc.co.uk/learningenglish"],
+     ["British Council LearnEnglish","Courses, grammar & speaking practice","https://learnenglish.britishcouncil.org/"],
+     ["VOA Learning English","News read slowly, with transcripts","https://learningenglish.voanews.com/"],
+     ["Cambridge English","Free activities & resources","https://www.cambridgeenglish.org/learning-english/"]]],
+   ["🗣️","Pronunciation & speaking",[
+     ["YouGlish","Hear any word in real videos","https://youglish.com/"],
+     ["BBC Pronunciation","The sounds of English, with mouth shapes","https://www.bbc.co.uk/learningenglish/features/pronunciation"],
+     ["Forvo","Native-speaker recordings of words","https://forvo.com/"],
+     ["Rachel's English","Free accent & rhythm videos","https://rachelsenglish.com/"]]],
+   ["📐","Grammar help",[
+     ["Perfect English Grammar","Clear rules + free exercises","https://www.perfect-english-grammar.com/"],
+     ["British Council Grammar","Grammar explained with practice","https://learnenglish.britishcouncil.org/grammar"],
+     ["Cambridge Grammar","Grammar + meaning in one place","https://dictionary.cambridge.org/grammar/british-grammar/"],
+     ["Grammarly Handbook","Quick writing & grammar tips","https://www.grammarly.com/blog/category/handbook/"]]],
+   ["🎯","IELTS & exams",[
+     ["British Council IELTS","Official prep & free practice tests","https://takeielts.britishcouncil.org/"],
+     ["IDP IELTS","Free practice materials","https://ielts.idp.com/prepare"],
+     ["IELTS Liz","Popular free IELTS lessons","https://ieltsliz.com/"],
+     ["Cambridge English exams","Find the right exam for you","https://www.cambridgeenglish.org/"]]],
+   ["📰","Reading & listening",[
+     ["News in Levels","World news at 3 difficulty levels","https://www.newsinlevels.com/"],
+     ["Breaking News English","Graded news lessons with audio","https://breakingnewsenglish.com/"],
+     ["TED Talks","Ideas worth hearing, with subtitles","https://www.ted.com/talks"],
+     ["Simple English Wikipedia","Articles in easy English","https://simple.wikipedia.org/"]]],
+   ["📚","Dictionaries & vocabulary",[
+     ["Cambridge Dictionary","Learner-friendly definitions + audio","https://dictionary.cambridge.org/"],
+     ["Oxford Learner's Dictionaries","Definitions with example sentences","https://www.oxfordlearnersdictionaries.com/"],
+     ["Merriam-Webster","Trusted US English dictionary","https://www.merriam-webster.com/"],
+     ["Vocabulary.com","Learn words with adaptive practice","https://www.vocabulary.com/"]]]
+  ];
+  var wrap=el("div","res-cats");
+  G.forEach(function(g){
+    var c=el("div","card");
+    var h="<div class='res-em'>"+g[0]+"</div><h3 class='res-h'>"+g[1]+"</h3>";
+    g[2].forEach(function(r){
+      h+="<a class='res-link' href='"+r[2]+"' target='_blank' rel='noopener noreferrer'>"+r[0]+"<small>"+r[1]+"</small></a>";
+    });
+    c.innerHTML=h;wrap.appendChild(c);
+  });
+  v.appendChild(wrap);
+  var note=el("p","muted");note.style.cssText="font-size:.8rem;margin-top:16px";
+  note.innerHTML="These sites are independent of English Foundations. Explore, then come back and practise in a lesson.";
+  v.appendChild(note);
+}
+
 /* ============================ ROUTER ============================ */
 function go(view,id){currentRoute={view:view,id:id||null};renderNav();
   if(view==="dashboard")renderDashboard();
   else if(view==="module")renderModule(id);
   else if(view==="progress")renderProgress();
+  else if(view==="resources")renderResources();
   window.scrollTo(0,0);
 }
 
