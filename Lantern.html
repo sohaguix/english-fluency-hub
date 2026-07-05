@@ -443,6 +443,8 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .ai-send:hover{filter:brightness(1.08)}
 @media(max-width:520px){.ai-msg{max-width:94%}.ai-acts{grid-template-columns:1fr 1fr}}
 
+.bank-audio{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--brand-soft);color:var(--brand);vertical-align:middle;margin-left:8px}
+.bank-audio svg{width:15px;height:15px}
 </style>
 </head>
 <body>
@@ -955,8 +957,8 @@ function renderBank(){
   let data=sets[bankTab].data;
   if(bankQuery){ const q=bankQuery.toLowerCase(); data=data.filter(v=>v.en.toLowerCase().includes(q)||v.bn.includes(bankQuery)||v.ex.toLowerCase().includes(q)); }
   const shown=data.slice(0,bankLimit);
-  let html=`<div class="panel-head"><h2>Vocabulary bank</h2>
-    <p>${RAW.vocab.abstract.length+RAW.vocab.phrasal.length+RAW.vocab.advanced.length} words with meaning, example, and audio. Tap ${ic('speaker')} to hear each one.</p></div>
+  let html=`<div class="panel-head"><h2>Vocabulary bank <span class="bank-audio">${ic('speaker')}</span></h2>
+    <p>${RAW.vocab.abstract.length+RAW.vocab.phrasal.length+RAW.vocab.advanced.length} words with meaning, example, and audio — tap the speaker on any word to hear it.</p></div>
     <div class="bank-tabs">`;
   Object.entries(sets).forEach(([k,v])=>{ html+=`<button class="bank-tab ${k===bankTab?'on':''}" onclick="setBankTab('${k}')">${v.label} · ${v.data.length}</button>`; });
   html+=`</div><input class="wsearch" placeholder="Search a word or meaning…" value="${bankQuery.replace(/"/g,'&quot;')}" oninput="bankSearch(this.value)"><div class="wlist">`;
