@@ -1311,6 +1311,7 @@ function lanternAnswer(q){
   const raw=(q||"").trim();
   if(!raw) return "";
   const s=' '+raw.toLowerCase()+' ';
+  const sn=' '+raw.toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim()+' ';
   // 1) sentence check
   if(/^(check|correct|fix)\b/i.test(raw) || /is this (correct|right|ok)/i.test(raw)){
     let sent=raw.replace(/^(check|correct|fix)[:\-\s]*/i,'').replace(/^is this (correct|right|ok)[:\-\s]*/i,'').trim();
@@ -1329,7 +1330,7 @@ function lanternAnswer(q){
   // 5) stative
   if(/am having|is having|are having|stative/.test(s)) return staticAns();
   // 6) parts of speech
-  for(const p of POS){ const key=p.name.toLowerCase().replace(/s$/,''); if(s.indexOf(' '+key+' ')>=0 || s.indexOf(p.name.toLowerCase())>=0) return posCard(p); }
+  for(const p of POS){ const key=p.name.toLowerCase().replace(/s$/,''); if(sn.indexOf(' '+key+' ')>=0 || sn.indexOf(' '+p.name.toLowerCase()+' ')>=0) return posCard(p); }
   // 7) common mistakes
   const CM=[
     {k:['discuss about'], h:"Say <b>“discuss the topic”</b> — ‘discuss’ takes no ‘about’."},
@@ -1348,6 +1349,7 @@ function lanternAnswer(q){
   let wm=raw.match(/(?:meaning of|what does|what is|whats|define|meaning for)\s+["'“]?([a-zA-Z][a-zA-Z\-]{1,24})/i);
   if(wm) word=wm[1];
   if(!word){ const m2=raw.match(/^([a-zA-Z\-]{2,})\s+mean(s|ing)?\b/i); if(m2) word=m2[1]; }
+  if(word && /^(a|an|the|is|are|to|of|it|this|that|do|does)$/i.test(word)) word=null;
   if(word){ const w=chatWords()[word.toLowerCase()]; if(w) return wordCard(w); }
   // 9) greetings / help
   if(/^(hi|hii|hello|hey|salam|assalam|good morning|good evening|good afternoon)\b/i.test(raw)) return "Hello! 👋 Ask me about grammar, a tense, a word's meaning, or type <b>check: your sentence</b>.";
