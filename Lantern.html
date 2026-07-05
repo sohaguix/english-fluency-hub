@@ -445,6 +445,75 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 
 .bank-audio{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--brand-soft);color:var(--brand);vertical-align:middle;margin-left:8px}
 .bank-audio svg{width:15px;height:15px}
+
+/* ===== COMMUNICATION FRAMEWORKS ===== */
+.fw-prog{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.fw-prog-bar{flex:1;height:10px;border-radius:6px;background:var(--paper-2);overflow:hidden}
+.fw-prog-bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--violet));border-radius:6px;transition:width .5s}
+.fw-prog-t{font:700 12.5px/1 var(--sans);color:var(--ink-soft);flex:none}
+.fw-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.fw-fil{border:1px solid var(--line);background:var(--card);color:var(--ink-soft);border-radius:999px;padding:7px 14px;font:700 12.5px/1 var(--sans);cursor:pointer;transition:all .15s}
+.fw-fil:hover{border-color:var(--brand);color:var(--brand)}
+.fw-fil.on{background:var(--brand);color:#fff;border-color:transparent}
+.fw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px}
+.fw-card{display:flex;align-items:center;gap:12px;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:14px 15px;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .15s}
+.fw-card:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var(--shadow-md)}
+.fw-card.done{background:linear-gradient(180deg,var(--card),var(--green-soft))}
+.fw-card-ic{width:44px;height:44px;flex:none;border-radius:13px;background:var(--paper-2);display:grid;place-items:center}
+.fw-card-ic svg{width:24px;height:24px}
+.fw-card-b{flex:1;min-width:0}
+.fw-card-t{font:700 15px/1.25 var(--sans);color:var(--ink)}
+.fw-card-bn{font-size:12px;color:var(--ink-faint);margin:1px 0 5px}
+.fw-lvl{display:inline-block;font:800 10px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;border:1px solid;border-radius:999px;padding:3px 8px}
+.fw-go{color:var(--ink-faint);font-size:18px;flex:none}
+.fw-check{flex:none;color:#fff;background:var(--green);width:24px;height:24px;border-radius:50%;display:grid;place-items:center}
+.fw-check svg{width:15px;height:15px}
+/* detail */
+.fw-back{border:none;background:none;color:var(--brand);font:700 13.5px/1 var(--sans);cursor:pointer;padding:4px 0;margin-bottom:10px}
+.fw-hero{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--lc);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.fw-hero-ic{width:54px;height:54px;flex:none;border-radius:15px;background:var(--paper-2);display:grid;place-items:center;color:var(--lc)}
+.fw-hero-ic svg{width:30px;height:30px}
+.fw-hero-t{font:700 21px/1.15 var(--disp);color:var(--ink)}
+.fw-hero-bn{font-size:13px;color:var(--ink-soft);margin:2px 0 6px}
+.fw-hero-tags{display:flex;gap:8px;align-items:center}
+.fw-done-tag{font:800 11px/1 var(--sans);color:var(--green);background:var(--green-soft);border-radius:999px;padding:5px 10px}
+.fw-sec{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 16px;margin-bottom:12px;box-shadow:var(--shadow-sm)}
+.fw-sec-h{display:flex;align-items:center;gap:8px;font:700 15px/1.2 var(--disp);color:var(--ink);margin-bottom:10px}
+.fw-sec-ic{font-size:17px}
+.fw-list{margin:0;padding-left:20px}
+.fw-list li{font-size:13.5px;line-height:1.55;color:var(--ink);margin:5px 0}
+.fw-warn li{color:#a13320}
+.fw-culture li{color:var(--ink-soft)}
+.fw-steps{display:flex;flex-direction:column;gap:2px}
+.fw-step{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line-2)}
+.fw-step:last-child{border-bottom:none}
+.fw-step-n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font:800 12px/24px var(--sans);text-align:center}
+.fw-step b{display:block;font-size:14px;color:var(--ink)}
+.fw-step span{display:block;font-size:13px;color:var(--ink-soft);margin-top:2px;line-height:1.5}
+.fw-ex{background:var(--paper-2);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.fw-ex-sit{font-size:12px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.fw-ex-say{font-size:14px;color:var(--ink);line-height:1.5}
+.fw-phrases{display:flex;flex-direction:column;gap:7px}
+.fw-phrase{text-align:left;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:11px;padding:9px 12px;font:600 13.5px/1.4 var(--sans);cursor:pointer;display:flex;justify-content:space-between;gap:8px;align-items:center;transition:all .13s}
+.fw-phrase:hover{border-color:var(--brand);background:var(--brand-soft)}
+.fw-phrase span{color:var(--brand);flex:none}
+.fw-vocab{display:flex;flex-direction:column;gap:6px}
+.fw-vrow{display:flex;align-items:center;gap:9px}
+.fw-vrow b{font-size:14px;color:var(--ink)}
+.fw-vrow .bn{margin-left:auto;font-size:13px;color:var(--ink-soft)}
+.fw-say{border:none;background:var(--brand-soft);color:var(--brand);width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:13px;flex:none}
+.fw-prac{border-top:1px dashed var(--line);padding-top:10px;margin-top:8px}
+.fw-prac:first-child{border-top:none;padding-top:0;margin-top:0}
+.fw-prac-q{font-weight:700;font-size:13.5px;margin-bottom:8px;color:var(--ink)}
+.fw-role{display:flex;flex-direction:column;gap:9px}
+.fw-role-ai{display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--ink);line-height:1.5;background:var(--paper-2);border-radius:12px;padding:10px 12px}
+.fw-role-ai svg{width:19px;height:19px;flex:none;color:var(--coral);margin-top:2px}
+.fw-role-me{align-self:flex-end;background:var(--brand);color:#fff;border-radius:12px;border-bottom-right-radius:5px;padding:9px 13px;font-size:13.5px;max-width:85%}
+.fw-role-replies{display:flex;flex-wrap:wrap;gap:7px}
+.fw-aip{font-size:13px;color:var(--ink-soft);margin:0 0 8px;line-height:1.5}
+.fw-complete{text-align:center;margin:6px 0 10px}
+@media(max-width:520px){.fw-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -466,6 +535,7 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
   <!-- PROFILE -->
   <div class="panel" id="panel-profile"></div>
   <div class="panel" id="panel-coach"></div>
+  <div class="panel" id="panel-frameworks"></div>
 </div>
 
 <!-- bottom nav -->
@@ -1496,6 +1566,674 @@ function aiDialReply(id,i){ const m=AI.msgs.find(x=>x.id===id); if(!m) return; c
   const t=sc.turns[m.data.step]; setTimeout(()=>say(t.ai),250);
 }
 
+const FRAMEWORKS=[{id:"everyday", title:"Everyday Conversations", bn:"দৈনন্দিন কথোপকথন", icon:"chat", level:"Beginner",
+ objectives:["Greet people and make simple small talk with confidence","Ask and answer everyday questions about routine and plans","Keep a short conversation going with natural follow-ups"],
+ steps:[{t:"Open warmly", d:"Start with a friendly greeting and a name if you know it, like 'Hi Ratna, how are you?'"},
+ {t:"Add a small comment", d:"Follow the greeting with a light remark about the day, weather, or place to break the ice."},
+ {t:"Ask an easy question", d:"Invite the other person to talk with simple questions like 'What have you been up to?'"},
+ {t:"Listen and react", d:"Show interest with short reactions such as 'Oh, nice!' or 'That sounds fun.'"},
+ {t:"Close politely", d:"End on a pleasant note: 'It was good to see you. Take care!'"}],
+ examples:[{sit:"Meeting a neighbour in the morning", say:"Good morning! Lovely weather today, isn't it?"},
+ {sit:"Bumping into a friend at the shop", say:"Hey, what a surprise! How have you been?"},
+ {sit:"Saying goodbye after a chat", say:"Anyway, I should get going. Let's catch up soon!"}],
+ phrases:["How's it going?","What have you been up to?","Long time no see!","Not much, just the usual.","That sounds great!","I'd better get going.","Take care!","See you around."],
+ vocab:[{en:"catch up", bn:"খোঁজখবর নেওয়া / দেখা করা"},
+ {en:"the usual", bn:"স্বাভাবিক ব্যাপার / রোজকার মতো"},
+ {en:"small talk", bn:"হালকা আলাপ"},
+ {en:"bump into", bn:"হঠাৎ দেখা হওয়া"},
+ {en:"lovely", bn:"চমৎকার / সুন্দর"},
+ {en:"get going", bn:"রওনা দেওয়া"}],
+ practice:[{q:"A friend says 'How's it going?' What is the most natural reply?", options:["Not much, just busy with work.","Yes, I am going now.","I don't understand."], a:0, ex:"'How's it going?' asks about your life in general, so a short update like 'Not much, just busy' fits naturally."},
+ {q:"Which phrase politely ends a casual chat?", options:["Why are you here?","I'd better get going, take care!","Stop talking now."], a:1, ex:"'I'd better get going, take care!' is a warm, natural way to close a conversation."}],
+ mistakes:["Answering 'How are you?' with a long, detailed story instead of a short reply","Forgetting to ask a question back, which makes the talk feel one-sided","Translating word-for-word from Bengali, which can sound unnatural","Ending abruptly without a friendly goodbye"],
+ culture:["In English small talk, a short positive answer is expected even if you had a hard day","Making eye contact and smiling shows warmth and interest","Talking briefly about weather or the weekend is a safe, friendly icebreaker"],
+ roleplay:[{ai:"Hi! Long time no see. How have you been?", replies:["Pretty good, thanks! Busy but happy. How about you?","I've been well! It really has been a while."]},
+ {ai:"I've been great. Just started a new job last week.", replies:["Oh, congratulations! How is it going so far?","That's exciting news! I'm really happy for you."]},
+ {ai:"Thanks! It's a lot to learn, but I'm enjoying it.", replies:["That's wonderful. I'm sure you'll do great.","Nice! Take your time and you'll settle in soon."]},
+ {ai:"Anyway, I should head off. Let's grab coffee sometime!", replies:["Definitely! Message me and we'll set a day.","Sounds perfect. Take care and see you soon!"]}]},
+{id:"social", title:"Social & Casual Conversations", bn:"সামাজিক ও আটপৌরে কথোপকথন", icon:"user", level:"Beginner",
+ objectives:["Start conversations with new people at social events","Share opinions and ask questions to keep the talk flowing","Use friendly, relaxed language to build rapport"],
+ steps:[{t:"Break the ice", d:"Introduce yourself and find common ground: 'Hi, I'm Karim. How do you know the host?'"},
+ {t:"Find shared interests", d:"Ask about hobbies, food, or the event to discover topics you both enjoy."},
+ {t:"Share about yourself", d:"Offer a little information so the other person can respond and relate."},
+ {t:"Keep it light", d:"Use humour and positive comments; avoid heavy or sensitive topics early on."},
+ {t:"Exchange contact if it clicks", d:"If you connect, suggest staying in touch: 'We should keep in touch!'"}],
+ examples:[{sit:"At a party where you know few people", say:"Hi, I don't think we've met. I'm Nadia. Are you a friend of the host?"},
+ {sit:"Chatting about a shared hobby", say:"Oh, you like cricket too? Did you watch the match last night?"},
+ {sit:"Complimenting someone", say:"I really like your jacket, it suits you!"}],
+ phrases:["I don't think we've met.","So, what do you do for fun?","No way, me too!","That's so cool.","Tell me more about that.","We should hang out sometime.","It was really nice talking to you.","Let's stay in touch."],
+ vocab:[{en:"break the ice", bn:"আলাপ শুরু করা"},
+ {en:"hang out", bn:"সময় কাটানো / আড্ডা দেওয়া"},
+ {en:"common ground", bn:"মিল / সাধারণ বিষয়"},
+ {en:"hit it off", bn:"দ্রুত ভাব জমে যাওয়া"},
+ {en:"rapport", bn:"সুসম্পর্ক"},
+ {en:"laid-back", bn:"সহজ-সরল / নির্ভার"}],
+ practice:[{q:"You want to start talking to someone new at a party. What's a good opener?", options:["Give me your phone number.","Hi, I don't think we've met. I'm Sara.","Why are you standing alone?"], a:1, ex:"Introducing yourself politely is a warm, low-pressure way to begin a social conversation."},
+ {q:"Your new friend says 'No way, I love hiking too!' How do you keep it going?", options:["Okay.","That's great! Where do you usually go hiking?","I have to leave now."], a:1, ex:"Asking a follow-up question shows interest and keeps the conversation flowing."}],
+ mistakes:["Jumping into serious or personal topics too quickly","Talking only about yourself without asking questions","Standing silent instead of offering a simple comment or compliment","Using very formal language that feels stiff in casual settings"],
+ culture:["Compliments about clothing or hobbies are common and welcome in casual settings","It's fine to approach strangers at social events; a smile makes it easy","Sharing a bit about yourself helps others open up in return"],
+ roleplay:[{ai:"Hey, are you enjoying the party?", replies:["Yeah, it's great! The food is amazing. Are you a friend of the host?","Definitely! It's a lovely crowd. How about you?"]},
+ {ai:"I am! I actually work with Rahim. What about you?", replies:["Oh nice! I know him from college. Small world!","Cool! I'm his neighbour, actually."]},
+ {ai:"Nice! So what do you do for fun outside work?", replies:["I love photography. What about you?","Mostly reading and hiking. Do you have any hobbies?"]},
+ {ai:"I'm really into hiking too! We should go sometime.", replies:["I'd love that! Let's swap numbers.","Sounds great! Let's stay in touch."]}]},
+{id:"travel", title:"Travel & Hospitality English", bn:"ভ্রমণ ও আতিথেয়তার ইংরেজি", icon:"compass", level:"Beginner",
+ objectives:["Handle check-in, directions, and orders while travelling","Ask for help politely and understand common replies","Deal with simple problems like changes or complaints"],
+ steps:[{t:"Be polite and clear", d:"Start requests with 'Could I...' or 'Excuse me...' and speak slowly and clearly."},
+ {t:"State your need", d:"Say exactly what you want: 'I'd like to check in, please. I have a reservation.'"},
+ {t:"Confirm details", d:"Repeat key information like times, numbers, and prices to avoid mistakes."},
+ {t:"Ask when unsure", d:"If you don't understand, say 'Sorry, could you repeat that?' or 'What do you mean?'"},
+ {t:"Thank and close", d:"End with 'Thank you so much for your help.'"}],
+ examples:[{sit:"Checking in at a hotel", say:"Hi, I have a reservation under the name Hasan. Could I check in, please?"},
+ {sit:"Asking for directions", say:"Excuse me, could you tell me how to get to the train station?"},
+ {sit:"Ordering at a restaurant", say:"I'd like the grilled chicken, please. And could I get some water?"}],
+ phrases:["I have a reservation under...","Could you point me to...?","How much is it?","Is breakfast included?","Could I get the bill, please?","Do you have any rooms available?","Excuse me, where's the nearest...?","Thank you, that's very helpful."],
+ vocab:[{en:"reservation", bn:"বুকিং / আগাম ব্যবস্থা"},
+ {en:"check in", bn:"হোটেলে প্রবেশ নথিভুক্ত করা"},
+ {en:"the bill", bn:"বিল / হিসাব"},
+ {en:"available", bn:"খালি / পাওয়া যায় এমন"},
+ {en:"directions", bn:"পথনির্দেশ"},
+ {en:"complimentary", bn:"বিনামূল্যে দেওয়া"}],
+ practice:[{q:"You arrive at your hotel. What do you say at the front desk?", options:["Give me a room.","Hi, I have a reservation under Islam. Could I check in, please?","Where is my room?"], a:1, ex:"Stating your name and reservation politely helps staff find your booking quickly."},
+ {q:"You didn't understand the directions. What's the best response?", options:["Okay, bye.","Sorry, could you repeat that a bit slower, please?","You are wrong."], a:1, ex:"Politely asking someone to repeat slowly is the clearest way to get help you understand."}],
+ mistakes:["Skipping polite words like 'please' and 'excuse me'","Speaking too fast or too quietly when nervous","Not confirming prices or times, which leads to confusion","Saying 'I want' instead of the softer 'I'd like'"],
+ culture:["'Please' and 'thank you' are expected in almost every service interaction","It's normal to ask staff to repeat or slow down; they are happy to help","Tipping customs vary by country, so it's fine to ask what is usual"],
+ roleplay:[{ai:"Good afternoon! Welcome. How can I help you?", replies:["Hi, I have a reservation under the name Rahman. Could I check in, please?","Good afternoon! I'd like to check in. My booking is under Rahman."]},
+ {ai:"Of course. May I see your ID and booking confirmation?", replies:["Sure, here you go.","Yes, of course. Here is my passport and the confirmation."]},
+ {ai:"Thank you. You're in room 204. Breakfast is from 7 to 10.", replies:["Great, thank you. Is breakfast included in the price?","Perfect. Could you tell me where the breakfast room is?"]},
+ {ai:"Yes, breakfast is included. The dining room is on the ground floor.", replies:["Wonderful, thank you so much for your help.","That's very helpful. Have a nice day!"]}]},
+{id:"phone", title:"Phone & Video Call Communication", bn:"ফোন ও ভিডিও কল যোগাযোগ", icon:"mic", level:"Intermediate",
+ objectives:["Open, manage, and close calls professionally","Handle poor audio, interruptions, and clarifications smoothly","Take and leave clear messages and confirm next steps"],
+ steps:[{t:"Greet and identify", d:"State who you are and why you're calling: 'Hi, this is Farhan from Sales.'"},
+ {t:"Set the purpose", d:"Briefly explain the reason: 'I'm calling to follow up on the invoice.'"},
+ {t:"Manage the flow", d:"Signal turns clearly and pause for the other person; on video, avoid talking over people."},
+ {t:"Clarify audio issues", d:"If something is unclear, say 'Sorry, you cut out. Could you repeat that?'"},
+ {t:"Summarise and close", d:"Recap decisions and next steps: 'So, I'll send the report by Friday. Thanks!'"}],
+ examples:[{sit:"Starting a business call", say:"Good morning, this is Ayesha from the marketing team. Is this a good time to talk?"},
+ {sit:"Bad connection on a video call", say:"Sorry, you're breaking up a little. Could you say that again?"},
+ {sit:"Ending a call", say:"Great, I think we've covered everything. Thanks for your time, and I'll follow up by email."}],
+ phrases:["This is ... speaking.","Is now a good time?","Can everyone hear me okay?","Sorry, could you repeat that?","You're on mute.","Let me just confirm that.","Just to recap...","Thanks, I'll follow up with an email."],
+ vocab:[{en:"break up / cut out", bn:"সংযোগ কেটে যাওয়া"},
+ {en:"on mute", bn:"শব্দ বন্ধ অবস্থায়"},
+ {en:"follow up", bn:"পরবর্তী পদক্ষেপ নেওয়া"},
+ {en:"recap", bn:"সংক্ষেপে পুনরাবৃত্তি"},
+ {en:"put on hold", bn:"অপেক্ষায় রাখা"},
+ {en:"speak up", bn:"জোরে বলা"}],
+ practice:[{q:"The other person's audio keeps dropping. What do you say?", options:["Your internet is bad.","Sorry, you're cutting out a bit. Could you repeat that?","I can't talk to you."], a:1, ex:"Politely noting the audio issue and asking for a repeat keeps the call constructive."},
+ {q:"How should you end a business call clearly?", options:["Okay bye.","Just to recap, I'll send the report Friday. Thanks for your time!","I have to go."], a:1, ex:"Recapping next steps before closing confirms mutual understanding and sounds professional."}],
+ mistakes:["Forgetting to say who you are at the start of the call","Talking over others, especially on video calls with slight delays","Not confirming action points, leading to confusion later","Staying silent when audio is unclear instead of asking for a repeat"],
+ culture:["On video calls, muting when not speaking is polite in noisy settings","Confirming 'Is now a good time?' respects the other person's schedule","A short spoken recap plus a follow-up email is standard business practice"],
+ roleplay:[{ai:"Hello, this is Sana speaking. How can I help?", replies:["Hi Sana, this is Tanvir from IT. Is now a good time to talk?","Hello Sana, this is Tanvir. I'm calling about the software update."]},
+ {ai:"Sure, now works. Sorry, you're a little quiet, could you speak up?", replies:["Of course, is this better? I'm calling about the update.","Sorry about that, can you hear me clearly now?"]},
+ {ai:"Yes, much better. So what's the issue with the update?", replies:["The install failed on two machines. Could you check the logs?","It didn't complete on some computers, so I wanted to flag it."]},
+ {ai:"Got it. I'll look into it and get back to you today.", replies:["Great. Just to recap, you'll check the logs and update me today.","Perfect, thanks. I'll wait for your reply. Talk soon!"]}]},
+{id:"service", title:"Customer Service Communication", bn:"গ্রাহক সেবা যোগাযোগ", icon:"spark", level:"Intermediate",
+ objectives:["Greet and understand customer needs with empathy","Explain solutions clearly and manage expectations","Handle complaints calmly and turn them into positive outcomes"],
+ steps:[{t:"Greet and offer help", d:"Welcome the customer warmly: 'Thanks for reaching out. How can I help you today?'"},
+ {t:"Listen and acknowledge", d:"Let them explain fully, then acknowledge: 'I understand, that must be frustrating.'"},
+ {t:"Clarify the issue", d:"Ask questions and confirm details so you solve the right problem."},
+ {t:"Offer a solution", d:"Explain what you can do and when: 'I'll process a refund; it'll arrive in 3 days.'"},
+ {t:"Confirm and follow up", d:"Check they're satisfied: 'Is there anything else I can help with?'"}],
+ examples:[{sit:"A customer with a delayed order", say:"I'm really sorry for the delay. Let me check your order right away and find a solution."},
+ {sit:"Explaining a refund", say:"I've processed your refund. You should see it in your account within three business days."},
+ {sit:"Closing a support chat", say:"Happy I could help! Is there anything else you need today?"}],
+ phrases:["How can I help you today?","I'm sorry to hear that.","Let me look into that for you.","I completely understand.","Here's what I can do...","Thank you for your patience.","Is there anything else I can help with?","We really appreciate your feedback."],
+ vocab:[{en:"reach out", bn:"যোগাযোগ করা"},
+ {en:"look into", bn:"খতিয়ে দেখা"},
+ {en:"refund", bn:"টাকা ফেরত"},
+ {en:"resolve", bn:"সমাধান করা"},
+ {en:"escalate", bn:"উপরের স্তরে পাঠানো"},
+ {en:"apologise", bn:"ক্ষমা চাওয়া"}],
+ practice:[{q:"An angry customer complains about a late delivery. What's the best first response?", options:["It's not my fault.","I'm really sorry for the delay. Let me check what happened right away.","You should have waited."], a:1, ex:"Apologising and taking action calms the customer and shows you're there to help."},
+ {q:"You've solved the customer's problem. How do you close?", options:["Okay, done.","Is there anything else I can help you with today?","Please stop messaging me."], a:1, ex:"Offering further help ends the interaction on a helpful, professional note."}],
+ mistakes:["Getting defensive or blaming the customer","Making promises you cannot keep about timing or outcomes","Using jargon the customer may not understand","Rushing to a solution before fully understanding the problem"],
+ culture:["Empathy words like 'I understand' matter as much as the solution itself","Staying calm and polite even with rude customers is expected","Confirming next steps in writing builds trust and reduces repeat contacts"],
+ roleplay:[{ai:"Hi, my order arrived damaged and I'm really upset about it.", replies:["I'm so sorry to hear that. Let me sort this out for you right away.","That's really disappointing, I understand. Let me help fix this now."]},
+ {ai:"Thank you. I just want a replacement as soon as possible.", replies:["Absolutely. Could you share your order number so I can start that?","Of course. I'll arrange a replacement; may I have your order number?"]},
+ {ai:"Sure, it's ORD-4821.", replies:["Thank you. I've found it and I'm sending a replacement today.","Got it. I'll ship a new one right away, arriving in two days."]},
+ {ai:"Great, that's a relief. Thanks for the quick help.", replies:["You're very welcome. Is there anything else I can help with?","My pleasure! I'll email you the tracking details shortly."]}]},
+{id:"networking", title:"Networking Conversations", bn:"নেটওয়ার্কিং কথোপকথন", icon:"layers", level:"Intermediate",
+ objectives:["Introduce yourself with a clear, memorable pitch","Ask engaging questions to build professional connections","Follow up and maintain relationships after meeting"],
+ steps:[{t:"Introduce with purpose", d:"Give a short, clear intro: 'Hi, I'm Zara. I work in digital marketing for startups.'"},
+ {t:"Show genuine interest", d:"Ask about their work: 'What brought you into this field?'"},
+ {t:"Find mutual value", d:"Look for ways you might help each other or share ideas."},
+ {t:"Exchange details", d:"Suggest connecting: 'I'd love to stay in touch. Are you on LinkedIn?'"},
+ {t:"Follow up soon", d:"Send a short message within a day or two referencing your chat."}],
+ examples:[{sit:"Introducing yourself at a conference", say:"Hi, I'm Imran. I lead product design at a fintech company. What do you work on?"},
+ {sit:"Showing interest in their work", say:"That sounds fascinating. How did you get started in that area?"},
+ {sit:"Following up after the event", say:"Hi Nabila, it was great meeting you at the summit. I'd love to continue our chat about analytics."}],
+ phrases:["What do you do?","What brought you here today?","That's really interesting.","We should connect on LinkedIn.","I'd love to learn more about your work.","Let's keep in touch.","It was a pleasure meeting you.","I'll follow up with you soon."],
+ vocab:[{en:"elevator pitch", bn:"সংক্ষিপ্ত পরিচয় বক্তব্য"},
+ {en:"connect", bn:"যোগাযোগ স্থাপন করা"},
+ {en:"in your field", bn:"আপনার ক্ষেত্রে"},
+ {en:"opportunity", bn:"সুযোগ"},
+ {en:"follow up", bn:"পরবর্তী যোগাযোগ করা"},
+ {en:"reach out", bn:"যোগাযোগ করা"}],
+ practice:[{q:"Someone asks 'What do you do?' What's a strong networking answer?", options:["I work.","I'm a data analyst; I help retail companies use data to boost sales.","That's private."], a:1, ex:"A clear, specific answer gives the other person something to respond to and remember."},
+ {q:"How do you keep a connection alive after meeting someone?", options:["Do nothing.","Send a short follow-up message referencing your conversation.","Ask them for a job immediately."], a:1, ex:"A timely, personal follow-up turns a brief meeting into a lasting professional connection."}],
+ mistakes:["Giving a vague answer when asked about your work","Focusing only on what you can gain, not on mutual value","Forgetting to follow up after exchanging contacts","Talking too much without asking questions about the other person"],
+ culture:["A concise elevator pitch is valued; long introductions lose attention","Following up within a day or two is seen as professional, not pushy","Offering help first, before asking for favours, builds stronger networks"],
+ roleplay:[{ai:"Hi there, I don't think we've met. What do you do?", replies:["Hi! I'm Rifat, a UX designer for e-commerce apps. And you?","Nice to meet you! I'm Rifat, I design user experiences. What about you?"]},
+ {ai:"I'm in product management at a logistics company. Interesting field you're in!", replies:["Thanks! Logistics sounds complex. What's the biggest challenge you face?","Likewise! How did you get into product management?"]},
+ {ai:"Honestly, keeping teams aligned is the hardest part.", replies:["I can imagine. Good design and clear communication really help with that.","That resonates. I've seen how good UX eases team alignment too."]},
+ {ai:"Absolutely. We should chat more about that sometime.", replies:["I'd love that. Are you on LinkedIn? Let's connect.","Definitely! I'll follow up so we can continue this."]}]},
+{id:"conflict", title:"Difficult Conversations & Conflict Resolution", bn:"কঠিন আলোচনা ও দ্বন্দ্ব নিরসন", icon:"cards", level:"Advanced",
+ objectives:["Raise sensitive issues calmly and constructively","Listen to understand and de-escalate tension","Reach fair, agreed solutions while preserving the relationship"],
+ steps:[{t:"Prepare and stay calm", d:"Know your goal, choose a private moment, and manage your own emotions first."},
+ {t:"State the issue neutrally", d:"Describe the facts without blame: 'I noticed the report was late twice this month.'"},
+ {t:"Use 'I' statements", d:"Express impact from your view: 'I felt worried because it affected the deadline.'"},
+ {t:"Listen actively", d:"Let them respond fully; paraphrase to show you understand their side."},
+ {t:"Find common ground", d:"Focus on shared goals and agree on concrete next steps together."}],
+ examples:[{sit:"Addressing a colleague missing deadlines", say:"I'd like to talk about the last two reports. When they arrive late, it affects the whole team. Can we figure out a better plan?"},
+ {sit:"Disagreeing respectfully in a meeting", say:"I see it differently, and I'd like to explain my reasoning. Could we look at both options?"},
+ {sit:"Calming a heated discussion", say:"I can see we both feel strongly. Let's take a step back and focus on what we agree on."}],
+ phrases:["I'd like to talk about something.","From my perspective...","I hear what you're saying.","Help me understand your side.","Let's find a solution that works for both of us.","Can we take a step back?","I appreciate you being open about this.","Where do we go from here?"],
+ vocab:[{en:"de-escalate", bn:"উত্তেজনা কমানো"},
+ {en:"common ground", bn:"অভিন্ন অবস্থান"},
+ {en:"'I' statement", bn:"নিজের অনুভূতিভিত্তিক বক্তব্য"},
+ {en:"compromise", bn:"সমঝোতা"},
+ {en:"perspective", bn:"দৃষ্টিভঙ্গি"},
+ {en:"acknowledge", bn:"স্বীকার করা"}],
+ practice:[{q:"A teammate keeps interrupting you in meetings. What's the best way to raise it?", options:["You're so rude, stop it!","When I get interrupted, I lose my train of thought. Could we make sure everyone finishes speaking?","Never mind, it's fine."], a:1, ex:"An 'I' statement describes the impact without attacking, making the person more likely to listen."},
+ {q:"A conversation is getting heated. What helps de-escalate it?", options:["Raise your voice louder.","Can we take a step back and focus on what we both want?","Walk out silently."], a:1, ex:"Pausing and refocusing on shared goals lowers tension and reopens dialogue."}],
+ mistakes:["Using 'you always' or 'you never', which triggers defensiveness","Trying to win instead of solving the problem together","Avoiding the conversation until frustration boils over","Interrupting or dismissing the other person's perspective"],
+ culture:["Direct but respectful feedback is valued; hinting can cause misunderstanding","Separating the person from the problem keeps the relationship intact","Acknowledging the other side's feelings, even in disagreement, builds trust"],
+ roleplay:[{ai:"You wanted to talk? I hope it's not another complaint about my work.", replies:["Not at all. I value working with you; I just want to solve one issue together.","No complaint. I'd like an honest chat so we can improve things as a team."]},
+ {ai:"Okay, go ahead. What's the problem?", replies:["The last two reports came in late, and it affected the deadline. Can we look at why?","I noticed some reports were late recently. Help me understand what's been happening."]},
+ {ai:"Honestly, I've been overloaded with other tasks lately.", replies:["Thanks for being honest. Let's see how we can rebalance your workload.","I hear you, that's a lot. How can we make the timeline more realistic?"]},
+ {ai:"That would really help. Maybe we can set clearer priorities.", replies:["Great idea. Let's agree on priorities each week and check in.","Perfect. I'll support you on that so we both hit the deadlines."]}]},
+{id:"workplace", title:"Professional & Workplace Communication", bn:"পেশাদার ও কর্মক্ষেত্রের যোগাযোগ", icon:"user", level:"Intermediate",
+ objectives:["Speak politely and clearly with colleagues and managers","Give updates, ask for help, and share opinions professionally","Handle disagreements and feedback with a calm, respectful tone"],
+ steps:[
+  {t:"Open with a greeting and context",d:"Start with a friendly greeting and quickly state why you are reaching out, for example a question, an update, or a request."},
+  {t:"State your point clearly",d:"Get to the main message in one or two sentences so the listener knows what you need."},
+  {t:"Use polite, softening language",d:"Add words like could, would, and I was wondering to sound respectful rather than demanding."},
+  {t:"Check understanding",d:"Confirm the next step by asking Does that work for you or Shall I go ahead."},
+  {t:"Close warmly",d:"End with a thank you or an offer to help so the exchange feels positive."}
+ ],
+ examples:[
+  {sit:"Asking a busy manager for a quick chat",say:"Do you have five minutes later today to go over the report? I want to make sure I am on the right track."},
+  {sit:"Sharing a delay with the team",say:"I wanted to give you a heads-up that the design will be ready by Thursday instead of Tuesday."},
+  {sit:"Politely disagreeing in a discussion",say:"I see your point, but I am a little concerned about the timeline. Could we look at another option?"}
+ ],
+ phrases:[
+  "Could I ask you a quick question?",
+  "I just wanted to give you a quick update on the project.",
+  "Would it be possible to move the deadline to Friday?",
+  "Thanks for flagging that, I will look into it.",
+  "Just to confirm, you would like me to send it by end of day?",
+  "I am happy to help if you need an extra pair of hands.",
+  "Let me get back to you on that after I check.",
+  "That makes sense, thanks for explaining."
+ ],
+ vocab:[
+  {en:"heads-up",bn:"আগাম সতর্কবার্তা"},
+  {en:"deadline",bn:"শেষ সময়সীমা"},
+  {en:"to flag an issue",bn:"সমস্যা চিহ্নিত করা"},
+  {en:"follow up",bn:"পরবর্তী যোগাযোগ করা"},
+  {en:"on the same page",bn:"একই বোঝাপড়ায় থাকা"},
+  {en:"workload",bn:"কাজের চাপ"}
+ ],
+ practice:[
+  {q:"Which sentence sounds most polite when asking a colleague for help?",options:["Do this for me now.","Could you help me with this when you have a moment?","You have to help me."],a:1,ex:"Could you and when you have a moment make the request soft and respectful."},
+  {q:"What is the best way to share bad news about a delay?",options:["Give an early, honest heads-up with a new date","Say nothing and hope no one notices","Blame a teammate for the delay"],a:0,ex:"An early, honest heads-up keeps trust and lets people plan."},
+  {q:"How do you politely disagree in a meeting?",options:["That is completely wrong.","I see your point, but I have a small concern.","Whatever you say."],a:1,ex:"Acknowledging the other view first keeps the tone respectful."}
+ ],
+ mistakes:[
+  "Being too direct or blunt, which can sound rude in English",
+  "Forgetting to say please, thank you, or a short greeting",
+  "Over-apologizing so much that your message loses confidence",
+  "Not confirming the next step, leaving the other person unsure"
+ ],
+ culture:[
+  "In many Western workplaces, softening requests with could or would is expected, not weak.",
+  "Small talk before business, like asking How was your weekend, helps build rapport.",
+  "Direct but polite feedback is valued more than silence when something is wrong."
+ ],
+ roleplay:[
+  {ai:"Hi, do you have a second? I noticed the numbers in your slide look a bit off.",replies:["Thanks for catching that, let me double-check the figures.","Oh, good spot. I will review it and send you an updated version."]},
+  {ai:"Can you get the report done by tomorrow morning?",replies:["I can, but I may need to hand over one other task. Is that okay?","Tomorrow morning is tight, could we aim for midday instead?"]},
+  {ai:"I disagree with your approach here.",replies:["That is fair, could you tell me which part concerns you?","I appreciate the honesty. Let us talk it through and find a better way."]},
+  {ai:"Thanks for your help today, I really appreciate it.",replies:["You are very welcome, glad I could help.","Anytime. Just let me know if anything else comes up."]}
+ ]},
+{id:"client", title:"Client Meetings", bn:"ক্লায়েন্ট মিটিং", icon:"chat", level:"Intermediate",
+ objectives:["Open and close client meetings with confidence","Understand client needs by asking the right questions","Present solutions and handle concerns professionally"],
+ steps:[
+  {t:"Welcome and set the agenda",d:"Greet the client, thank them for their time, and outline what you will cover today."},
+  {t:"Ask discovery questions",d:"Use open questions to understand their goals, challenges, and priorities before pitching anything."},
+  {t:"Present your solution clearly",d:"Link each feature or idea directly to a need the client mentioned."},
+  {t:"Address concerns calmly",d:"Listen fully, acknowledge the concern, then respond with facts or options."},
+  {t:"Agree on next steps",d:"Summarize decisions and confirm who does what and by when."}
+ ],
+ examples:[
+  {sit:"Opening the meeting",say:"Thanks for joining today. I thought we could start with your goals, then I will walk you through how we can help."},
+  {sit:"Uncovering a need",say:"What is the biggest challenge you are hoping to solve in the next quarter?"},
+  {sit:"Handling a price concern",say:"I understand budget is important. Let me show you the value you get and we can look at options that fit."}
+ ],
+ phrases:[
+  "Thank you for taking the time to meet with us today.",
+  "Before we dive in, what would you most like to get out of this meeting?",
+  "That is a great question, let me explain how that works.",
+  "Just to make sure I understand, you are looking for a faster turnaround?",
+  "Based on what you have told me, I would recommend the following.",
+  "How does that sound so far?",
+  "Let me summarize what we have agreed on today.",
+  "I will send over a proposal by Friday, does that timing work?"
+ ],
+ vocab:[
+  {en:"agenda",bn:"আলোচ্যসূচি"},
+  {en:"requirements",bn:"প্রয়োজনীয়তা"},
+  {en:"proposal",bn:"প্রস্তাবনা"},
+  {en:"turnaround time",bn:"কাজ সম্পন্নের সময়"},
+  {en:"stakeholder",bn:"অংশীদার"},
+  {en:"deliverables",bn:"প্রদেয় ফলাফল"}
+ ],
+ practice:[
+  {q:"What is the best way to start a client meeting?",options:["Jump straight into your product features","Thank them and set a clear agenda","Ask them to sign the contract first"],a:1,ex:"A warm opening and clear agenda set a professional, organized tone."},
+  {q:"A client says your price is too high. What do you do?",options:["Immediately drop the price","Acknowledge the concern and explain the value","Tell them to look elsewhere"],a:1,ex:"Acknowledging then explaining value keeps trust and opens negotiation."},
+  {q:"How should you end a client meeting?",options:["Summarize decisions and confirm next steps","Leave quickly to save time","Assume they know what happens next"],a:0,ex:"A clear summary and next steps prevent confusion and show professionalism."}
+ ],
+ mistakes:[
+  "Talking about your product before understanding the client need",
+  "Interrupting the client instead of listening fully",
+  "Using heavy jargon the client may not follow",
+  "Ending without confirming clear next steps"
+ ],
+ culture:[
+  "Building trust early with a few minutes of rapport is often expected before business.",
+  "Clients appreciate direct answers, but always framed politely and with options.",
+  "Following up in writing after the meeting shows reliability and professionalism."
+ ],
+ roleplay:[
+  {ai:"Hi, thanks for setting this up. So, what can you offer us?",replies:["Happy to be here. First, could you tell me a bit about your main goals?","Thanks for meeting. Before I present, I would love to understand your current challenges."]},
+  {ai:"Honestly, our biggest problem is that everything takes too long.",replies:["That is helpful to know. Speed is exactly where we can help.","Understood. Let me show you how our process cuts that time down."]},
+  {ai:"This looks good, but it is more than we planned to spend.",replies:["I hear you. Let me break down the value, then we can explore options.","Budget matters, of course. We do have a lighter package that may fit."]},
+  {ai:"Okay, I think this could work. What happens next?",replies:["Great. I will send a proposal by Friday and we can review it together.","Let me summarize what we agreed, then I will follow up in writing."]}
+ ]},
+{id:"meetings", title:"Meeting & Discussion Frameworks", bn:"মিটিং ও আলোচনার কাঠামো", icon:"grid", level:"Intermediate",
+ objectives:["Participate actively in meetings and group discussions","Interrupt, agree, and disagree politely","Lead a discussion and keep it on track"],
+ steps:[
+  {t:"Prepare your key points",d:"Note one or two things you want to say so you can contribute clearly when the moment comes."},
+  {t:"Enter the conversation politely",d:"Use a soft opener like Can I add something or If I may to join without cutting people off."},
+  {t:"Support or challenge ideas",d:"Agree by building on a point, or disagree by naming a concern respectfully."},
+  {t:"Keep the discussion focused",d:"Gently steer back with phrases like Coming back to the main topic when it drifts."},
+  {t:"Summarize and confirm actions",d:"Wrap up by restating decisions and who is responsible for each task."}
+ ],
+ examples:[
+  {sit:"Joining a fast conversation",say:"Sorry to jump in, but can I add a quick point here?"},
+  {sit:"Disagreeing with a proposal",say:"I understand the idea, but I am worried about the extra cost. Could we explore alternatives?"},
+  {sit:"Bringing the group back on topic",say:"That is interesting, but maybe we can park that and return to the main decision."}
+ ],
+ phrases:[
+  "Can I add something here?",
+  "I would like to build on what Sarah just said.",
+  "If I may, I have a slightly different view.",
+  "Let us make sure we agree on the next step.",
+  "Sorry, could I just finish my point?",
+  "To sum up, we have decided to move forward with option two.",
+  "Can we come back to the main topic?",
+  "Who will take ownership of this action?"
+ ],
+ vocab:[
+  {en:"agenda item",bn:"আলোচ্য বিষয়"},
+  {en:"to chair a meeting",bn:"সভা পরিচালনা করা"},
+  {en:"action point",bn:"করণীয় কাজ"},
+  {en:"to park an idea",bn:"বিষয় পরে আলোচনার জন্য রাখা"},
+  {en:"consensus",bn:"সর্বসম্মতি"},
+  {en:"to wrap up",bn:"সমাপ্ত করা"}
+ ],
+ practice:[
+  {q:"How can you politely join a busy discussion?",options:["Speak loudly over everyone","Say sorry to jump in, but can I add a point?","Wait and never share your idea"],a:1,ex:"A soft opener lets you contribute without seeming rude."},
+  {q:"What is a respectful way to disagree?",options:["That will never work.","I see the idea, but I have a concern about the cost.","You are wrong as usual."],a:1,ex:"Acknowledging then naming a concern keeps the tone professional."},
+  {q:"How should a meeting end?",options:["With a clear summary and action points","Suddenly with no conclusion","With everyone leaving confused"],a:0,ex:"Summarizing decisions and owners ensures follow-through."}
+ ],
+ mistakes:[
+  "Staying silent the whole meeting and never contributing",
+  "Interrupting people mid-sentence without any soft opener",
+  "Letting the discussion drift with no one refocusing it",
+  "Ending without agreeing on clear action points"
+ ],
+ culture:[
+  "In many teams, quiet members are expected to speak up, so contributing is valued.",
+  "Disagreement is fine if framed as concern for the goal, not personal attack.",
+  "Confirming action points in writing after the meeting is standard good practice."
+ ],
+ roleplay:[
+  {ai:"So everyone agrees we launch next week, right?",replies:["Before we lock that in, can I raise one concern about testing?","I mostly agree, but could we confirm the team has enough time?"]},
+  {ai:"I think we should just skip the review stage to save time.",replies:["I see the appeal, but I worry we might miss errors. Could we shorten it instead?","That is one option, though I would feel safer keeping a quick review."]},
+  {ai:"We seem to be going off topic here.",replies:["Good point, let us come back to the launch date.","Agreed, can we park this and refocus on the main decision?"]},
+  {ai:"Alright, let us finish here. Are we all clear?",replies:["Just to confirm, I will handle testing and Maria takes the report?","Before we close, can we quickly list the action points?"]}
+ ]},
+{id:"email", title:"Email & Professional Writing", bn:"ইমেইল ও পেশাদার লেখা", icon:"pen", level:"Intermediate",
+ objectives:["Write clear, well-structured professional emails","Use appropriate openings, closings, and request lines","Match tone to formal and semi-formal situations"],
+ steps:[
+  {t:"Write a clear subject line",d:"Summarize the purpose in a few words, for example Request for meeting on Thursday."},
+  {t:"Open appropriately",d:"Choose a greeting that fits the relationship, from Dear Mr Khan to Hi Sarah."},
+  {t:"State your purpose early",d:"In the first line, explain why you are writing so the reader knows the point immediately."},
+  {t:"Make requests politely and clearly",d:"Use polite request lines and specify exactly what you need and by when."},
+  {t:"Close professionally",d:"End with a courteous line and a sign-off such as Best regards or Kind regards."}
+ ],
+ examples:[
+  {sit:"Requesting information",say:"I am writing to ask whether you could send me the updated pricing sheet by Wednesday."},
+  {sit:"Following up on no reply",say:"I just wanted to follow up on my email below. Please let me know if you need anything further from me."},
+  {sit:"Declining politely",say:"Thank you for the invitation. Unfortunately, I will not be able to attend, but I would be glad to send my notes."}
+ ],
+ phrases:[
+  "I hope this email finds you well.",
+  "I am writing to let you know that the report is now ready.",
+  "Could you please send me the details by end of day?",
+  "Thank you in advance for your help with this.",
+  "Please do not hesitate to contact me if you have any questions.",
+  "I look forward to hearing from you.",
+  "Just a quick note to confirm our meeting on Monday.",
+  "Best regards, and thanks again for your support."
+ ],
+ vocab:[
+  {en:"subject line",bn:"বিষয়ের শিরোনাম"},
+  {en:"to follow up",bn:"পরবর্তী যোগাযোগ করা"},
+  {en:"attachment",bn:"সংযুক্তি"},
+  {en:"recipient",bn:"প্রাপক"},
+  {en:"sign-off",bn:"সমাপনী অভিবাদন"},
+  {en:"CC (carbon copy)",bn:"অনুলিপি প্রাপক"}
+ ],
+ practice:[
+  {q:"Which is the clearest subject line?",options:["Hello","Request for updated invoice by Friday","stuff"],a:1,ex:"A specific subject line tells the reader the purpose and deadline at a glance."},
+  {q:"Which is a polite request line?",options:["Send it now.","Could you please share the file by tomorrow?","I need the file, do it."],a:1,ex:"Could you please plus a clear deadline is polite and specific."},
+  {q:"Which is an appropriate formal sign-off?",options:["Later","Best regards","cya"],a:1,ex:"Best regards is professional and widely accepted in business email."}
+ ],
+ mistakes:[
+  "Writing a vague or empty subject line that gets ignored",
+  "Being too casual in a formal email, such as starting with Hey",
+  "Burying the main request deep in a long paragraph",
+  "Forgetting to attach the file you mention in the email"
+ ],
+ culture:[
+  "In business email, getting to the point quickly is seen as respectful of time.",
+  "Match formality to the reader, more formal for new contacts, warmer for known colleagues.",
+  "A short thank-you line at the end leaves a positive, professional impression."
+ ],
+ roleplay:[
+  {ai:"Hi, I never received the document you mentioned. Can you resend it?",replies:["Apologies for that. Please find it attached, and let me know if it opens fine.","So sorry, I must have missed the attachment. I am resending it now."]},
+  {ai:"Could you confirm whether Thursday works for the call?",replies:["Yes, Thursday at 2 pm works well for me. I will send a calendar invite.","Thursday is fine on my end. Please let me know your preferred time."]},
+  {ai:"We need the proposal urgently. When can you send it?",replies:["I understand the urgency. I will have it to you by tomorrow morning.","I can send a draft by end of day and the final version tomorrow."]},
+  {ai:"Thanks for the quick reply, that is all I needed.",replies:["You are welcome. Please do not hesitate to reach out if anything else comes up.","Glad I could help. I look forward to working with you on this."]}
+ ]},
+{id:"interview", title:"Interview Communication", bn:"সাক্ষাৎকারের যোগাযোগ", icon:"mic", level:"Advanced",
+ objectives:["Answer common interview questions with structure and confidence","Present strengths and achievements without sounding arrogant","Ask thoughtful questions and close the interview well"],
+ steps:[
+  {t:"Prepare your story",d:"Have clear examples of achievements ready, using the situation, task, action, result structure."},
+  {t:"Open with a strong self-introduction",d:"Give a concise summary of who you are, your experience, and what you bring."},
+  {t:"Answer with structure",d:"For behavioral questions, describe the situation, what you did, and the result you achieved."},
+  {t:"Show self-awareness",d:"When asked about weaknesses, name a real one and explain how you are improving it."},
+  {t:"Ask smart questions and close",d:"Ask about the team or goals, then thank the interviewer and express genuine interest."}
+ ],
+ examples:[
+  {sit:"Answering tell me about yourself",say:"I am a marketing specialist with five years of experience, and I focus on turning data into campaigns that grow revenue."},
+  {sit:"Describing an achievement",say:"When our sales dropped, I led a new outreach plan that increased leads by thirty percent in three months."},
+  {sit:"Discussing a weakness",say:"I used to take on too much myself, so I have been learning to delegate and trust my team more."}
+ ],
+ phrases:[
+  "Thank you for the opportunity to interview for this role.",
+  "In my previous role, I was responsible for leading a small team.",
+  "One achievement I am proud of is improving our process efficiency.",
+  "That is a great question, let me give you a specific example.",
+  "I would describe my working style as collaborative and detail-oriented.",
+  "I am really drawn to this role because it aligns with my long-term goals.",
+  "Could you tell me more about how success is measured in this position?",
+  "I am confident I could add value to your team from day one."
+ ],
+ vocab:[
+  {en:"strengths",bn:"শক্তির দিক"},
+  {en:"to delegate",bn:"দায়িত্ব ভাগ করে দেওয়া"},
+  {en:"achievement",bn:"অর্জন"},
+  {en:"to align with",bn:"সঙ্গতিপূর্ণ হওয়া"},
+  {en:"proactive",bn:"সক্রিয় ও উদ্যোগী"},
+  {en:"track record",bn:"অতীত কৃতিত্বের রেকর্ড"}
+ ],
+ practice:[
+  {q:"How should you answer a behavioral question like tell me about a challenge?",options:["Give a vague general answer","Use a clear situation, action, and result example","Say you have never faced a challenge"],a:1,ex:"A structured, specific example shows real skill and is memorable."},
+  {q:"What is the best way to discuss a weakness?",options:["Say you have none","Name a real one and how you are improving it","Give a fake strength like I work too hard"],a:1,ex:"Honesty plus growth shows self-awareness, which employers value."},
+  {q:"What should you do at the end of an interview?",options:["Leave silently","Ask a thoughtful question and thank them","Ask only about salary and days off"],a:1,ex:"A good closing question and genuine thanks leave a strong final impression."}
+ ],
+ mistakes:[
+  "Giving long, unstructured answers that lose the interviewer",
+  "Sounding either too arrogant or too unsure of yourself",
+  "Speaking negatively about a former employer or colleague",
+  "Not preparing any questions to ask at the end"
+ ],
+ culture:[
+  "Confidently stating your achievements is expected, not seen as boasting, if backed by facts.",
+  "Interviewers value specific examples over general claims about your abilities.",
+  "Sending a short thank-you email afterward is a common and respected practice."
+ ],
+ roleplay:[
+  {ai:"So, tell me a little about yourself.",replies:["I am a project manager with six years of experience delivering software on time and on budget.","Sure. I specialize in operations, and I am proud of a track record of improving team efficiency."]},
+  {ai:"What would you say is your biggest weakness?",replies:["I used to struggle with delegating, but I have actively worked on trusting my team more.","I can be a perfectionist, so I have learned to balance quality with realistic deadlines."]},
+  {ai:"Can you describe a time you handled a difficult situation?",replies:["When a key client threatened to leave, I led weekly check-ins that rebuilt their trust and renewed the contract.","During a tight deadline, I reprioritized tasks with the team and we still delivered on time."]},
+  {ai:"Do you have any questions for me?",replies:["Yes, how do you measure success in this role during the first six months?","I would love to know more about the team culture and how you support growth."]}
+ ]},
+{id:"business", title:"Business English Frameworks", bn:"বিজনেস ইংলিশ কাঠামো", icon:"layers", level:"Advanced",
+ objectives:["Negotiate, persuade, and present ideas in business settings","Use precise business vocabulary and diplomatic language","Handle high-stakes conversations with clarity and tact"],
+ steps:[
+  {t:"Frame the value proposition",d:"Lead with the benefit or outcome that matters most to your audience before the details."},
+  {t:"Use diplomatic language",d:"Soften strong positions with hedging words like perhaps, tend to, and it might be worth."},
+  {t:"Negotiate with give and take",d:"Signal flexibility using if and then conditions to trade value rather than simply conceding."},
+  {t:"Support claims with evidence",d:"Back statements with numbers, examples, or trends to build credibility."},
+  {t:"Close with a clear call to action",d:"End by proposing a concrete next step and confirming agreement."}
+ ],
+ examples:[
+  {sit:"Making a persuasive pitch",say:"By automating this process, we could cut costs by twenty percent and free the team for higher-value work."},
+  {sit:"Negotiating terms",say:"If you can commit to a twelve-month contract, then we would be able to offer a better rate."},
+  {sit:"Pushing back diplomatically",say:"I take your point, though it might be worth considering the long-term impact before we decide."}
+ ],
+ phrases:[
+  "Let me walk you through the key benefits.",
+  "From a strategic standpoint, this positions us well for growth.",
+  "If we go this route, then we can expect a stronger return.",
+  "I would like to propose a slightly different approach.",
+  "Correct me if I am wrong, but it seems the main concern is cost.",
+  "Shall we aim to finalize the terms by the end of the week?",
+  "That is a fair point, and here is how we can address it.",
+  "To move this forward, I suggest we agree on the scope first."
+ ],
+ vocab:[
+  {en:"value proposition",bn:"মূল্য প্রস্তাব"},
+  {en:"to leverage",bn:"সুবিধা কাজে লাগানো"},
+  {en:"return on investment",bn:"বিনিয়োগের প্রতিদান"},
+  {en:"to negotiate terms",bn:"শর্ত নিয়ে দর কষাকষি"},
+  {en:"scope",bn:"কাজের পরিধি"},
+  {en:"bottom line",bn:"মূল ফলাফল বা লাভ"}
+ ],
+ practice:[
+  {q:"What is a strong way to open a business pitch?",options:["List every technical detail first","Lead with the main benefit for the audience","Talk mostly about your company history"],a:1,ex:"Leading with the benefit captures attention and shows relevance immediately."},
+  {q:"Which sentence uses diplomatic negotiation language?",options:["Take it or leave it.","If you commit to a longer term, then we can offer a better rate.","That is my final price, no discussion."],a:1,ex:"The if and then structure trades value and keeps the negotiation open."},
+  {q:"How should you handle an objection in a business meeting?",options:["Ignore it and keep talking","Acknowledge it, then address it with evidence","Get defensive and argue"],a:1,ex:"Acknowledging and answering with evidence builds trust and credibility."}
+ ],
+ mistakes:[
+  "Overloading the audience with detail before showing the value",
+  "Being too rigid in negotiation instead of offering trade-offs",
+  "Making claims without any data or examples to back them",
+  "Using aggressive language that damages the long-term relationship"
+ ],
+ culture:[
+  "Diplomatic hedging is respected in high-level business talks, not seen as weak.",
+  "Data and evidence carry strong weight when persuading Western business audiences.",
+  "Negotiation is expected to be a give and take, so leaving some room is normal."
+ ],
+ roleplay:[
+  {ai:"Your proposal looks interesting, but the price is above our budget.",replies:["I understand. If we adjust the scope slightly, then we can bring the cost down.","Let me show you the return on investment, and we can explore a package that fits."]},
+  {ai:"Why should we choose your company over a cheaper competitor?",replies:["Our track record shows we deliver on time, which lowers your long-term costs.","We focus on results, and clients typically see a strong return within six months."]},
+  {ai:"I am not sure this approach will work for our market.",replies:["That is a fair concern. It might be worth running a small pilot first.","Correct me if I am wrong, but the main risk seems to be scale. We can plan for that."]},
+  {ai:"Okay, I think we can move forward with this.",replies:["Excellent. Shall we aim to finalize the terms by the end of the week?","Great. To keep momentum, I suggest we agree on the scope and next steps today."]}
+ ]},
+{id:"presentation", title:"Presentation & Public Speaking", bn:"উপস্থাপনা ও জনসমক্ষে বক্তৃতা", icon:"mic", level:"Advanced",
+ objectives:["Open with a hook that grabs attention in the first 30 seconds","Structure your talk with a clear beginning, middle, and end","Handle nerves, pauses, and audience questions with confidence"],
+ steps:[{t:"Open with a hook",d:"Start with a question, a surprising fact, or a short story instead of just introducing yourself."},{t:"State your agenda",d:"Tell the audience what you will cover: 'Today I will walk you through three key points.'"},{t:"Deliver the body",d:"Present one main idea per slide or section, and use signpost phrases to move between them."},{t:"Use vocal variety",d:"Slow down for important points, pause after key ideas, and change your tone to keep attention."},{t:"Close with a call to action",d:"Summarise your key message and end with a clear next step or a memorable line."}],
+ examples:[{sit:"Opening a talk to a large audience",say:"Imagine you could save two hours every day. By the end of this talk, you will know exactly how."},{sit:"Moving to your final point",say:"That brings me to my last and most important point."},{sit:"Wrapping up",say:"So, to leave you with one thought: small changes today create big results tomorrow."}],
+ phrases:["Let me start by asking you a question.","Today I would like to talk to you about...","Let us move on to the next point.","As you can see on this slide...","To sum up, the key takeaway is...","That is a great question, let me answer that.","I will come back to that point in a moment.","Thank you all for your time and attention."],
+ vocab:[{en:"hook",bn:"শ্রোতার মনোযোগ আকর্ষণকারী শুরু"},{en:"signpost",bn:"দিকনির্দেশক বাক্যাংশ"},{en:"call to action",bn:"পদক্ষেপ নেওয়ার আহ্বান"},{en:"vocal variety",bn:"কণ্ঠস্বরের বৈচিত্র্য"},{en:"takeaway",bn:"মূল শিক্ষা বা বার্তা"},{en:"rapport",bn:"সুসম্পর্ক বা বোঝাপড়া"}],
+ practice:[{q:"What is the best way to open a presentation?",options:["With a hook like a question or surprising fact","By reading every slide aloud","By apologising for being nervous"],a:0,ex:"A hook grabs attention immediately and makes the audience want to listen."},{q:"Which phrase helps you move between sections smoothly?",options:["Um, so anyway...","Let us move on to the next point.","I forgot what I was saying."],a:1,ex:"Signpost phrases guide the audience and make your structure clear."},{q:"How should you end a strong presentation?",options:["Just say 'that is all'","With a clear summary and call to action","By walking off quickly"],a:1,ex:"A summary plus a call to action leaves a lasting, actionable impression."}],
+ mistakes:["Reading directly from your slides word for word","Speaking too fast because of nerves","Ending abruptly without a summary","Overloading slides with too much text"],
+ culture:["In many Western settings, audiences appreciate a light joke or personal story to build rapport","Making eye contact shows confidence and honesty","Inviting questions at the end signals openness and respect for the audience"],
+ roleplay:[{ai:"Good morning everyone, are we ready to begin?",replies:["Good morning, yes, let us get started.","Yes, thank you all for coming, I am excited to share this with you."]},{ai:"That was interesting, but could you explain your second point again?",replies:["Of course, let me go over that point in more detail.","Certainly, that is a great question, allow me to clarify."]},{ai:"How does this apply to a smaller team like ours?",replies:["Great question, the same principles scale down easily, let me show you how.","I am glad you asked, for smaller teams the impact is even faster."]},{ai:"Thank you, that was a very clear presentation.",replies:["Thank you so much, I appreciate your kind words.","Thank you, I am glad you found it useful."]}]},
+{id:"uxdemo", title:"UX Design Prototype Presentation", bn:"ইউএক্স ডিজাইন প্রোটোটাইপ উপস্থাপনা", icon:"layers", level:"Advanced",
+ objectives:["Set clear context and the user problem before showing any screens","Walk stakeholders through the user flow logically","Explain design decisions and gather actionable feedback"],
+ steps:[{t:"Set the context",d:"Remind stakeholders of the goal and who the user is: 'This prototype focuses on first-time users signing up.'"},{t:"Frame the user problem",d:"State the pain point clearly: 'Users were dropping off because the form felt too long.'"},{t:"Walk through the flow",d:"Move screen by screen, narrating what the user sees and does at each step."},{t:"Explain design decisions",d:"Justify key choices with reasoning: 'We split the form into steps to reduce cognitive load.'"},{t:"Invite and frame feedback",d:"Ask focused questions: 'Does this flow match how your customers actually behave?'"}],
+ examples:[{sit:"Starting the demo",say:"Before I show the screens, let me quickly set the context for this flow."},{sit:"Explaining a choice",say:"We chose a progress bar here so users always know how many steps are left."},{sit:"Asking for feedback",say:"I would love your thoughts, does this address the drop-off issue we discussed?"}],
+ phrases:["Let me start by framing the problem we are solving.","This is a clickable prototype, so I will walk you through the flow.","On this screen, the user is trying to...","The reasoning behind this decision was...","This is still a work in progress, so feedback is welcome.","Let me highlight one key interaction here.","How does this align with what you are seeing from real users?","I want to flag one open question for the group."],
+ vocab:[{en:"user flow",bn:"ব্যবহারকারীর ধাপক্রম"},{en:"prototype",bn:"প্রাথমিক নমুনা"},{en:"pain point",bn:"সমস্যা বা অসুবিধার বিন্দু"},{en:"drop-off",bn:"ব্যবহারকারীর সরে যাওয়া"},{en:"cognitive load",bn:"মানসিক চাপ বা প্রক্রিয়াকরণের ভার"},{en:"iteration",bn:"পুনরাবৃত্তি বা উন্নয়ন চক্র"}],
+ practice:[{q:"What should you do before showing any prototype screens?",options:["Set the context and user problem","Show every screen as fast as possible","Ask stakeholders to guess the goal"],a:0,ex:"Context helps stakeholders judge the design against a real problem, not just aesthetics."},{q:"How should you present a design decision?",options:["Say 'it just looks better'","Justify it with reasoning tied to the user","Skip the explanation entirely"],a:1,ex:"Explaining the reasoning builds trust and shows the decision was intentional."},{q:"What is a good way to invite feedback?",options:["Ask a focused question about user behaviour","Ask 'do you like it?' only","Avoid asking anything"],a:0,ex:"Focused questions produce actionable feedback instead of vague opinions."}],
+ mistakes:["Jumping into screens before explaining the problem","Defending your design instead of listening to feedback","Using heavy jargon that stakeholders do not understand","Presenting the prototype as final when it is still a draft"],
+ culture:["Framing feedback as collaboration keeps stakeholders engaged rather than defensive","In cross-functional meetings, tie design choices to business goals, not just visuals","Acknowledging good feedback openly encourages more honest input"],
+ roleplay:[{ai:"So walk me through this, what exactly are we looking at?",replies:["Sure, this is the sign-up flow for first-time users, let me set the context first.","Happy to, let me start with the problem we are solving, then show the screens."]},{ai:"Why did you split the form into three steps?",replies:["Good question, we split it to reduce cognitive load and cut the drop-off rate.","We tested a long single form and users abandoned it, so steps felt friendlier."]},{ai:"I am not sure users will understand this icon.",replies:["That is a fair point, let me note it and we can test the icon with users.","Thank you, I will flag that, we can add a label to make it clearer."]},{ai:"This looks solid, what happens next?",replies:["Next we run a quick usability test, then I will share the results with you.","Great, our next step is user testing, and I will iterate based on findings."]}]},
+{id:"negotiation", title:"Negotiation Techniques", bn:"আলোচনা ও দর-কষাকষির কৌশল", icon:"compass", level:"Advanced",
+ objectives:["Open a negotiation while building trust and rapport","Make and respond to offers with clear, professional language","Reach a win-win outcome without damaging the relationship"],
+ steps:[{t:"Prepare your position",d:"Know your goal, your best alternative, and the point where you will walk away."},{t:"Build rapport first",d:"Start friendly and find common ground before discussing numbers."},{t:"Make your case",d:"Explain your reasoning and the value you offer, not just what you want."},{t:"Trade concessions",d:"Never give something without asking for something in return: 'If we do X, could you do Y?'"},{t:"Confirm the agreement",d:"Summarise what was agreed clearly so both sides leave with the same understanding."}],
+ examples:[{sit:"Opening a price discussion",say:"Before we talk numbers, I want to make sure this works well for both of us."},{sit:"Making a counter-offer",say:"I understand your position, but that budget is a little tight, could we meet in the middle?"},{sit:"Trading a concession",say:"If you can commit to a longer contract, I can offer you a better rate."}],
+ phrases:["Let us see if we can find a solution that works for both of us.","I hear what you are saying, however...","What if we approached it this way?","Would you be open to a compromise?","That is a fair point, let me suggest an alternative.","I can be flexible on the timeline if you can be flexible on the price.","Let me make sure I understand your priorities.","So, to confirm, we have agreed that..."],
+ vocab:[{en:"leverage",bn:"সুবিধা বা প্রভাব খাটানোর ক্ষমতা"},{en:"concession",bn:"ছাড় দেওয়া"},{en:"compromise",bn:"আপস বা মাঝামাঝি সমাধান"},{en:"win-win",bn:"উভয়পক্ষের লাভজনক সমাধান"},{en:"walk-away point",bn:"সরে যাওয়ার সীমা"},{en:"common ground",bn:"সাধারণ ভিত্তি বা মিল"}],
+ practice:[{q:"What is the best mindset for a strong negotiation?",options:["Win at any cost","Aim for a win-win outcome","Give in immediately to avoid conflict"],a:1,ex:"Win-win outcomes protect the relationship and lead to lasting agreements."},{q:"How should you handle a concession?",options:["Give it freely to seem generous","Trade it for something in return","Refuse to concede anything"],a:1,ex:"Trading concessions keeps the exchange balanced and shows the value of each item."},{q:"Which phrase softens disagreement professionally?",options:["You are completely wrong.","I hear what you are saying, however...","That is a ridiculous offer."],a:1,ex:"Acknowledging the other side first keeps the tone respectful and productive."}],
+ mistakes:["Making the first offer too extreme and losing credibility","Focusing only on your own needs, not the other side's","Giving concessions without asking for anything back","Letting emotions take over during tense moments"],
+ culture:["In many cultures, some small talk before business builds essential trust","Being direct is valued in Western negotiations, but stay polite and calm","Never make the other side lose face, even when you disagree strongly"],
+ roleplay:[{ai:"Honestly, your price is much higher than we expected.",replies:["I understand your concern, let me explain the value behind it.","I hear you, could we look at what is driving the price together?"]},{ai:"We would need a 20 percent discount to move forward.",replies:["That is a big ask, but if you extend the contract, I can work on it.","I appreciate the offer, could we meet in the middle at 10 percent?"]},{ai:"Our budget is fixed, there is no room to increase it.",replies:["Understood, then let us adjust the scope to fit your budget.","Alright, if the budget is fixed, can we be flexible on the deadline instead?"]},{ai:"Okay, I think we can make that work.",replies:["Wonderful, let me summarise what we have agreed on.","Great, so to confirm, we are aligned on the terms, correct?"]}]},
+{id:"storytelling", title:"Storytelling Frameworks", bn:"গল্প বলার কাঠামো", icon:"book", level:"Intermediate",
+ objectives:["Structure a story with a clear beginning, conflict, and resolution","Use vivid detail and emotion to keep listeners engaged","Connect your story to a clear message or lesson"],
+ steps:[{t:"Set the scene",d:"Give the listener a time, place, and character: 'A few years ago, I was working on a project that seemed impossible.'"},{t:"Introduce the conflict",d:"Describe the problem or tension that makes the story worth telling."},{t:"Build the tension",d:"Show the struggle and stakes so the listener feels invested."},{t:"Reveal the turning point",d:"Share the moment when things changed or you learned something."},{t:"Land the message",d:"Connect the story to your point: 'And that is why I believe...'"}],
+ examples:[{sit:"Starting a personal story",say:"Let me tell you about the day everything nearly went wrong."},{sit:"Building tension",say:"With only one hour left, we still had no solution, and everyone was watching."},{sit:"Delivering the lesson",say:"That experience taught me that the best ideas often come under pressure."}],
+ phrases:["Let me tell you a quick story.","It all started when...","At that moment, I realised...","But here is the interesting part...","Long story short...","And that is when everything changed.","The lesson I took from that was...","You can probably guess what happened next."],
+ vocab:[{en:"set the scene",bn:"পরিবেশ বা পটভূমি তৈরি করা"},{en:"conflict",bn:"দ্বন্দ্ব বা সমস্যা"},{en:"turning point",bn:"মোড় ঘোরানো মুহূর্ত"},{en:"stakes",bn:"ঝুঁকি বা যা হারানোর ভয়"},{en:"resolution",bn:"সমাধান বা পরিণতি"},{en:"relatable",bn:"সহজে অনুভব করা যায় এমন"}],
+ practice:[{q:"What makes a story engaging?",options:["A clear conflict and turning point","A long list of facts","No emotion at all"],a:0,ex:"Conflict and a turning point create tension that keeps listeners hooked."},{q:"Why should a story connect to a message?",options:["It should not, stories are just for fun","So the listener remembers the point","To make the story longer"],a:1,ex:"A clear message gives the story purpose and makes it memorable."},{q:"How should you begin a short story in conversation?",options:["Give every background detail first","Set the scene briefly and get to the point","Start with the ending"],a:1,ex:"A brief scene draws people in without losing them in detail."}],
+ mistakes:["Including too many irrelevant details","Forgetting to connect the story to a clear point","Telling the story in a flat, monotone voice","Making the story too long for the moment"],
+ culture:["Personal, humble stories often connect well in Western audiences","Humour can lighten a story, but keep it inclusive","A relatable everyday struggle is often more powerful than a dramatic one"],
+ roleplay:[{ai:"So how did you get into this field?",replies:["Funny you ask, let me tell you a quick story about that.","It actually started with a small failure, let me explain."]},{ai:"That sounds tough, what did you do?",replies:["At that moment, I realised I had to try something completely different.","Honestly, I panicked at first, but then something clicked."]},{ai:"And did it work out in the end?",replies:["It did, and that is when everything changed for me.","Not right away, but the lesson stuck with me forever."]},{ai:"Wow, that is a great story.",replies:["Thank you, the takeaway for me was to never give up too early.","I am glad you liked it, it really shaped how I work today."]}]},
+{id:"persuasion", title:"Persuasive Communication", bn:"প্রভাবশালী যোগাযোগ", icon:"spark", level:"Advanced",
+ objectives:["Build credibility and appeal to logic and emotion","Structure an argument that anticipates objections","Move your listener toward a clear, confident yes"],
+ steps:[{t:"Establish credibility",d:"Show why you are worth listening to with experience or evidence early on."},{t:"Appeal to logic",d:"Support your point with facts, data, or clear reasoning."},{t:"Appeal to emotion",d:"Connect to what your listener cares about: their goals, fears, or values."},{t:"Address objections",d:"Raise the likely 'but what about...' and answer it before they do."},{t:"Ask for the commitment",d:"End with a clear, specific request: 'So, can I count on your support?'"}],
+ examples:[{sit:"Building credibility",say:"Having run this process a dozen times, I have seen exactly what works."},{sit:"Appealing to emotion",say:"I know how much this project means to you, and that is why this matters."},{sit:"Handling an objection",say:"You might be worried about the cost, and that is fair, but consider the return."}],
+ phrases:["The evidence clearly shows that...","Consider this for a moment...","I understand your concern, and here is why it is not a problem.","This is not just my opinion, the data backs it up.","Imagine what this could mean for you.","The real question we should ask is...","Here is why this matters to you specifically.","So, what do you say, shall we move forward?"],
+ vocab:[{en:"credibility",bn:"বিশ্বাসযোগ্যতা"},{en:"objection",bn:"আপত্তি"},{en:"appeal",bn:"আবেদন বা আকর্ষণ"},{en:"reasoning",bn:"যুক্তি"},{en:"commitment",bn:"প্রতিশ্রুতি"},{en:"compelling",bn:"অত্যন্ত আকর্ষণীয় বা বাধ্যকারী"}],
+ practice:[{q:"What makes an argument more persuasive?",options:["Only strong emotion","A balance of credibility, logic, and emotion","Repeating yourself loudly"],a:1,ex:"Persuasion works best when credibility, logic, and emotion reinforce each other."},{q:"Why address objections yourself?",options:["To confuse the listener","To show you have thought it through and build trust","To make the argument longer"],a:1,ex:"Pre-empting objections shows honesty and removes doubts before they grow."},{q:"How should a persuasive message end?",options:["With a vague hope","With a clear, specific request","With an apology"],a:1,ex:"A specific ask makes it easy for the listener to say yes and act."}],
+ mistakes:["Relying only on facts and ignoring emotion","Ignoring or dismissing the listener's concerns","Overselling and sounding pushy","Ending without a clear request or next step"],
+ culture:["In Western contexts, evidence and data carry strong persuasive weight","Being overly aggressive can backfire, aim for confident and respectful","Framing benefits around the listener's interests is more effective than around your own"],
+ roleplay:[{ai:"I am not convinced this is worth the investment.",replies:["I understand, let me show you the numbers behind the return.","Fair enough, consider what it saves you over the next year."]},{ai:"But what if it does not work for our situation?",replies:["Good concern, we can start with a small pilot to reduce the risk.","That is exactly why I would tailor it to your specific needs."]},{ai:"My team might resist this change.",replies:["I hear you, and involving them early usually turns resistance into support.","That is common, so let me suggest a rollout that brings them on board."]},{ai:"Alright, you are making a strong case.",replies:["Thank you, so can I count on your support to move forward?","I am glad, shall we take the first step together this week?"]}]},
+{id:"academic", title:"Academic Communication", bn:"একাডেমিক যোগাযোগ", icon:"pen", level:"Advanced",
+ objectives:["Present research and arguments with clarity and precision","Use formal, objective language and hedge claims appropriately","Engage in scholarly discussion, citing evidence and asking critical questions"],
+ steps:[{t:"State your thesis clearly",d:"Open with a precise claim: 'This study argues that...' so the reader knows your position."},{t:"Support with evidence",d:"Back every claim with data, citations, or established findings."},{t:"Use hedging language",d:"Soften absolute claims: 'The results suggest...' rather than 'This proves...'"},{t:"Acknowledge limitations",d:"Note what your work does not cover to show intellectual honesty."},{t:"Draw measured conclusions",d:"Summarise findings and suggest directions for future research."}],
+ examples:[{sit:"Introducing a research point",say:"Previous studies have shown that this factor plays a significant role."},{sit:"Hedging a claim",say:"These findings appear to indicate a correlation, though further research is needed."},{sit:"Responding in a seminar",say:"That is an interesting point, though I would question whether the sample size supports it."}],
+ phrases:["This paper aims to examine...","The evidence suggests that...","According to the literature...","It could be argued that...","However, this interpretation has certain limitations.","Further research is needed to confirm these findings.","In contrast to previous studies...","To what extent does this support the hypothesis?"],
+ vocab:[{en:"thesis",bn:"মূল প্রতিপাদ্য বা দাবি"},{en:"hedging",bn:"সাবধানী বা নরম ভাষা"},{en:"citation",bn:"উদ্ধৃতি বা সূত্র উল্লেখ"},{en:"hypothesis",bn:"অনুমান বা প্রকল্প"},{en:"limitation",bn:"সীমাবদ্ধতা"},{en:"peer review",bn:"সমমর্যাদার পর্যালোচনা"}],
+ practice:[{q:"Why do academics use hedging language?",options:["To sound uncertain about everything","To make claims precise and avoid overstatement","To hide their findings"],a:1,ex:"Hedging reflects the tentative nature of evidence and keeps claims defensible."},{q:"What must support an academic claim?",options:["Personal opinion alone","Evidence such as data or citations","Strong emotion"],a:1,ex:"Academic writing values evidence and sources over unsupported assertions."},{q:"Why acknowledge limitations in your work?",options:["It weakens the paper","It shows intellectual honesty and rigour","It is never done"],a:1,ex:"Noting limitations demonstrates honesty and helps others build on the work."}],
+ mistakes:["Making absolute claims without evidence","Using casual or emotional language in formal writing","Forgetting to cite sources properly","Ignoring counter-arguments or limitations"],
+ culture:["Western academia values critical questioning, even of respected authors","Objectivity and evidence outweigh personal authority","Disagreeing politely with reasoning is expected, not disrespectful"],
+ roleplay:[{ai:"Your thesis is interesting, but is your evidence strong enough?",replies:["That is a fair question, let me point you to the data supporting it.","Good point, the evidence suggests a trend, though I acknowledge its limits."]},{ai:"How does your work differ from earlier studies?",replies:["In contrast to previous studies, my approach focuses on a wider sample.","Earlier work looked at short-term effects, whereas I examine long-term ones."]},{ai:"Could there be another explanation for your results?",replies:["Absolutely, and I address that alternative in the limitations section.","That is possible, which is why I recommend further research to confirm."]},{ai:"Thank you, this was a rigorous presentation.",replies:["Thank you, I appreciate your thoughtful questions.","Thank you, the discussion has given me useful directions to explore."]}]},
+];
+
+/* ============================================================
+   ENGLISH COMMUNICATION FRAMEWORKS
+   ============================================================ */
+let FW={cur:null, ans:{}, role:null, filter:"All"};
+const FW_KEY="lantern.fw.v1";
+function fwLoad(){ try{const r=JSON.parse(localStorage.getItem(FW_KEY)); if(r&&r.done) return r;}catch(e){} return {done:{}}; }
+let FWS=fwLoad();
+function fwSave(){ try{localStorage.setItem(FW_KEY,JSON.stringify(FWS));}catch(e){} }
+function fwIsDone(id){ return !!FWS.done[id]; }
+function fwMark(id){ FWS.done[id]=true; fwSave(); }
+function fwGet(id){ return FRAMEWORKS.find(f=>f.id===id); }
+function fwEsc(s){ return String(s).replace(/'/g,"\\'"); }
+const FW_LVLC={Beginner:"var(--green)",Intermediate:"var(--gold-deep)",Advanced:"var(--coral)"};
+
+function renderFrameworks(){
+  FW.cur=null;
+  const el=document.getElementById('panel-frameworks');
+  const done=FRAMEWORKS.filter(f=>fwIsDone(f.id)).length;
+  const pct=Math.round(done/FRAMEWORKS.length*100);
+  const levels=["All","Beginner","Intermediate","Advanced"];
+  let html="<div class='panel-head'><h2>Communication Frameworks</h2>"+
+    "<p>Structured playbooks to speak naturally and confidently in real situations — work, travel, interviews and more. <span class='bn'>(বাস্তব পরিস্থিতিতে আত্মবিশ্বাসে কথা বলো)</span></p></div>";
+  html+="<div class='fw-prog'><div class='fw-prog-bar'><i style='width:"+pct+"%'></i></div><div class='fw-prog-t'>"+done+" / "+FRAMEWORKS.length+" completed</div></div>";
+  html+="<div class='fw-filters'>"+levels.map(l=>"<button class='fw-fil"+(FW.filter===l?" on":"")+"' onclick=\"fwSetFilter('"+l+"')\">"+l+"</button>").join('')+"</div>";
+  html+="<div class='fw-grid'>";
+  FRAMEWORKS.filter(f=>FW.filter==="All"||f.level===FW.filter).forEach(f=>{
+    const d=fwIsDone(f.id);
+    html+="<button class='fw-card"+(d?" done":"")+"' onclick=\"fwOpen('"+f.id+"')\">"+
+      "<div class='fw-card-ic' style='color:"+FW_LVLC[f.level]+"'>"+ic(f.icon)+"</div>"+
+      "<div class='fw-card-b'><div class='fw-card-t'>"+f.title+"</div>"+
+      "<div class='fw-card-bn bn'>"+f.bn+"</div>"+
+      "<span class='fw-lvl' style='color:"+FW_LVLC[f.level]+";border-color:"+FW_LVLC[f.level]+"'>"+f.level+"</span></div>"+
+      (d?"<span class='fw-check'>"+ic('check')+"</span>":"<span class='fw-go'>→</span>")+"</button>";
+  });
+  html+="</div>";
+  el.innerHTML=html;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function fwSetFilter(l){ FW.filter=l; renderFrameworks(); }
+
+function fwOpen(id){
+  FW.cur=id;
+  const f=fwGet(id); if(!f) return;
+  const el=document.getElementById('panel-frameworks');
+  const lc=FW_LVLC[f.level];
+  let h="<button class='fw-back' onclick='renderFrameworks()'>← All frameworks</button>";
+  h+="<div class='fw-hero' style='--lc:"+lc+"'><div class='fw-hero-ic'>"+ic(f.icon)+"</div>"+
+     "<div><div class='fw-hero-t'>"+f.title+"</div><div class='fw-hero-bn bn'>"+f.bn+"</div>"+
+     "<div class='fw-hero-tags'><span class='fw-lvl' style='color:"+lc+";border-color:"+lc+"'>"+f.level+"</span>"+
+     (fwIsDone(id)?"<span class='fw-done-tag'>✓ Completed</span>":"")+"</div></div></div>";
+
+  h+=fwSec("🎯","Learning objectives","<ul class='fw-list'>"+f.objectives.map(o=>"<li>"+o+"</li>").join('')+"</ul>");
+  h+=fwSec("🧭","Step-by-step structure","<div class='fw-steps'>"+f.steps.map((s,i)=>"<div class='fw-step'><div class='fw-step-n'>"+(i+1)+"</div><div><b>"+s.t+"</b><span>"+s.d+"</span></div></div>").join('')+"</div>");
+  h+=fwSec("💬","Real-life examples",f.examples.map(e=>"<div class='fw-ex'><div class='fw-ex-sit'>"+e.sit+"</div><div class='fw-ex-say'>“"+e.say+"” <button class='fw-say' onclick=\"say('"+fwEsc(e.say)+"')\">🔊</button></div></div>").join(''));
+  h+=fwSec("🗣️","Common phrases","<div class='fw-phrases'>"+f.phrases.map(p=>"<button class='fw-phrase' onclick=\"say('"+fwEsc(p)+"')\">"+p+" <span>🔊</span></button>").join('')+"</div>");
+  h+=fwSec("📖","Vocabulary highlights","<div class='fw-vocab'>"+f.vocab.map(v=>"<div class='fw-vrow'><button class='fw-say' onclick=\"say('"+fwEsc(v.en)+"')\">🔊</button><b>"+v.en+"</b><span class='bn'>"+v.bn+"</span></div>").join('')+"</div>");
+  h+=fwSec("⚠️","Common mistakes to avoid","<ul class='fw-list fw-warn'>"+f.mistakes.map(m=>"<li>"+m+"</li>").join('')+"</ul>");
+  h+=fwSec("🌍","Cultural communication tips","<ul class='fw-list fw-culture'>"+f.culture.map(c=>"<li>"+c+"</li>").join('')+"</ul>");
+  // practice
+  let pr="";
+  f.practice.forEach((q,qi)=>{
+    const key=id+"-"+qi; const chosen=FW.ans[key];
+    pr+="<div class='fw-prac'><div class='fw-prac-q'>"+(qi+1)+". "+q.q+"</div>"+
+      q.options.map((o,oi)=>"<button class='aic-opt "+(chosen!=null?(oi===q.a?'right':(oi===chosen?'wrong':'')):'')+"' "+(chosen!=null?'disabled':'')+" onclick=\"fwAnswer('"+id+"',"+qi+","+oi+")\">"+o+"</button>").join('')+
+      (chosen!=null?"<div class='aic-fb'>"+(chosen===q.a?"<b class='ok'>Correct! ✅</b> ":"<b class='x'>Not quite. </b>")+q.ex+"</div>":"")+"</div>";
+  });
+  h+=fwSec("✏️","Practice exercises",pr);
+  // roleplay
+  h+=fwSec("🎭","Interactive role-play",fwRoleHTML(f));
+  // AI practice
+  h+=fwSec("🤖","Practice with AI","<p class='fw-aip'>Open your AI Tutor for a live conversation about this topic — it gives feedback and pronunciation scoring.</p><button class='ai-btn' onclick=\"fwToAI('"+id+"')\">Practice with AI Tutor →</button>");
+  // complete
+  const alldone=f.practice.every((q,qi)=>FW.ans[id+"-"+qi]!=null);
+  h+="<div class='fw-complete'>"+(fwIsDone(id)?"<span class='fw-done-tag'>✓ Completed — well done!</span>":"<button class='ai-btn "+(alldone?'':'ghost')+"' onclick=\"fwCompleteBtn('"+id+"')\">"+(alldone?"Mark as complete 🎉":"Finish the practice to complete")+"</button>")+"</div>";
+
+  el.innerHTML=h;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function fwSec(icn,title,body){ return "<div class='fw-sec'><div class='fw-sec-h'><span class='fw-sec-ic'>"+icn+"</span>"+title+"</div><div class='fw-sec-b'>"+body+"</div></div>"; }
+function fwAnswer(id,qi,oi){ const key=id+"-"+qi; if(FW.ans[key]!=null) return; FW.ans[key]=oi; fwOpen(id); }
+function fwCompleteBtn(id){ const f=fwGet(id); const alldone=f.practice.every((q,qi)=>FW.ans[id+"-"+qi]!=null); if(!alldone){ document.querySelector('.fw-prac')&&document.querySelector('.fw-prac').scrollIntoView({behavior:'smooth'}); return; } fwMark(id); fwOpen(id); }
+function fwToAI(id){ const f=fwGet(id); go('coach'); setTimeout(function(){ if(typeof aiSend==='function') aiSend("Let's practice speaking"); },350); }
+
+/* role-play */
+function fwRoleHTML(f){
+  const active=FW.role&&FW.role.id===f.id;
+  const step=active?FW.role.step:0;
+  const turns=f.roleplay||[];
+  if(!turns.length) return "<p class='fw-aip'>—</p>";
+  if(!active) return "<p class='fw-aip'>Play a short scripted conversation. Tap a suggested reply (or say it aloud) to continue.</p><button class='ai-btn' onclick=\"fwRoleStart('"+f.id+"')\">▶ Start role-play</button>";
+  let h="<div class='fw-role'>";
+  for(let i=0;i<=step && i<turns.length;i++){
+    h+="<div class='fw-role-ai'>"+ic('chat')+" <span>"+turns[i].ai+"</span> <button class='fw-say' onclick=\"say('"+fwEsc(turns[i].ai)+"')\">🔊</button></div>";
+    if(i<step){ /* already replied - show chosen */ if(FW.role.picks&&FW.role.picks[i]!=null) h+="<div class='fw-role-me'>"+turns[i].replies[FW.role.picks[i]]+"</div>"; }
+  }
+  const cur=turns[step];
+  if(step<turns.length-1){
+    h+="<div class='fw-role-replies'>"+cur.replies.map((r,ri)=>"<button class='ai-chip' onclick=\"fwRoleReply('"+f.id+"',"+ri+")\">"+r+"</button>").join('')+"</div>";
+  } else {
+    h+="<div class='fw-aip'>🎉 Great — you completed the role-play!</div><button class='ai-btn ghost' onclick=\"fwRoleStart('"+f.id+"')\">Replay</button>";
+  }
+  h+="</div>";
+  return h;
+}
+function fwRoleStart(id){ FW.role={id:id,step:0,picks:{}}; fwOpen(id); const f=fwGet(id); setTimeout(()=>say(f.roleplay[0].ai),250); }
+function fwRoleReply(id,ri){ if(!FW.role||FW.role.id!==id) return; const f=fwGet(id); FW.role.picks[FW.role.step]=ri; FW.role.step=Math.min(FW.role.step+1,f.roleplay.length-1); fwOpen(id); const t=f.roleplay[FW.role.step]; setTimeout(()=>say(t.ai),300); }
+
 function renderTop(){
   document.getElementById('lanternIcon').innerHTML=ic('lantern');
   document.getElementById('streakIc').innerHTML=ic('flame');
@@ -1505,7 +2243,7 @@ function renderTop(){
   document.getElementById('xpVal').textContent=S.xp;
   document.getElementById('heartVal').textContent=S.hearts;
 }
-const NAV=[["learn","Learn","compass"],["skills","Skills","spark"],["bank","Words","cards"],["coach","AI Tutor","coach"],["profile","You","user"]];
+const NAV=[["learn","Learn","compass"],["skills","Skills","spark"],["bank","Words","cards"],["frameworks","Frameworks","layers"],["coach","AI Tutor","coach"],["profile","You","user"]];
 function buildNav(){
   document.getElementById('nav').innerHTML=NAV.map(([id,label,icn])=>
     `<button data-tab="${id}" class="${id==='learn'?'on':''}" onclick="go('${id}')">${ic(icn)}<span>${label}</span></button>`).join('');
@@ -1524,6 +2262,7 @@ function render(tab){
   else if(tab==='bank') renderBank();
   else if(tab==='profile') renderProfile();
   else if(tab==='coach') renderCoach();
+  else if(tab==='frameworks') renderFrameworks();
 }
 
 /* ============================================================

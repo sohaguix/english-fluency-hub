@@ -4,31 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Vocabulary Master</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --brand:#0D9488; --brand-2:#14B8A6; --brand-ink:#0B7C71;
-  --green:#16A34A; --green-soft:#DCFCE7;
-  --red:#E11D48; --red-soft:#FFE4E9;
-  --amber:#F59E0B; --flame:#FB7A3C; --violet:#7C3AED; --blue:#2563EB;
+  --brand:#4B47C7; --brand-2:#6C63FF; --brand-ink:#322E9E;
+  --green:#2E9E6B; --green-soft:#D6F0E2;
+  --red:#E1573F; --red-soft:#FBDDD4;
+  --amber:#F0A62F; --flame:#F0A62F; --violet:#8257E5; --blue:#2E93C9;
+  --gold:#F0A62F; --gold-deep:#C87E12; --gold-soft:#FBE6BC;
   --r:18px; --r-sm:12px; --r-lg:26px; --tap:46px;
   --sp:clamp(15px,4vw,26px);
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --disp:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --bn:'Noto Sans Bengali','Inter',sans-serif;
+  --mono:'Inter',ui-monospace,monospace;
   --ease:cubic-bezier(.22,.7,.24,1);
 }
 :root[data-theme="light"]{
-  --bg:#F1F5F5; --bg-2:#E6EDEC; --surface:#FFFFFF; --surface-2:#F7FAFA;
-  --text:#132022; --muted:#5C6B6D; --faint:#93A2A3; --line:#E4EBEA; --line-2:#D6E0DF;
-  --shadow:0 1px 2px rgba(19,32,34,.04),0 10px 26px -14px rgba(19,32,34,.18);
-  --shadow-lg:0 2px 8px rgba(19,32,34,.06),0 26px 60px -24px rgba(19,32,34,.3);
-  --tint:#DFF5F2;
+  --bg:#FAF6EF; --bg-2:#F3ECDF; --surface:#FFFDF8; --surface-2:#F3ECDF;
+  --text:#20242E; --muted:#585C6C; --faint:#8A8E9C; --line:#EAE3D6; --line-2:#F0EBE0;
+  --shadow:0 1px 2px rgba(32,36,46,.06),0 12px 30px -16px rgba(32,36,46,.14);
+  --shadow-lg:0 4px 10px rgba(32,36,46,.07),0 30px 70px -28px rgba(32,36,46,.2);
+  --tint:#E7E6FA;
 }
 :root[data-theme="dark"]{
-  --bg:#0C1413; --bg-2:#101B1A; --surface:#15211F; --surface-2:#1B2A28;
-  --text:#E8F0EF; --muted:#9DB0AE; --faint:#657573; --line:#233432; --line-2:#2C403D;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px -16px rgba(0,0,0,.6);
-  --shadow-lg:0 2px 10px rgba(0,0,0,.4),0 30px 70px -28px rgba(0,0,0,.75);
-  --tint:#0E2E2A; --green-soft:#0E3A24; --red-soft:#3A1620;
+  --bg:#171525; --bg-2:#1E1B30; --surface:#231F38; --surface-2:#2B2745;
+  --text:#EDEBF7; --muted:#AAA6C4; --faint:#726E90; --line:#332E52; --line-2:#2A2545;
+  --brand:#8B86F0; --brand-2:#A29CF7;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px -16px rgba(0,0,0,.55);
+  --shadow-lg:0 2px 10px rgba(0,0,0,.4),0 30px 70px -28px rgba(0,0,0,.7);
+  --tint:#2E2A5A; --green-soft:#123A2A; --red-soft:#3A2018; --gold-soft:#3A2E12;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -37,7 +44,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 input,textarea,select{font-family:inherit;font-size:1rem}
 :focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:8px}
-h1,h2,h3,h4{margin:0;line-height:1.15;letter-spacing:-.02em;font-weight:800}
+h1,h2,h3,h4{margin:0;line-height:1.15;letter-spacing:-.01em;font-weight:800}
+h1,h2{font-family:var(--disp);font-weight:700;letter-spacing:-.02em}
+.bn,[lang="bn"]{font-family:var(--bn)}
 p{margin:0}
 .muted{color:var(--muted)} .mono{font-family:var(--mono)}
 ::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:9px}
