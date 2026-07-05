@@ -67,15 +67,37 @@ a.card:focus-visible{outline:2px solid var(--cy);outline-offset:3px}
 a.card:hover .arrow{transform:translate(3px,-3px);color:var(--cy)}
 footer{text-align:center;margin-top:clamp(36px,6vw,60px);color:var(--mut);font-size:13px;line-height:1.7}
 footer a{color:var(--i2);text-decoration:none}
+.featured{position:relative;display:flex;gap:22px;align-items:center;text-decoration:none;color:inherit;background:linear-gradient(135deg,rgba(240,166,47,.16),rgba(139,92,246,.14) 55%,rgba(34,211,238,.12));border:1px solid rgba(240,166,47,.4);border-radius:22px;padding:26px 28px;margin-bottom:22px;box-shadow:0 20px 60px rgba(240,166,47,.14);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+.featured:hover{transform:translateY(-4px);box-shadow:0 28px 70px rgba(240,166,47,.22)}
+.featured:focus-visible{outline:2px solid #F0A62F;outline-offset:3px}
+.featured .ribbon{position:absolute;top:16px;right:-36px;transform:rotate(45deg);background:linear-gradient(90deg,#F0A62F,#C87E12);color:#1a1200;font-weight:800;font-size:11px;letter-spacing:.1em;padding:5px 44px}
+.featured-ico{font-size:54px;flex:none;filter:drop-shadow(0 6px 18px rgba(240,166,47,.4))}
+.featured-body{flex:1;min-width:0}
+.featured-body h2{margin:0 0 8px;font-size:26px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fbadge{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#F0A62F;border:1px solid rgba(240,166,47,.5);border-radius:999px;padding:3px 10px}
+.featured-body p{margin:0;color:var(--mut);font-size:14.5px;line-height:1.55;max-width:72ch}
+.ftag{display:inline-block;margin-top:12px;font-size:12px;font-weight:600;color:#F0A62F}
+@media(max-width:600px){.featured{flex-direction:column;text-align:center;align-items:center}.featured-body h2{justify-content:center}.featured .ribbon{display:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <span class="badge"><span class="dot"></span> 6 free apps · no sign-up · works offline</span>
+    <span class="badge"><span class="dot"></span> 7 apps · no sign-up · works offline</span>
     <h1>English Fluency Hub</h1>
     <p class="sub">A collection of self-contained apps to build your English from the ground up — foundations, vocabulary, speaking, and exam prep. Pick one and start.</p>
   </header>
+
+  <a class="featured" href="Lantern.html">
+    <span class="ribbon">PREMIUM</span>
+    <div class="featured-ico">🏮</div>
+    <div class="featured-body">
+      <h2>Lantern <span class="fbadge">Advanced</span></h2>
+      <p>The most advanced way to learn here — a guided path from <b>Beginner → Intermediate → Advanced → Fluent</b>, with an <b>AI Coach</b>: pronunciation scoring, a grammar &amp; sentence checker, personalized study plans, spaced-repetition review, and বাংলা help throughout.</p>
+      <span class="ftag">Structured path · AI Coach · Speaking · Grammar · Spaced repetition</span>
+    </div>
+    <span class="arrow" aria-hidden="true">↗</span>
+  </a>
 
   <main class="grid">
     <a class="card" href="English-Foundations.html">
