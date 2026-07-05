@@ -414,6 +414,24 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .coach-badge-desc{font-size:11px;color:var(--ink-soft);margin-top:3px;line-height:1.4}
 @media(max-width:520px){.coach-lv{width:60px}.coach-chip{font-size:11.5px}}
 
+
+/* ===== Lantern AI chat ===== */
+.lchat-card{padding:14px}
+.lchat-log{max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:4px 2px 8px}
+.lchat-msg{max-width:86%;padding:10px 13px;border-radius:15px;font-size:13.5px;line-height:1.5}
+.lchat-msg.bot{align-self:flex-start;background:var(--brand-soft);color:var(--ink);border-bottom-left-radius:5px}
+.lchat-msg.me{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:5px}
+.lchat-msg.bot .bn{color:var(--brand-deep)}
+.lchat-msg.bot .coach-list{margin:6px 0 0;padding-left:18px}
+.lchat-msg.bot .coach-list li{margin:4px 0}
+.lchat-tip{display:block;margin-top:6px;font-size:11.5px;color:var(--ink-faint)}
+.lchat-sugg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.lchat-chip{border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);border-radius:999px;padding:6px 11px;font:600 12px/1 var(--sans);cursor:pointer;transition:all .15s}
+.lchat-chip:hover{border-color:var(--brand);color:var(--brand)}
+.lchat-row{display:flex;gap:8px}
+.lchat-in{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:11px 14px;font:500 14.5px/1.3 var(--sans);color:var(--ink);background:var(--paper)}
+.lchat-in:focus{outline:none;border-color:var(--brand)}
+
 </style>
 </head>
 <body>
@@ -821,7 +839,7 @@ function unlockedIndex(){ // first not-done index that is unlocked
   for(let i=0;i<ORDER.length;i++){ if(!unit(ORDER[i]).done) return i; }
   return ORDER.length;
 }
-function isUnlocked(i){ return i===0 || unit(ORDER[i-1]).done; }
+function isUnlocked(i){ return true; }
 
 /* ============================================================
    RENDER: HOME PATH
@@ -1132,6 +1150,7 @@ function renderCoach(){
 
   let html=
   "<div class='panel-head'><h2>AI Coach ✨</h2><p>Your personal English mentor — a study plan, a grammar checker, pronunciation scoring and smart word picks. <span class='bn'>(তোমার নিজের কোচ)</span></p></div>";
+  html+=lchatSection();
 
   // level card
   html+="<div class='card coach-card'><div class='coach-band-top'><div><div class='coach-eyebrow'>Your level</div>"+
@@ -1195,6 +1214,179 @@ function renderCoach(){
   html+="</div>";
 
   el.innerHTML=html;
+}
+
+
+/* ============================================================
+   LANTERN AI CHAT  (offline tutor, answers from app content)
+   ============================================================ */
+let LANTERN_CHAT=[{r:'bot', h:"Hi! I'm your <b>Lantern tutor</b> 🏮 Ask me about grammar, tenses, parts of speech, or a word's meaning — or type <b>check: your sentence</b> and I'll fix it. <span class='bn'>(ব্যাকরণ, টেন্স বা শব্দের অর্থ জিজ্ঞাসা করো)</span>"}];
+let CHAT_WORDS=null;
+function chatWords(){
+  if(CHAT_WORDS) return CHAT_WORDS;
+  CHAT_WORDS={};
+  const add=function(v){ if(v&&v.en){ const k=String(v.en).toLowerCase(); if(!CHAT_WORDS[k]) CHAT_WORDS[k]={en:v.en,bn:v.bn||'',ex:v.ex||''}; } };
+  try{ RAW.vocab.abstract.forEach(add); RAW.vocab.advanced.forEach(add); RAW.vocab.phrasal.forEach(add); }catch(e){}
+  try{ POS.forEach(function(p){ p.items.forEach(add); }); }catch(e){}
+  return CHAT_WORDS;
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function chatGrammar(t){
+  const issues=[];
+  const rules=[
+    [/\bdiscuss(ed|ing)?\s+about\b/i, "‘discuss’ takes no ‘about’ → “discuss the plan”."],
+    [/\bmarried\s+with\b/i, "Use ‘married to’, not ‘married with’."],
+    [/\bgood\s+in\b/i, "For a skill use ‘good at’ (good at maths), not ‘good in’."],
+    [/\bsince\s+\d+\s+(year|years|day|days|month|months|hour|hours|week|weeks)\b/i, "Use ‘for’ + a length of time (for 3 years); ‘since’ + a start point (since 2021)."],
+    [/\b(am|is|are)\s+having\b/i, "‘have’ (own) is stative — say ‘I have’, not ‘I am having’."],
+    [/\bmyself\s+[A-Z][a-z]+/, "Introduce yourself as ‘I’m …’ or ‘My name is …’, not ‘Myself …’."],
+    [/\brevert\s+back\b/i, "‘revert back’ → ‘reply’ or ‘get back to you’."],
+    [/\bdo\s+the\s+needful\b/i, "‘do the needful’ → say the exact action (please arrange / approve it)."],
+    [/\bout\s+of\s+station\b/i, "‘out of station’ → ‘out of town’ / ‘away’."],
+    [/\bcousin\s+(brother|sister)\b/i, "Just ‘cousin’ (drop brother/sister)."],
+    [/\bprepone\b/i, "‘prepone’ → ‘move earlier / bring forward’."],
+    [/\ba\s+(hour|honest|honour|umbrella|apple|elephant|orange|idea|engineer|answer|email|hour)\b/i, "Use ‘an’ before a vowel SOUND (an hour, an umbrella)."],
+    [/\bmore\s+better\b/i, "Say ‘better’ (not ‘more better’)."]
+  ];
+  rules.forEach(function(r){ if(r[0].test(t)) issues.push(r[1]); });
+  if(/^[a-z]/.test(t.trim())) issues.push("Start the sentence with a capital letter.");
+  if(!/[.!?]["']?$/.test(t.trim())) issues.push("End the sentence with . ! or ?");
+  if(/\bi\b/.test(t)) issues.push("Write ‘I’ (the pronoun) as a capital letter.");
+  return issues;
+}
+
+function tenseCard(t){
+  return "<b>"+t.name+"</b> <span class='bn'>— "+t.bn+"</span><br>"+
+    "<b>Structure:</b> "+t.struct+"<br>"+
+    "<b>Example:</b> "+t.ex+" <span class='bn'>("+t.exbn+")</span><br>"+
+    "<span class='lchat-tip'>Practise it in <b>Learn → Grammar You Must Know</b>.</span>";
+}
+function posCard(p){
+  const ex=p.items.slice(0,3).map(function(v){return "<li>"+v.en+" <span class='bn'>("+v.bn+")</span> — "+v.ex+"</li>";}).join("");
+  return "<b>"+p.name+"</b> <span class='bn'>("+p.bn+")</span><br>"+p.def+" <span class='bn'>"+p.defbn+"</span>"+
+    "<ul class='coach-list'>"+ex+"</ul>";
+}
+function wordCard(w){
+  return "<b>"+w.en+"</b> <span class='bn'>= "+(w.bn||"—")+"</span>"+(w.ex?"<br><b>Example:</b> "+w.ex:"")+
+    "<br><span class='lchat-tip'>Tap 🔊 in <b>Words</b> to hear it, or add it to review.</span>";
+}
+function articleAns(){
+  return "<b>a / an / the</b> <span class='bn'>(article — বাংলায় নেই, তাই সহজে ভুল হয়)</span><br>"+
+    "• <b>a / an</b> = one, not specific → <i>a book, an hour</i>.<br>"+
+    "• Use <b>an</b> before a vowel <i>sound</i> → <i>an apple, an MP</i>.<br>"+
+    "• <b>the</b> = specific / already known → <i>the sun, the book you gave me</i>.<br>"+
+    "• No article for general plurals / uncountables → <i>I like rice</i>.";
+}
+function sinceForAns(){
+  return "<b>since vs for</b><br>"+
+    "• <b>for</b> + a length of time → <i>for 3 years, for two hours</i>.<br>"+
+    "• <b>since</b> + a starting point → <i>since 2021, since Monday</i>.<br>"+
+    "So say <i>“I have lived here for 3 years”</i> — not <i>“since 3 years”</i>.";
+}
+function staticAns(){
+  return "<b>Stative verbs</b> (have, know, like, want, understand) don't take <b>-ing</b>.<br>"+
+    "✅ <i>I have a car.</i> &nbsp; ❌ <i>I am having a car.</i><br>"+
+    "✅ <i>I understand.</i> &nbsp; ❌ <i>I am understanding.</i>";
+}
+function helpAns(){
+  return "I can help with:<ul class='coach-list'>"+
+    "<li>Any of the <b>12 tenses</b> — try “present perfect”.</li>"+
+    "<li><b>Parts of speech</b> — “what is an adjective?”</li>"+
+    "<li>Tricky points — “a or an?”, “since vs for”, “am having”.</li>"+
+    "<li><b>Word meanings</b> — “meaning of achievement”.</li>"+
+    "<li><b>Fixing sentences</b> — “check: I am having two brothers”.</li></ul>";
+}
+function fallbackAns(raw){
+  // try to find a known word inside the message
+  const words=raw.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/);
+  const wb=chatWords();
+  for(const w of words){ if(w.length>2 && wb[w]) return "Did you mean the word <b>"+wb[w].en+"</b>?<br>"+wordCard(wb[w]); }
+  return "I'm a focused tutor, so I answer from this course's content. Try:<br>"+
+    "<span class='lchat-tip'>“present perfect” · “what is a verb?” · “a or an?” · “meaning of courage” · “check: I go school everyday”</span><br>"+
+    "For more, open <b>Learn</b> or the hub's <b>Resources</b> page.";
+}
+
+function lanternAnswer(q){
+  const raw=(q||"").trim();
+  if(!raw) return "";
+  const s=' '+raw.toLowerCase()+' ';
+  // 1) sentence check
+  if(/^(check|correct|fix)\b/i.test(raw) || /is this (correct|right|ok)/i.test(raw)){
+    let sent=raw.replace(/^(check|correct|fix)[:\-\s]*/i,'').replace(/^is this (correct|right|ok)[:\-\s]*/i,'').trim();
+    sent=sent.replace(/[?]$/,'').trim();
+    if(!sent) return "Type a sentence after ‘check:’ — e.g. <i>check: I am having a car</i>.";
+    const iss=chatGrammar(sent);
+    if(!iss.length) return "✅ <b>“"+esc(sent)+"”</b> looks correct and natural. Nice! <span class='bn'>(সুন্দর!)</span>";
+    return "For <b>“"+esc(sent)+"”</b> — "+iss.length+" fix"+(iss.length>1?"es":"")+":<ul class='coach-list'>"+iss.map(function(i){return "<li>"+i+"</li>";}).join("")+"</ul>";
+  }
+  // 2) tenses (specific)
+  for(const t of TENSES){ if(s.indexOf(t.name.toLowerCase())>=0) return tenseCard(t); }
+  // 3) articles
+  if(/\ba or an\b|\ban or a\b|\barticle\b/.test(s) || /(when|how).*(use).*( a | an | the )/.test(s) || /\ba vs an\b/.test(s)) return articleAns();
+  // 4) since / for
+  if(/since.*\bfor\b|\bfor\b.*since|since or for|for or since|since vs for/.test(s)) return sinceForAns();
+  // 5) stative
+  if(/am having|is having|are having|stative/.test(s)) return staticAns();
+  // 6) parts of speech
+  for(const p of POS){ const key=p.name.toLowerCase().replace(/s$/,''); if(s.indexOf(' '+key+' ')>=0 || s.indexOf(p.name.toLowerCase())>=0) return posCard(p); }
+  // 7) common mistakes
+  const CM=[
+    {k:['discuss about'], h:"Say <b>“discuss the topic”</b> — ‘discuss’ takes no ‘about’."},
+    {k:['myself '], h:"Introduce yourself as <b>“I'm Rahul”</b> or <b>“My name is Rahul”</b> — not ‘Myself Rahul’."},
+    {k:['do the needful'], h:"Instead of ‘do the needful’, say the exact action: <b>“Please review and approve it.”</b>"},
+    {k:['revert back','revert '], h:"Use <b>“reply”</b> or <b>“get back to you”</b> — ‘revert back’ isn't standard."},
+    {k:['married with'], h:"It's <b>“married to”</b> someone, not ‘married with’."},
+    {k:['good in','good at'], h:"For a skill use <b>“good at”</b> (good at maths), not ‘good in’."},
+    {k:['prepone'], h:"‘Prepone’ isn't global English — say <b>“move it earlier”</b> or ‘bring it forward’."},
+    {k:['tag question',"isn't it",' na?','tag '], h:"A tag question must match the verb: <i>You live here, <b>don't you</b>?</i> — ‘isn't it?’ isn't a universal tag."},
+    {k:['pass out'], h:"For finishing college say <b>“graduated”</b>; ‘pass out’ means to faint."}
+  ];
+  for(const m of CM){ if(m.k.some(function(x){return s.indexOf(x)>=0;})) return m.h; }
+  // 8) word meaning
+  let word=null;
+  let wm=raw.match(/(?:meaning of|what does|what is|whats|define|meaning for)\s+["'“]?([a-zA-Z][a-zA-Z\-]{1,24})/i);
+  if(wm) word=wm[1];
+  if(!word){ const m2=raw.match(/^([a-zA-Z\-]{2,})\s+mean(s|ing)?\b/i); if(m2) word=m2[1]; }
+  if(word){ const w=chatWords()[word.toLowerCase()]; if(w) return wordCard(w); }
+  // 9) greetings / help
+  if(/^(hi|hii|hello|hey|salam|assalam|good morning|good evening|good afternoon)\b/i.test(raw)) return "Hello! 👋 Ask me about grammar, a tense, a word's meaning, or type <b>check: your sentence</b>.";
+  if(/\bthank/.test(s)) return "You're welcome! Keep practising — you've got this. 🌟";
+  if(/help|what can you|what do you|topics/.test(s)) return helpAns();
+  // 10) fallback
+  return fallbackAns(raw);
+}
+
+function lanternChatRender(){
+  const log=document.getElementById('lanternChatLog');
+  if(!log) return;
+  log.innerHTML=LANTERN_CHAT.map(function(m){
+    return "<div class='lchat-msg "+(m.r==='me'?'me':'bot')+"'>"+m.h+"</div>";
+  }).join("");
+  log.scrollTop=log.scrollHeight;
+}
+function lanternAsk(preset){
+  const inp=document.getElementById('lanternChatIn');
+  let q=(preset!=null?preset:(inp?inp.value:"")).trim();
+  if(!q) return;
+  LANTERN_CHAT.push({r:'me', h:esc(q)});
+  const a=lanternAnswer(q);
+  LANTERN_CHAT.push({r:'bot', h:a||"Try asking about a tense, a word, or type ‘check: …’."});
+  if(inp) inp.value="";
+  lanternChatRender();
+}
+function lchatSection(){
+  const sugg=["present perfect","a or an?","since vs for","what is a verb?","meaning of courage","check: I am having a car"];
+  let h="<div class='coach-sec-title'>💬 Ask Lantern AI <span class='bn'>(প্রশ্ন করো)</span></div>";
+  h+="<div class='card coach-card lchat-card'>";
+  h+="<div id='lanternChatLog' class='lchat-log'></div>";
+  h+="<div class='lchat-sugg'>"+sugg.map(function(x){return "<button class='lchat-chip' onclick=\"lanternAsk('"+x.replace(/'/g,"\\'")+"')\">"+x+"</button>";}).join("")+"</div>";
+  h+="<div class='lchat-row'><input id='lanternChatIn' class='lchat-in' placeholder='Ask a question…' onkeydown=\"if(event.key==='Enter'){lanternAsk();}\">"+
+     "<button class='coach-btn' onclick='lanternAsk()'>Send</button></div>";
+  h+="</div>";
+  // render log after insert
+  setTimeout(lanternChatRender,0);
+  return h;
 }
 
 function renderTop(){
