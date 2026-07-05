@@ -305,7 +305,8 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 .wlist{display:flex;flex-direction:column;gap:9px;margin-top:8px}
 .wrow{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--r);background:var(--card);
   border:1px solid var(--line);box-shadow:var(--shadow-sm)}
-.wrow .say2{width:36px;height:36px;flex:none;border-radius:10px;background:var(--brand-soft);display:grid;place-items:center}
+.wrow .say2{width:30px;height:30px;flex:none;border-radius:9px;background:var(--brand-soft);display:grid;place-items:center;margin-left:8px}
+.say2 svg{width:15px;height:15px}
 .wrow .say2 svg{width:18px;height:18px;color:var(--brand)}
 .wrow .w-en{font-weight:800;font-size:16px}
 .wrow .w-ex{font-size:13px;color:var(--ink-soft);margin-top:2px;line-height:1.4}
@@ -343,94 +344,104 @@ button{font-family:inherit; cursor:pointer; border:none; background:none; color:
 
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.05ms!important}}
 
-/* ===== AI COACH (added) ===== */
-.coach-card{padding:18px;margin-bottom:14px}
-.coach-eyebrow{font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
-.coach-sec-title{font:700 15px/1.3 var(--sans);color:var(--ink);margin:20px 4px 10px;display:flex;align-items:center;gap:8px}
-.coach-band-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.coach-band-name{font:700 22px/1.15 var(--disp);color:var(--ink);margin-top:2px}
-.coach-band-blurb{color:var(--ink-soft);font-size:13.5px;margin-top:3px}
-.coach-band-badge{width:52px;height:52px;flex:none;border-radius:16px;background:var(--brand-soft);display:grid;place-items:center;color:var(--brand)}
-.coach-band-badge svg{width:28px;height:28px}
-.coach-levels{display:flex;align-items:center;margin:16px 0 6px}
-.coach-lv{display:flex;flex-direction:column;align-items:center;gap:3px;flex:none;width:74px;text-align:center}
-.coach-lv-ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--paper-2);color:var(--ink-faint);border:2px solid var(--line)}
-.coach-lv-ic svg{width:20px;height:20px}
-.coach-lv-name{font:700 12px/1.1 var(--sans);color:var(--ink-faint)}
-.coach-lv-bn{font-size:11px;color:var(--ink-faint)}
-.coach-lv.done .coach-lv-ic{background:var(--green-soft);color:var(--green);border-color:transparent}
-.coach-lv.done .coach-lv-name{color:var(--green)}
-.coach-lv.cur .coach-lv-ic{background:var(--gold);color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(240,166,47,.4)}
-.coach-lv.cur .coach-lv-name{color:var(--gold-deep)}
-.coach-lv-line{flex:1;height:3px;border-radius:2px;background:var(--line);min-width:10px}
-.coach-lv-line.done{background:var(--green)}
-.coach-bar{height:9px;border-radius:6px;background:var(--paper-2);overflow:hidden;margin-top:12px}
-.coach-bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-deep));border-radius:6px;transition:width .5s}
-.coach-band-hint{font-size:12.5px;color:var(--ink-soft);margin-top:7px}
-.coach-plan{display:flex;flex-direction:column;gap:10px}
-.coach-plan-item{display:flex;align-items:center;gap:12px;padding:14px 16px}
-.coach-dot{width:10px;height:10px;border-radius:50%;flex:none}
-.coach-plan-txt{flex:1;min-width:0}
-.coach-plan-txt b{display:block;font:700 14.5px/1.3 var(--sans);color:var(--ink)}
-.coach-plan-txt span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:2px}
-.coach-btn{border:none;border-radius:12px;background:var(--brand);color:#fff;font:700 13px/1 var(--sans);padding:10px 14px;cursor:pointer;flex:none;white-space:nowrap;transition:filter .15s,transform .1s}
-.coach-btn:hover{filter:brightness(1.06)}
-.coach-btn:active{transform:scale(.97)}
-.coach-btn.ghost{background:var(--paper-2);color:var(--ink)}
-.coach-btn.rec{background:var(--coral);animation:coachpulse 1s infinite}
-@keyframes coachpulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.2)}}
-.coach-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:6px}
-.coach-chip{border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);border-radius:999px;padding:7px 12px;font:600 12.5px/1 var(--sans);cursor:pointer;transition:all .15s}
-.coach-chip:hover{border-color:var(--brand);color:var(--brand)}
-.coach-chip.on{background:var(--brand);color:#fff;border-color:transparent}
-.coach-phrase{font:600 20px/1.35 var(--disp);color:var(--ink);margin:14px 0;text-align:center}
-.coach-pron-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.coach-score{display:flex;align-items:center;gap:12px;margin:8px 0}
-.coach-score-bar{flex:1;height:14px;border-radius:8px;background:var(--paper-2);overflow:hidden}
-.coach-score-bar>i{display:block;height:100%;border-radius:8px;transition:width .5s}
-.coach-score-num{font:800 20px/1 var(--disp);flex:none}
-.coach-verdict{font-size:14px;margin:2px 0}
-.coach-note{font-size:12.5px;color:var(--ink-soft);margin-top:6px;line-height:1.5}
-.coach-input{width:100%;box-sizing:border-box;min-height:78px;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font:500 15px/1.5 var(--sans);color:var(--ink);background:var(--paper);resize:vertical;margin-bottom:10px}
-.coach-input:focus{outline:none;border-color:var(--brand)}
-.coach-ok{background:var(--green-soft);color:var(--ink);padding:12px 14px;border-radius:12px;font-size:13.5px}
-.coach-flag{font:700 13px/1.3 var(--sans);color:var(--coral);margin-bottom:6px}
-.coach-list{margin:0;padding-left:18px}
-.coach-list li{font-size:13px;color:var(--ink);margin:5px 0;line-height:1.5}
-.coach-recs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.coach-rec{padding:12px 14px}
-.coach-rec-top{display:flex;justify-content:space-between;align-items:center}
-.coach-rec-top b{font:700 15px/1 var(--sans);color:var(--ink)}
-.coach-say{border:none;background:var(--brand-soft);color:var(--brand);width:28px;height:28px;border-radius:9px;cursor:pointer;font-size:13px}
-.coach-rec-bn{font-size:13px;color:var(--ink-soft);margin-top:4px}
-.coach-rec-ex{font-size:12px;color:var(--ink-faint);margin-top:5px;line-height:1.45}
-.coach-badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
-.coach-badge{padding:14px 12px;border-radius:16px;background:var(--card);border:1px solid var(--line);text-align:center;opacity:.55;filter:grayscale(.5)}
-.coach-badge.on{opacity:1;filter:none;border-color:var(--gold-soft);background:linear-gradient(180deg,var(--card),var(--gold-soft))}
-.coach-badge-ic{width:40px;height:40px;margin:0 auto 6px;border-radius:12px;display:grid;place-items:center;background:var(--paper-2);color:var(--ink-faint)}
-.coach-badge.on .coach-badge-ic{background:var(--gold);color:#fff}
-.coach-badge-ic svg{width:22px;height:22px}
-.coach-badge-name{font:700 13px/1.2 var(--sans);color:var(--ink)}
-.coach-badge-desc{font-size:11px;color:var(--ink-soft);margin-top:3px;line-height:1.4}
-@media(max-width:520px){.coach-lv{width:60px}.coach-chip{font-size:11.5px}}
-
-
-/* ===== Lantern AI chat ===== */
-.lchat-card{padding:14px}
-.lchat-log{max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:4px 2px 8px}
-.lchat-msg{max-width:86%;padding:10px 13px;border-radius:15px;font-size:13.5px;line-height:1.5}
-.lchat-msg.bot{align-self:flex-start;background:var(--brand-soft);color:var(--ink);border-bottom-left-radius:5px}
-.lchat-msg.me{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:5px}
-.lchat-msg.bot .bn{color:var(--brand-deep)}
-.lchat-msg.bot .coach-list{margin:6px 0 0;padding-left:18px}
-.lchat-msg.bot .coach-list li{margin:4px 0}
-.lchat-tip{display:block;margin-top:6px;font-size:11.5px;color:var(--ink-faint)}
-.lchat-sugg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
-.lchat-chip{border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);border-radius:999px;padding:6px 11px;font:600 12px/1 var(--sans);cursor:pointer;transition:all .15s}
-.lchat-chip:hover{border-color:var(--brand);color:var(--brand)}
-.lchat-row{display:flex;gap:8px}
-.lchat-in{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:11px 14px;font:500 14.5px/1.3 var(--sans);color:var(--ink);background:var(--paper)}
-.lchat-in:focus{outline:none;border-color:var(--brand)}
+/* ===== LANTERN AI TUTOR ===== */
+.ai-wrap{display:flex;flex-direction:column;min-height:calc(100vh - 190px)}
+.ai-head{display:flex;justify-content:space-between;align-items:center;padding:2px 2px 12px;border-bottom:1px solid var(--line-2);margin-bottom:12px}
+.ai-title{font:800 20px/1.1 var(--disp);color:var(--ink)}
+.ai-sub{font:600 11px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-left:8px}
+.ai-head-r{display:flex;align-items:center;gap:9px}
+.ai-level{font:700 11px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--brand);background:var(--brand-soft);border-radius:999px;padding:6px 11px}
+.ai-new{border:1px solid var(--line);background:var(--card);color:var(--ink-soft);border-radius:999px;padding:6px 12px;font:700 12px/1 var(--sans);cursor:pointer}
+.ai-new:hover{border-color:var(--brand);color:var(--brand)}
+.ai-log{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding:4px 2px 8px}
+.ai-msg{max-width:88%;font-size:14px;line-height:1.55;animation:aiIn .25s ease}
+@keyframes aiIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ai-msg.me{align-self:flex-end;background:var(--brand);color:#fff;padding:11px 15px;border-radius:16px;border-bottom-right-radius:5px}
+.ai-msg.bot{align-self:flex-start;color:var(--ink);width:100%;max-width:100%}
+.ai-msg.bot>div:not(.aicard):not([id^=aic]){background:var(--brand-soft);padding:12px 15px;border-radius:16px;border-bottom-left-radius:5px;display:inline-block}
+.ai-msg.bot [id^=aic]{background:var(--brand-soft);padding:12px 15px;border-radius:16px;border-bottom-left-radius:5px;display:inline-block}
+.ai-msg .bn{font-family:var(--bn)}
+.ai-loading{display:flex;align-items:center;gap:10px;color:var(--ink-soft);font-size:12.5px}
+.ai-dots{display:inline-flex;gap:4px}
+.ai-dots i{width:7px;height:7px;border-radius:50%;background:var(--brand);opacity:.5;animation:aidot 1s infinite}
+.ai-dots i:nth-child(2){animation-delay:.15s}.ai-dots i:nth-child(3){animation-delay:.3s}
+@keyframes aidot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+.ai-tip{font-style:italic}
+/* cards */
+.aicard{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:16px;padding:15px 16px;box-shadow:var(--shadow-sm);width:100%;box-sizing:border-box}
+.aicard-h{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.aicard-tag{font:800 10px/1 var(--sans);letter-spacing:.1em;color:#fff;background:var(--c);border-radius:6px;padding:4px 7px}
+.aicard-t{font:700 16px/1.2 var(--disp);color:var(--ink)}
+.aic-body{margin:0 0 8px;font-size:13.5px;color:var(--ink-soft);line-height:1.55}
+.aic-list{margin:6px 0;padding-left:18px}
+.aic-list li{font-size:13.5px;margin:5px 0;line-height:1.5;color:var(--ink)}
+.aic-mistakes{display:flex;flex-direction:column;gap:6px;margin:8px 0;background:var(--paper-2);border-radius:12px;padding:10px 12px}
+.aic-mistakes .x{color:var(--coral);display:block;font-size:13px}
+.aic-mistakes .ok{color:var(--green);display:block;font-size:13px;font-weight:600}
+.aic-practice{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.aic-practice-q{font-weight:700;font-size:13.5px;margin-bottom:8px;color:var(--ink)}
+.aic-opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:11px;padding:10px 13px;font:600 13.5px/1.3 var(--sans);cursor:pointer;margin:5px 0;transition:all .12s}
+.aic-opt:hover:not(:disabled){border-color:var(--brand);background:var(--brand-soft)}
+.aic-opt:disabled{cursor:default}
+.aic-opt.right{border-color:var(--green);background:var(--green-soft);font-weight:700}
+.aic-opt.wrong{border-color:var(--coral);background:var(--coral-soft)}
+.aic-fb{margin-top:8px;font-size:13px;color:var(--ink-soft);line-height:1.5}
+.aic-fb .ok,.aic-fb b.ok{color:var(--green)}.aic-fb .x,.aic-fb b.x{color:var(--coral)}
+.aic-word{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:6px}
+.aic-w{font:800 22px/1 var(--disp);color:var(--ink)}
+.aic-ipa{font-family:var(--mono,monospace);color:var(--brand-deep);font-size:14px}
+.aic-pos{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+.aic-say{border:none;background:var(--brand-soft);color:var(--brand);width:30px;height:30px;border-radius:9px;cursor:pointer;font-size:14px;margin-left:auto}
+.aic-mean{font-size:13.5px;color:var(--ink-soft);margin:4px 0 6px;line-height:1.5}
+.aic-ex{font-size:13.5px;color:var(--ink);font-style:italic;background:var(--paper-2);border-radius:10px;padding:8px 11px;margin:6px 0}
+.aic-lbl{font:700 10.5px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);margin:10px 0 5px}
+.aic-chips{display:flex;flex-wrap:wrap;gap:6px}
+.aic-chips span{font-size:12.5px;font-weight:600;border-radius:999px;padding:5px 11px;background:var(--paper-2);color:var(--ink)}
+.aic-chips.syn span{background:var(--green-soft);color:#1c6b47}
+.aic-chips.ant span{background:var(--coral-soft);color:#a13320}
+.aic-chips.coll span{background:var(--brand-soft);color:var(--brand-deep)}
+.ai-btn{border:none;border-radius:11px;background:var(--brand);color:#fff;font:700 13px/1 var(--sans);padding:10px 14px;cursor:pointer;margin:6px 6px 0 0;transition:filter .15s}
+.ai-btn:hover{filter:brightness(1.07)}.ai-btn.rec{background:var(--coral);animation:aidot 1s infinite}
+.aic-pron-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.aic-scorebar{height:13px;border-radius:8px;background:var(--paper-2);overflow:hidden;margin:10px 0 5px}
+.aic-scorebar>i{display:block;height:100%;border-radius:8px;transition:width .5s}
+.aic-scoren{font:800 15px/1 var(--disp)}
+.aic-note{font-size:12.5px;color:var(--ink-soft);margin-top:8px;line-height:1.5}
+.aic-rw{display:flex;flex-direction:column;gap:8px}
+.aic-rw-row{display:flex;gap:9px;align-items:flex-start}
+.aic-rw-lbl{font:800 9.5px/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase;flex:none;width:66px;padding-top:2px}
+.aic-rw-lbl.x{color:var(--coral)}.aic-rw-lbl.ok{color:var(--green)}
+.aic-rw-txt{flex:1;font-size:14px;line-height:1.5;color:var(--ink-soft)}
+.aic-rw-txt.good{color:var(--ink);font-weight:600;background:var(--green-soft);border-radius:9px;padding:7px 10px}
+.aic-timeline{margin:8px 0}
+.aic-step{display:flex;gap:11px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line-2)}
+.aic-step:last-child{border-bottom:none}
+.aic-step-n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--sky);color:#fff;font:800 12px/24px var(--sans);text-align:center}
+.aic-step b{font-size:13.5px;color:var(--ink);display:block}
+.aic-step span{font-size:12.5px;color:var(--ink-soft);display:block;margin-top:1px;line-height:1.45}
+.aic-tr{text-align:center;margin:4px 0}
+.aic-tr-src{font-size:17px;color:var(--ink);font-weight:600}
+.aic-tr-arrow{color:var(--ink-faint);margin:4px 0}
+.aic-tr-out{font:600 18px/1.3 var(--disp);color:var(--brand-deep)}
+.aic-dial-ai{display:flex;align-items:flex-start;gap:8px;font-size:14.5px;color:var(--ink);line-height:1.5}
+.aic-dial-ai svg{width:20px;height:20px;flex:none;color:var(--coral);margin-top:2px}
+.ai-chips-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.ai-launch{margin-top:6px}
+.ai-launch-t{font:700 14px/1.3 var(--sans);color:var(--ink-soft);margin:6px 0 10px}
+.ai-acts{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px;margin-top:6px}
+.ai-act{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 13px;cursor:pointer;font:700 13.5px/1.2 var(--sans);color:var(--ink);text-align:left;transition:all .14s;box-shadow:var(--shadow-sm)}
+.ai-act:hover{border-color:var(--brand);transform:translateY(-2px)}
+.ai-act-ic{font-size:20px;display:inline-flex}.ai-act-ic svg{width:20px;height:20px;color:var(--brand)}
+.ai-foot{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,var(--paper) 22%);padding-top:10px;margin-top:8px}
+.ai-follows{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px}
+.ai-chip{border:1px solid var(--line);background:var(--card);color:var(--ink-soft);border-radius:999px;padding:7px 13px;font:600 12.5px/1 var(--sans);cursor:pointer;transition:all .14s}
+.ai-chip:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-soft)}
+.ai-inputrow{display:flex;gap:9px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:6px 6px 6px 16px;box-shadow:var(--shadow-md)}
+.ai-in{flex:1;border:none;background:transparent;font:500 15px/1.4 var(--sans);color:var(--ink);padding:8px 0}
+.ai-in:focus{outline:none}
+.ai-send{flex:none;width:42px;height:42px;border-radius:12px;border:none;background:var(--brand);color:#fff;font-size:16px;cursor:pointer;transition:filter .15s}
+.ai-send:hover{filter:brightness(1.08)}
+@media(max-width:520px){.ai-msg{max-width:94%}.ai-acts{grid-template-columns:1fr 1fr}}
 
 </style>
 </head>
@@ -951,9 +962,7 @@ function renderBank(){
   html+=`</div><input class="wsearch" placeholder="Search a word or meaning…" value="${bankQuery.replace(/"/g,'&quot;')}" oninput="bankSearch(this.value)"><div class="wlist">`;
   if(!shown.length) html+=`<div class="empty"><h3>No matches</h3><p>Try another word.</p></div>`;
   shown.forEach(v=>{
-    html+=`<div class="wrow"><button class="say2" onclick="say(${JSON.stringify(v.ex||v.en).replace(/"/g,'&quot;')})" aria-label="Play">${ic('speaker')}</button>
-      <div style="flex:1;min-width:0"><div class="w-en">${v.en}</div><div class="w-ex">${v.ex}</div></div>
-      <div class="w-bn">${v.bn}</div></div>`;
+    html+=`<div class="wrow"><div style="flex:1;min-width:0"><div class="w-en">${v.en}</div><div class="w-ex">${v.ex}</div></div><div class="w-bn">${v.bn}</div><button class="say2" onclick="say(${JSON.stringify(v.ex||v.en).replace(/"/g,'&quot;')})" aria-label="Play">${ic('speaker')}</button></div>`;
   });
   html+=`</div>`;
   if(shown.length<data.length) html+=`<div class="wmore" onclick="bankMore()">Show more (${data.length-shown.length} left)</div>`;
@@ -998,397 +1007,491 @@ function resetAll(){
    ============================================================ */
 
 /* ============================================================
-   AI COACH  (premium, added)
+   LANTERN AI TUTOR — data
    ============================================================ */
-const LEVEL_BANDS = [
-  {name:"Beginner",     bn:"শুরু",    ic:"spark",   need:0,  blurb:"First sentences & core grammar."},
-  {name:"Intermediate", bn:"মধ্যম",   ic:"layers",  need:8,  blurb:"Tenses, parts of speech, real talk."},
-  {name:"Advanced",     bn:"উন্নত",   ic:"compass", need:18, blurb:"Reading, writing & richer vocabulary."},
-  {name:"Fluent",       bn:"সাবলীল",  ic:"lantern", need:30, blurb:"Confident, natural, exam-ready English."},
-];
-function coachBand(done){
-  let idx=0;
-  LEVEL_BANDS.forEach((b,i)=>{ if(done>=b.need) idx=i; });
-  const cur=LEVEL_BANDS[idx], next=LEVEL_BANDS[idx+1];
-  const span = next ? (next.need-cur.need) : Math.max(1, cur.need);
-  const into = done-cur.need;
-  const pct = next ? Math.max(0,Math.min(100, Math.round(into/span*100))) : 100;
-  return {idx, cur, next, pct};
-}
-
-const COACH_PHRASES = [
-  "Could you help me, please?",
-  "I would like a cup of tea.",
-  "Where is the nearest station?",
-  "Nice to meet you.",
-  "I have lived here for three years.",
-  "Let me think about that for a moment.",
-  "Could you repeat that, please?",
-  "I am looking forward to the meeting.",
-  "What time does the class start?",
-  "Thank you very much for your help.",
-  "I am not sure I agree, but I see your point.",
-  "Could you speak a little more slowly?"
-];
-let COACH_PHRASE = COACH_PHRASES[0];
-
-/* ---- rule-based grammar / sentence checker (offline "AI") ---- */
-function coachCheck(){
-  const box=document.getElementById('coachInput');
-  const out=document.getElementById('coachResult');
-  if(!box||!out) return;
-  const t=(box.value||"").trim();
-  if(!t){ out.innerHTML="<div class='coach-note'>Type a sentence above, then tap <b>Check</b>.</div>"; return; }
-  const issues=[];
-  const rules=[
-    [/\bdiscuss(ed|ing)?\s+about\b/i, "‘discuss’ takes no ‘about’ → “discuss the plan”."],
-    [/\bmarried\s+with\b/i, "Use ‘married to’, not ‘married with’."],
-    [/\bgood\s+in\b/i, "For a skill use ‘good at’ (good at maths), not ‘good in’."],
-    [/\bsince\s+\d+\s+(year|years|day|days|month|months|hour|hours|week|weeks)\b/i, "Use ‘for’ + a length of time (for 3 years); ‘since’ + a start point (since 2021)."],
-    [/\b(am|is|are)\s+having\b/i, "‘have’ (own) is stative — say ‘I have’, not ‘I am having’."],
-    [/\bmyself\s+[A-Z][a-z]+/, "Introduce yourself as ‘I’m …’ or ‘My name is …’, not ‘Myself …’."],
-    [/\brevert\s+back\b/i, "‘revert back’ → ‘reply’ or ‘get back to you’."],
-    [/\bdo\s+the\s+needful\b/i, "‘do the needful’ → say the exact action (please arrange / approve it)."],
-    [/\bout\s+of\s+station\b/i, "‘out of station’ → ‘out of town’ / ‘away’."],
-    [/\bcousin\s+(brother|sister)\b/i, "Just ‘cousin’ (drop brother/sister)."],
-    [/\bprepone\b/i, "‘prepone’ → ‘move earlier / bring forward’."],
-    [/\bpass(ed)?\s+out\b/i, "For finishing college use ‘graduated’; ‘pass out’ means faint."],
-    [/\bkindly\s+do\b/i, "‘kindly do …’ sounds old-fashioned — try ‘could you please …’."],
-    [/\ba\s+(hour|honest|honour|umbrella|apple|elephant|orange|idea|engineer|answer|email|MBA|MP|hour)\b/i, "Use ‘an’ before a vowel SOUND (an hour, an umbrella)."],
-    [/\bmore\s+better\b/i, "Say ‘better’ (not ‘more better’)."],
-    [/\bvery\s+much\s+good\b/i, "Say ‘very good’ or ‘really good’."]
-  ];
-  rules.forEach(([re,msg])=>{ if(re.test(t)) issues.push(msg); });
-  if(/^[a-z]/.test(t)) issues.push("Start the sentence with a capital letter.");
-  if(!/[.!?]["']?$/.test(t)) issues.push("End the sentence with . ! or ?");
-  if(/\bi\b/.test(t)) issues.push("Write ‘I’ (the pronoun) as a capital letter.");
-  if(/\s{2,}/.test(t)) issues.push("Remove the extra space between words.");
-  const words=t.split(/\s+/).length;
-  if(issues.length===0){
-    out.innerHTML="<div class='coach-ok'>✅ <b>Looks good!</b> Clear and natural — nicely done. <span class='bn'>(সুন্দর হয়েছে!)</span></div>"+
-      (words<4?"<div class='coach-note'>Tip: try a slightly longer sentence to practise more.</div>":"");
-  } else {
-    out.innerHTML="<div class='coach-flag'>Found "+issues.length+" thing"+(issues.length>1?"s":"")+" to polish:</div>"+
-      "<ul class='coach-list'>"+issues.map(i=>"<li>"+i+"</li>").join("")+"</ul>";
-  }
-}
-
-/* ---- pronunciation studio (uses SpeechRecognition + similarity) ---- */
-function coachSetPhrase(i){ COACH_PHRASE=COACH_PHRASES[i]; renderCoach(); setTimeout(function(){ say(COACH_PHRASE); },150); }
-function coachHear(){ say(COACH_PHRASE); }
-function coachListen(){
-  const out=document.getElementById('coachPronOut');
-  if(!CAN_LISTEN){ if(out) out.innerHTML="<div class='coach-note'>Your browser can't use the mic. Tap 🔊 Hear it, then repeat aloud.</div>"; return; }
-  const btn=document.getElementById('coachMic');
-  try{
-    const rec=new SR(); rec.lang='en-US'; rec.interimResults=false; rec.maxAlternatives=1;
-    if(btn) btn.classList.add('rec');
-    if(out) out.innerHTML="<div class='coach-note'>🎙️ Listening… say the phrase now.</div>";
-    rec.onresult=function(e){
-      const said=e.results[0][0].transcript;
-      const pct=Math.round(similarity(said, COACH_PHRASE)*100);
-      if(btn) btn.classList.remove('rec');
-      let verdict, col;
-      if(pct>=80){ verdict="Excellent!"; col="var(--green)"; }
-      else if(pct>=55){ verdict="Good — almost there."; col="var(--gold-deep)"; }
-      else { verdict="Keep practising."; col="var(--coral)"; }
-      if(out) out.innerHTML=
-        "<div class='coach-score'><div class='coach-score-bar'><i style='width:"+pct+"%;background:"+col+"'></i></div>"+
-        "<div class='coach-score-num' style='color:"+col+"'>"+pct+"%</div></div>"+
-        "<div class='coach-verdict' style='color:"+col+"'><b>"+verdict+"</b></div>"+
-        "<div class='coach-note'>You said: “"+said+"”</div>"+
-        (pct<80?"<div class='coach-note'>Tip: tap 🔊 Hear it again, copy the rhythm, and stress the strong words.</div>":"");
-    };
-    rec.onerror=function(){ if(btn) btn.classList.remove('rec'); if(out) out.innerHTML="<div class='coach-note'>No mic access. Tap 🔊 Hear it and repeat aloud.</div>"; };
-    rec.start();
-  }catch(err){ if(out) out.innerHTML="<div class='coach-note'>Mic not available right now. Tap 🔊 Hear it and repeat.</div>"; }
-}
-
-/* ---- achievements ---- */
-const COACH_BADGES=[
-  {ic:"spark",  name:"First Light",   desc:"Finish your first lesson", cond:function(d){return d.done>=1;}},
-  {ic:"layers", name:"Steady",        desc:"Finish 5 lessons",         cond:function(d){return d.done>=5;}},
-  {ic:"compass",name:"Explorer",      desc:"Finish 12 lessons",        cond:function(d){return d.done>=12;}},
-  {ic:"flame",  name:"On Fire",       desc:"Reach a 3-day streak",     cond:function(d){return d.streak>=3;}},
-  {ic:"flame",  name:"Unstoppable",   desc:"Reach a 7-day streak",     cond:function(d){return d.streak>=7;}},
-  {ic:"bolt",   name:"Century",       desc:"Earn 100 XP",              cond:function(d){return d.xp>=100;}},
-  {ic:"cards",  name:"Word Collector",desc:"Meet 50 words",            cond:function(d){return d.words>=50;}},
-  {ic:"lantern",name:"Fluent Path",   desc:"Reach the Fluent band",    cond:function(d){return d.done>=30;}},
+const RICHV=[
+ {en:"improve",ipa:"/ɪmˈpruːv/",pos:"verb",bn:"উন্নতি করা",def:"to make or become better",syn:["enhance","boost","upgrade"],ant:["worsen","decline"],coll:["improve your skills","greatly improve","improve the quality"],ex:"Reading daily will improve your English."},
+ {en:"achieve",ipa:"/əˈtʃiːv/",pos:"verb",bn:"অর্জন করা",def:"to succeed in reaching a goal",syn:["accomplish","attain","reach"],ant:["fail","miss"],coll:["achieve a goal","achieve success"],ex:"She worked hard to achieve her dream."},
+ {en:"benefit",ipa:"/ˈbenɪfɪt/",pos:"noun",bn:"সুবিধা",def:"a helpful or good effect",syn:["advantage","gain","perk"],ant:["drawback","disadvantage"],coll:["a major benefit","health benefits","benefit from"],ex:"Exercise has many health benefits."},
+ {en:"opportunity",ipa:"/ˌɒpəˈtjuːnəti/",pos:"noun",bn:"সুযোগ",def:"a chance to do something good",syn:["chance","opening","shot"],ant:["missed chance"],coll:["a great opportunity","miss an opportunity","job opportunity"],ex:"This job is a great opportunity for you."},
+ {en:"challenge",ipa:"/ˈtʃælɪndʒ/",pos:"noun",bn:"কঠিন কাজ",def:"a difficult task that tests your ability",syn:["difficulty","test","hurdle"],ant:["ease"],coll:["face a challenge","a big challenge"],ex:"Learning a language is a fun challenge."},
+ {en:"essential",ipa:"/ɪˈsenʃəl/",pos:"adjective",bn:"অপরিহার্য",def:"absolutely necessary",syn:["necessary","vital","crucial"],ant:["optional","unnecessary"],coll:["essential for","an essential part"],ex:"Water is essential for life."},
+ {en:"reliable",ipa:"/rɪˈlaɪəbl/",pos:"adjective",bn:"নির্ভরযোগ্য",def:"able to be trusted",syn:["dependable","trustworthy"],ant:["unreliable"],coll:["a reliable source","reliable service"],ex:"He is a reliable friend."},
+ {en:"efficient",ipa:"/ɪˈfɪʃnt/",pos:"adjective",bn:"দক্ষ",def:"working well without wasting time or energy",syn:["productive","effective"],ant:["inefficient","wasteful"],coll:["highly efficient","an efficient way"],ex:"This is an efficient way to study."},
+ {en:"confident",ipa:"/ˈkɒnfɪdənt/",pos:"adjective",bn:"আত্মবিশ্বাসী",def:"sure of yourself and your abilities",syn:["self-assured","sure"],ant:["nervous","unsure"],coll:["feel confident","confident about"],ex:"Speak slowly and stay confident."},
+ {en:"grateful",ipa:"/ˈɡreɪtfl/",pos:"adjective",bn:"কৃতজ্ঞ",def:"feeling thankful",syn:["thankful","appreciative"],ant:["ungrateful"],coll:["grateful for","deeply grateful"],ex:"I am grateful for your help."},
+ {en:"generous",ipa:"/ˈdʒenərəs/",pos:"adjective",bn:"উদার",def:"willing to give and share",syn:["giving","kind"],ant:["selfish","stingy"],coll:["very generous","a generous gift"],ex:"She is generous with her time."},
+ {en:"patient",ipa:"/ˈpeɪʃnt/",pos:"adjective",bn:"ধৈর্যশীল",def:"able to wait calmly without getting angry",syn:["calm","tolerant"],ant:["impatient"],coll:["be patient","patient with"],ex:"Be patient — fluency takes time."},
+ {en:"curious",ipa:"/ˈkjʊəriəs/",pos:"adjective",bn:"কৌতূহলী",def:"eager to learn or know",syn:["inquisitive","interested"],ant:["indifferent"],coll:["curious about"],ex:"Curious learners improve fastest."},
+ {en:"increase",ipa:"/ɪnˈkriːs/",pos:"verb",bn:"বৃদ্ধি করা",def:"to make larger in size or amount",syn:["raise","grow","boost"],ant:["decrease","reduce"],coll:["increase steadily","a sharp increase"],ex:"Try to increase your vocabulary daily."},
+ {en:"maintain",ipa:"/meɪnˈteɪn/",pos:"verb",bn:"বজায় রাখা",def:"to keep something going at the same level",syn:["keep","sustain","preserve"],ant:["abandon","neglect"],coll:["maintain a habit","maintain progress"],ex:"Maintain your daily study streak."},
+ {en:"avoid",ipa:"/əˈvɔɪd/",pos:"verb",bn:"এড়ানো",def:"to keep away from something",syn:["prevent","dodge","evade"],ant:["seek","face"],coll:["avoid mistakes","hard to avoid"],ex:"Avoid translating word for word."},
+ {en:"encourage",ipa:"/ɪnˈkʌrɪdʒ/",pos:"verb",bn:"উৎসাহ দেওয়া",def:"to give support, hope, or confidence",syn:["support","motivate","inspire"],ant:["discourage"],coll:["encourage someone to"],ex:"Good teachers encourage you to try."},
+ {en:"suggest",ipa:"/səˈdʒest/",pos:"verb",bn:"প্রস্তাব দেওয়া",def:"to put forward an idea for consideration",syn:["propose","recommend"],ant:["dismiss"],coll:["suggest that","strongly suggest"],ex:"I suggest reading a little every day."},
+ {en:"sincere",ipa:"/sɪnˈsɪə/",pos:"adjective",bn:"আন্তরিক",def:"honest and genuine",syn:["genuine","honest","heartfelt"],ant:["insincere","fake"],coll:["a sincere apology"],ex:"Please accept my sincere thanks."},
+ {en:"ambitious",ipa:"/æmˈbɪʃəs/",pos:"adjective",bn:"উচ্চাকাঙ্ক্ষী",def:"having a strong desire to succeed",syn:["driven","motivated"],ant:["lazy","unambitious"],coll:["an ambitious goal"],ex:"Set an ambitious but realistic goal."},
+ {en:"fluent",ipa:"/ˈfluːənt/",pos:"adjective",bn:"সাবলীল",def:"able to speak a language easily and well",syn:["articulate","smooth"],ant:["halting"],coll:["fluent in English","become fluent"],ex:"You will become fluent with steady practice."},
+ {en:"vocabulary",ipa:"/vəˈkæbjələri/",pos:"noun",bn:"শব্দভান্ডার",def:"all the words a person knows or uses",syn:["lexicon","word bank"],ant:[],coll:["build vocabulary","a wide vocabulary"],ex:"A big vocabulary makes speaking easier."},
+ {en:"pronounce",ipa:"/prəˈnaʊns/",pos:"verb",bn:"উচ্চারণ করা",def:"to make the sound of a word",syn:["say","articulate"],ant:[],coll:["pronounce correctly","hard to pronounce"],ex:"Let me help you pronounce this word."},
+ {en:"consider",ipa:"/kənˈsɪdə/",pos:"verb",bn:"বিবেচনা করা",def:"to think about carefully",syn:["think about","ponder","weigh"],ant:["ignore"],coll:["consider carefully","consider options"],ex:"Consider both sides before deciding."}
 ];
 
-function renderCoach(){
-  const el=document.getElementById('panel-coach');
-  const done=ORDER.filter(id=>unit(id).done).length;
-  const words=Object.keys(S.seen).length;
-  const b=coachBand(done);
-  // weakest skill
-  let weak=null,wv=Infinity;
-  Object.entries(SKILLS).forEach(([k,m])=>{ const v=S.skills[k]||0; if(v<wv){wv=v;weak={k:k,m:m,v:v};} });
-  const due=S.review.length;
+const IPA_EXTRA={
+ "the":"/ðə/","water":"/ˈwɔːtə/","comfortable":"/ˈkʌmftəbl/","schedule":"/ˈʃedjuːl/","thorough":"/ˈθʌrə/",
+ "vegetable":"/ˈvedʒtəbl/","wednesday":"/ˈwenzdeɪ/","february":"/ˈfebruəri/","colleague":"/ˈkɒliːɡ/","genre":"/ˈʒɒnrə/",
+ "island":"/ˈaɪlənd/","hour":"/aʊə/","honest":"/ˈɒnɪst/","knife":"/naɪf/","receipt":"/rɪˈsiːt/",
+ "beautiful":"/ˈbjuːtɪfl/","interesting":"/ˈɪntrəstɪŋ/","important":"/ɪmˈpɔːtnt/","development":"/dɪˈveləpmənt/","opportunity":"/ˌɒpəˈtjuːnəti/"
+};
 
-  // ---- level path ----
-  let path="<div class='coach-levels'>";
-  LEVEL_BANDS.forEach(function(x,i){
-    const state=i<b.idx?"done":(i===b.idx?"cur":"lock");
-    path+="<div class='coach-lv "+state+"'><div class='coach-lv-ic'>"+ic(x.ic)+"</div>"+
-      "<div class='coach-lv-name'>"+x.name+"</div><div class='coach-lv-bn bn'>"+x.bn+"</div></div>";
-    if(i<LEVEL_BANDS.length-1) path+="<div class='coach-lv-line "+(i<b.idx?'done':'')+"'></div>";
-  });
-  path+="</div>";
+const GRAMTOPICS=[
+ {id:"articles",key:["article","a or an","a an the","a vs an","when to use a","when to use the"],title:"Articles: a / an / the",bn:"article — বাংলায় নেই",
+  body:"Articles sit before nouns. Bangla has none, so learners often drop them.",
+  points:["<b>a / an</b> = one, not specific → <i>a book, an hour</i>","Use <b>an</b> before a vowel <i>sound</i> → <i>an apple, an MP</i>","<b>the</b> = specific / already known → <i>the sun, the book you gave me</i>","No article for general plurals & uncountables → <i>I like rice</i>"],
+  mistakes:[["He is best student.","He is the best student."],["I saw a elephant.","I saw an elephant."]],
+  practice:{q:"I waited for ___ hour.",options:["a","an","the"],a:1,ex:"‘hour’ starts with a vowel sound → an."}},
+ {id:"sincefor",key:["since or for","since vs for","for or since","since and for","since for"],title:"since vs for",bn:"সময় বোঝাতে",
+  body:"Both talk about time with the present perfect, but differently.",
+  points:["<b>for</b> + a length of time → <i>for 3 years, for two hours</i>","<b>since</b> + a starting point → <i>since 2021, since Monday</i>"],
+  mistakes:[["I have lived here since 3 years.","I have lived here for 3 years."]],
+  practice:{q:"We have been friends ___ childhood.",options:["for","since"],a:1,ex:"‘childhood’ is a starting point → since."}},
+ {id:"stative",key:["stative","am having","is having","are having","state verb"],title:"Stative verbs (no -ing)",bn:"যে verb-এ -ing লাগে না",
+  body:"Some verbs describe a state, not an action, and don't take -ing.",
+  points:["Common stative verbs: <i>have, know, like, want, understand, believe</i>","✅ <i>I have a car.</i> &nbsp; ❌ <i>I am having a car.</i>","✅ <i>I understand.</i> &nbsp; ❌ <i>I am understanding.</i>"],
+  mistakes:[["I am wanting tea.","I want tea."]],
+  practice:{q:"Which is correct?",options:["I am having two brothers.","I have two brothers."],a:1,ex:"‘have’ (own) is stative — no -ing."}},
+ {id:"prepositions",key:["preposition","discuss about","married with","good in","good at","depend on"],title:"Tricky prepositions",bn:"preposition ভুল",
+  body:"Prepositions don't translate one-to-one from Bangla — learn them as fixed phrases.",
+  points:["<b>discuss</b> (no ‘about’) → <i>discuss the plan</i>","<b>married to</b> (not ‘with’)","<b>good at</b> a skill (not ‘good in’)","<b>depend on</b>, <b>listen to</b>, <b>angry with</b> a person"],
+  mistakes:[["We discussed about it.","We discussed it."],["She is married with a doctor.","She is married to a doctor."]],
+  practice:{q:"I'm good ___ cooking.",options:["in","at","on"],a:1,ex:"good AT an activity."}},
+ {id:"tags",key:["tag question","isn't it","tag ","question tag"],title:"Tag questions",bn:"‘তাই না?’",
+  body:"A tag question must match the main verb — ‘isn't it?’ is not universal.",
+  points:["Positive sentence → negative tag: <i>You live here, don't you?</i>","Match the verb: <i>She can swim, can't she?</i>","Drop the habit of adding ‘isn't it?’ / ‘na?’ to everything"],
+  mistakes:[["You are coming, isn't it?","You are coming, aren't you?"]],
+  practice:{q:"He works here, ___?",options:["isn't it","doesn't he","don't he"],a:1,ex:"‘works’ → doesn't he."}},
+ {id:"comparatives",key:["comparative","superlative","er than","more than","bigger","best"],title:"Comparatives & superlatives",bn:"তুলনা করা",
+  body:"Use these to compare two or more things.",
+  points:["Short words: add <b>-er / -est</b> → <i>fast → faster → fastest</i>","Long words: use <b>more / most</b> → <i>careful → more careful → most careful</i>","Never mix them: not ‘more better’ — just ‘better’"],
+  mistakes:[["This is more better.","This is better."]],
+  practice:{q:"This book is ___ than that one.",options:["interesting","more interesting","most interesting"],a:1,ex:"Long adjective → more interesting."}}
+];
 
-  // ---- study plan ----
-  const plan=[];
-  if(due>0) plan.push({t:"Review "+due+" word"+(due>1?"s":"")+" now", s:"Spaced repetition locks words into memory.", btn:"Start review", act:"startReview()", c:"var(--gold)"});
-  plan.push({t:"Strengthen "+weak.m.name, s:"This is your lightest skill — a lesson here balances you out.", btn:"Go to lessons", act:"go('learn')", c:weak.m.color});
-  plan.push({t:"Pronunciation drill", s:"Say 3 phrases below and beat 80%.", btn:"Scroll down", act:"document.getElementById('coachPron').scrollIntoView({behavior:'smooth'})", c:"var(--coral)"});
-  if(S.streak>0) plan.push({t:"Keep your "+S.streak+"-day streak 🔥", s:"Do at least one lesson today.", btn:"Continue", act:"go('learn')", c:"var(--brand)"});
+const AI_TIPS=[
+ "Tip: reading aloud 10 minutes a day trains your mouth and ears together.",
+ "Tip: learn words in a sentence, not alone — context sticks better.",
+ "Tip: don't translate word-for-word; think of the meaning first.",
+ "Tip: 5 focused minutes daily beats 1 long session a week.",
+ "Tip: shadow a speaker — repeat right after them to copy the rhythm.",
+ "Tip: record yourself, then compare with the model. You'll hear the gap.",
+ "Tip: mistakes are data — each one shows you exactly what to fix.",
+ "Tip: review a word 1 day, 3 days, then 7 days later to lock it in."
+];
 
-  // ---- recommendations ----
-  const dueItems=S.review.slice(0,3);
-  const fresh=RAW.vocab.advanced.filter(function(v){return !S.seen[v.en];}).slice(0,3);
-  const recs=dueItems.concat(fresh).slice(0,6);
-
-  let html=
-  "<div class='panel-head'><h2>AI Coach ✨</h2><p>Your personal English mentor — a study plan, a grammar checker, pronunciation scoring and smart word picks. <span class='bn'>(তোমার নিজের কোচ)</span></p></div>";
-  html+=lchatSection();
-
-  // level card
-  html+="<div class='card coach-card'><div class='coach-band-top'><div><div class='coach-eyebrow'>Your level</div>"+
-    "<div class='coach-band-name'>"+b.cur.name+" <span class='bn'>"+b.cur.bn+"</span></div>"+
-    "<div class='coach-band-blurb'>"+b.cur.blurb+"</div></div>"+
-    "<div class='coach-band-badge'>"+ic(b.cur.ic)+"</div></div>"+
-    path+
-    (b.next?"<div class='coach-band-prog'><div class='coach-bar'><i style='width:"+b.pct+"%'></i></div>"+
-      "<div class='coach-band-hint'>"+b.pct+"% to <b>"+b.next.name+"</b> · "+done+" lessons done</div></div>"
-      :"<div class='coach-band-hint'>🎉 You've reached the top band — keep it sharp!</div>")+
-    "</div>";
-
-  // study plan
-  html+="<div class='coach-sec-title'>📋 Today's plan <span class='bn'>(আজকের পরিকল্পনা)</span></div>";
-  html+="<div class='coach-plan'>";
-  plan.forEach(function(p){
-    html+="<div class='card coach-plan-item'><div class='coach-dot' style='background:"+p.c+"'></div>"+
-      "<div class='coach-plan-txt'><b>"+p.t+"</b><span>"+p.s+"</span></div>"+
-      "<button class='btn coach-btn' onclick=\""+p.act+"\">"+p.btn+"</button></div>";
-  });
-  html+="</div>";
-
-  // pronunciation studio
-  html+="<div class='coach-sec-title' id='coachPron'>🎤 Pronunciation studio <span class='bn'>(উচ্চারণ অনুশীলন)</span></div>";
-  html+="<div class='card coach-card'><div class='coach-chips'>";
-  COACH_PHRASES.forEach(function(p,i){ html+="<button class='coach-chip"+(p===COACH_PHRASE?" on":"")+"' onclick='coachSetPhrase("+i+")'>"+p+"</button>"; });
-  html+="</div><div class='coach-phrase'>“"+COACH_PHRASE+"”</div>"+
-    "<div class='coach-pron-row'>"+
-    "<button class='btn coach-btn ghost' onclick='coachHear()'>🔊 Hear it</button>"+
-    "<button class='btn coach-btn' id='coachMic' onclick='coachListen()'>🎤 Speak & score</button></div>"+
-    "<div id='coachPronOut'><div class='coach-note'>Tap <b>Hear it</b>, then <b>Speak & score</b> to get an instant pronunciation score.</div></div></div>";
-
-  // grammar checker
-  html+="<div class='coach-sec-title'>✍️ Grammar & sentence checker <span class='bn'>(বাক্য যাচাই)</span></div>";
-  html+="<div class='card coach-card'><textarea id='coachInput' class='coach-input' placeholder='Type an English sentence… e.g. I am having two brothers'></textarea>"+
-    "<div class='coach-pron-row'><button class='btn coach-btn' onclick='coachCheck()'>Check my sentence</button>"+
-    "<button class='btn coach-btn ghost' onclick=\"document.getElementById('coachInput').value='';document.getElementById('coachResult').innerHTML='';\">Clear</button></div>"+
-    "<div id='coachResult'></div></div>";
-
-  // recommendations
-  html+="<div class='coach-sec-title'>💡 Words picked for you <span class='bn'>(তোমার জন্য শব্দ)</span></div>";
-  html+="<div class='coach-recs'>";
-  recs.forEach(function(v){
-    html+="<div class='card coach-rec'><div class='coach-rec-top'><b>"+v.en+"</b>"+
-      "<button class='coach-say' onclick=\"say('"+String(v.en).replace(/'/g,"\\'")+"')\">🔊</button></div>"+
-      "<div class='coach-rec-bn bn'>"+(v.bn||"")+"</div>"+
-      (v.ex?"<div class='coach-rec-ex'>"+v.ex+"</div>":"")+"</div>";
-  });
-  html+="</div>";
-
-  // achievements
-  const stat={done:done, streak:S.streak, xp:S.xp, words:words};
-  const got=COACH_BADGES.filter(function(x){return x.cond(stat);}).length;
-  html+="<div class='coach-sec-title'>🏆 Achievements <span class='coach-eyebrow' style='display:inline'>· "+got+"/"+COACH_BADGES.length+"</span></div>";
-  html+="<div class='coach-badges'>";
-  COACH_BADGES.forEach(function(x){
-    const on=x.cond(stat);
-    html+="<div class='coach-badge"+(on?" on":"")+"'><div class='coach-badge-ic'>"+ic(x.ic)+"</div>"+
-      "<div class='coach-badge-name'>"+x.name+"</div><div class='coach-badge-desc'>"+x.desc+"</div></div>";
-  });
-  html+="</div>";
-
-  el.innerHTML=html;
-}
+const DIALOGUES={
+ intro:{name:"Meeting someone new",icon:"chat",turns:[
+   {ai:"Hi! I'm Sam. Nice to meet you.",replies:["Nice to meet you too. I'm ___.","Hello Sam, I'm ___."]},
+   {ai:"Where are you from?",replies:["I'm from Dhaka.","I'm from Bangladesh, originally."]},
+   {ai:"What do you do?",replies:["I'm a student.","I work as a teacher.","I'm looking for a job."]},
+   {ai:"Great talking to you! Let's catch up again soon.",replies:["You too — take care!","Likewise, see you!"]}
+ ]},
+ cafe:{name:"At a café",icon:"spark",turns:[
+   {ai:"Hello! What can I get for you?",replies:["Could I have a coffee, please?","I'd like a tea, please."]},
+   {ai:"Sure. Anything to eat?",replies:["A sandwich, please.","No, thank you — just the drink."]},
+   {ai:"That's five dollars. Eat in or take away?",replies:["Take away, please.","Eat in, thanks."]},
+   {ai:"Here you go. Have a lovely day!",replies:["Thank you very much!","Thanks, you too!"]}
+ ]},
+ interview:{name:"Job interview",icon:"user",turns:[
+   {ai:"Thanks for coming. Tell me a little about yourself.",replies:["I'm a hard worker and I learn quickly.","I recently graduated and I love this field."]},
+   {ai:"What is your biggest strength?",replies:["I stay calm under pressure.","I'm good at solving problems."]},
+   {ai:"Why do you want this job?",replies:["It matches my skills and goals.","I admire your company and want to grow here."]},
+   {ai:"Great answers. We'll be in touch soon!",replies:["Thank you for your time.","I appreciate the opportunity."]}
+ ]}
+};
 
 
 /* ============================================================
-   LANTERN AI CHAT  (offline tutor, answers from app content)
+   LANTERN AI TUTOR — engine + UI
    ============================================================ */
-let LANTERN_CHAT=[{r:'bot', h:"Hi! I'm your <b>Lantern tutor</b> 🏮 Ask me about grammar, tenses, parts of speech, or a word's meaning — or type <b>check: your sentence</b> and I'll fix it. <span class='bn'>(ব্যাকরণ, টেন্স বা শব্দের অর্থ জিজ্ঞাসা করো)</span>"}];
-let CHAT_WORDS=null;
-function chatWords(){
-  if(CHAT_WORDS) return CHAT_WORDS;
-  CHAT_WORDS={};
-  const add=function(v){ if(v&&v.en){ const k=String(v.en).toLowerCase(); if(!CHAT_WORDS[k]) CHAT_WORDS[k]={en:v.en,bn:v.bn||'',ex:v.ex||''}; } };
-  try{ RAW.vocab.abstract.forEach(add); RAW.vocab.advanced.forEach(add); RAW.vocab.phrasal.forEach(add); }catch(e){}
-  try{ POS.forEach(function(p){ p.items.forEach(add); }); }catch(e){}
-  return CHAT_WORDS;
-}
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+let AI={ msgs:[], ctx:{lastWord:null,lastTopic:null,hard:0}, seq:0, started:false };
+function aiEsc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function aiShuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=(Math.random()*(i+1))|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function aiHasBn(s){return /[ঀ-৿]/.test(s);}
+function aiLevel(){ const d=(typeof ORDER!=='undefined')?ORDER.filter(id=>unit(id).done).length:0; return d>=30?'Fluent':d>=18?'Advanced':d>=8?'Intermediate':'Beginner'; }
 
-function chatGrammar(t){
-  const issues=[];
-  const rules=[
-    [/\bdiscuss(ed|ing)?\s+about\b/i, "‘discuss’ takes no ‘about’ → “discuss the plan”."],
-    [/\bmarried\s+with\b/i, "Use ‘married to’, not ‘married with’."],
-    [/\bgood\s+in\b/i, "For a skill use ‘good at’ (good at maths), not ‘good in’."],
-    [/\bsince\s+\d+\s+(year|years|day|days|month|months|hour|hours|week|weeks)\b/i, "Use ‘for’ + a length of time (for 3 years); ‘since’ + a start point (since 2021)."],
-    [/\b(am|is|are)\s+having\b/i, "‘have’ (own) is stative — say ‘I have’, not ‘I am having’."],
-    [/\bmyself\s+[A-Z][a-z]+/, "Introduce yourself as ‘I’m …’ or ‘My name is …’, not ‘Myself …’."],
-    [/\brevert\s+back\b/i, "‘revert back’ → ‘reply’ or ‘get back to you’."],
-    [/\bdo\s+the\s+needful\b/i, "‘do the needful’ → say the exact action (please arrange / approve it)."],
-    [/\bout\s+of\s+station\b/i, "‘out of station’ → ‘out of town’ / ‘away’."],
-    [/\bcousin\s+(brother|sister)\b/i, "Just ‘cousin’ (drop brother/sister)."],
-    [/\bprepone\b/i, "‘prepone’ → ‘move earlier / bring forward’."],
-    [/\ba\s+(hour|honest|honour|umbrella|apple|elephant|orange|idea|engineer|answer|email|hour)\b/i, "Use ‘an’ before a vowel SOUND (an hour, an umbrella)."],
-    [/\bmore\s+better\b/i, "Say ‘better’ (not ‘more better’)."]
+/* ---- word data ---- */
+let AI_WORDS=null;
+function aiWordIndex(){ if(AI_WORDS) return AI_WORDS; AI_WORDS={};
+  const add=v=>{ if(v&&v.en){const k=String(v.en).toLowerCase(); if(!AI_WORDS[k]) AI_WORDS[k]={en:v.en,bn:v.bn||'',ex:v.ex||''};} };
+  try{RAW.vocab.abstract.forEach(add);RAW.vocab.advanced.forEach(add);RAW.vocab.phrasal.forEach(add);}catch(e){}
+  try{POS.forEach(p=>p.items.forEach(add));}catch(e){}
+  return AI_WORDS; }
+function aiRich(word){ return RICHV.find(v=>v.en.toLowerCase()===word.toLowerCase()); }
+function aiVocab(word){
+  const r=aiRich(word); if(r) return r;
+  const w=aiWordIndex()[word.toLowerCase()];
+  if(w) return {en:w.en,ipa:IPA_EXTRA[word.toLowerCase()]||'',pos:'',bn:w.bn,def:'',syn:[],ant:[],coll:[],ex:w.ex};
+  return null;
+}
+function aiIpa(word){ const r=aiRich(word); if(r) return r.ipa; return IPA_EXTRA[word.toLowerCase()]||''; }
+
+/* ---- grammar matching ---- */
+function aiGrammarFor(q){
+  const s=' '+q.toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim()+' ';
+  for(const t of TENSES){ if(q.toLowerCase().indexOf(t.name.toLowerCase())>=0){
+    const others=aiShuffle(TENSES.filter(x=>x.name!==t.name).map(x=>x.ex)).slice(0,3);
+    const opts=aiShuffle([t.ex,...others]);
+    return {title:t.name,bn:t.bn,body:"<b>Structure:</b> "+t.struct,
+      points:["Example: <b>"+t.ex+"</b> <span class='bn'>("+t.exbn+")</span>","Use it for: "+t.bn],
+      mistakes:[],practice:{q:"Which sentence is in the "+t.name+"?",options:opts,a:opts.indexOf(t.ex),ex:"‘"+t.ex+"’ is the "+t.name+"."}};
+  }}
+  for(const g of GRAMTOPICS){ if(g.key.some(k=>s.indexOf(' '+k.replace(/[^a-z0-9]+/g,' ').trim()+' ')>=0 || q.toLowerCase().indexOf(k)>=0)) return g; }
+  for(const p of POS){ const key=p.name.toLowerCase().replace(/s$/,''); if(s.indexOf(' '+key+' ')>=0){
+    const right=p.items[0].en; const wrongPool=aiShuffle(POS.filter(x=>x!==p).flatMap(x=>x.items.map(i=>i.en))).slice(0,3);
+    const opts=aiShuffle([right,...wrongPool]);
+    return {title:p.name,bn:p.bn,body:p.def+" <span class='bn'>"+p.defbn+"</span>",
+      points:p.items.slice(0,3).map(v=>"<b>"+v.en+"</b> <span class='bn'>("+v.bn+")</span> — "+v.ex),
+      mistakes:[],practice:{q:"Which word is a "+key+"?",options:opts,a:opts.indexOf(right),ex:"‘"+right+"’ is a "+key+"."}};
+  }}
+  return null;
+}
+
+/* ---- rewrite / correction ---- */
+function aiRewrite(text){
+  let out=text.trim(); const changes=[];
+  const T=[
+    [/\bam having\b/gi,"have","‘have’ is stative — it doesn't take -ing."],
+    [/\bis having\b/gi,"has","‘have’ is stative — it doesn't take -ing."],
+    [/\bare having\b/gi,"have","‘have’ is stative — it doesn't take -ing."],
+    [/\bdiscuss(ed|ing)?\s+about\b/gi,"discussed","‘discuss’ takes no ‘about’."],
+    [/\bmarried with\b/gi,"married to","We say ‘married to’ someone."],
+    [/\bgood in\b/gi,"good at","‘good at’ for a skill."],
+    [/\bmore better\b/gi,"better","‘better’ is already comparative."],
+    [/\brevert back\b/gi,"reply","‘revert back’ isn't standard."],
+    [/\bgo school\b/gi,"go to school","We need ‘to’ before ‘school’."],
+    [/\beveryday\b/g,"every day","‘every day’ (two words) is the time phrase."]
   ];
-  rules.forEach(function(r){ if(r[0].test(t)) issues.push(r[1]); });
-  if(/^[a-z]/.test(t.trim())) issues.push("Start the sentence with a capital letter.");
-  if(!/[.!?]["']?$/.test(t.trim())) issues.push("End the sentence with . ! or ?");
-  if(/\bi\b/.test(t)) issues.push("Write ‘I’ (the pronoun) as a capital letter.");
-  return issues;
+  T.forEach(r=>{ if(r[0].test(out)){ const before=out; out=out.replace(r[0],r[1]); if(before!==out) changes.push({to:r[1],why:r[2]}); } });
+  // article a→an before vowel
+  out=out.replace(/\ba (hour|honest|umbrella|apple|elephant|orange|idea|engineer|answer|hour)\b/gi,(m,w)=>{changes.push({to:"an "+w,why:"Use ‘an’ before a vowel sound."});return "an "+w;});
+  // capital I
+  if(/\bi\b/.test(out)){ out=out.replace(/\bi\b/g,"I"); changes.push({to:"I",why:"The pronoun ‘I’ is always capital."}); }
+  // capitalise first letter
+  if(/^[a-z]/.test(out)){ out=out.charAt(0).toUpperCase()+out.slice(1); changes.push({to:"Capital start",why:"Sentences begin with a capital letter."}); }
+  // end punctuation
+  if(!/[.!?]["']?$/.test(out)){ out=out+"."; changes.push({to:"‘.’ at the end",why:"End a statement with a full stop."}); }
+  return {orig:text.trim(),improved:out,changes};
 }
 
-function tenseCard(t){
-  return "<b>"+t.name+"</b> <span class='bn'>— "+t.bn+"</span><br>"+
-    "<b>Structure:</b> "+t.struct+"<br>"+
-    "<b>Example:</b> "+t.ex+" <span class='bn'>("+t.exbn+")</span><br>"+
-    "<span class='lchat-tip'>Practise it in <b>Learn → Grammar You Must Know</b>.</span>";
+/* ---- quiz ---- */
+function aiBuildQuiz(){
+  const pool=[];
+  GRAMTOPICS.forEach(g=>pool.push({q:g.practice.q,options:g.practice.options,a:g.practice.a,ex:g.practice.ex}));
+  // vocab meaning
+  aiShuffle(RICHV).slice(0,6).forEach(v=>{ const wrong=aiShuffle(RICHV.filter(x=>x!==v).map(x=>x.bn)).slice(0,3); const opts=aiShuffle([v.bn,...wrong]); pool.push({q:"What does <b>"+v.en+"</b> mean?",options:opts,a:opts.indexOf(v.bn),ex:"‘"+v.en+"’ = "+v.bn+"."}); });
+  // tense id
+  aiShuffle(TENSES).slice(0,4).forEach(t=>{ const wrong=aiShuffle(TENSES.filter(x=>x.name!==t.name).map(x=>x.ex)).slice(0,3); const opts=aiShuffle([t.ex,...wrong]); pool.push({q:"Pick the <b>"+t.name+"</b> sentence:",options:opts,a:opts.indexOf(t.ex),ex:"That's the "+t.name+"."}); });
+  const pick=pool[(Math.random()*pool.length)|0];
+  return {q:pick.q,options:pick.options,a:pick.a,ex:pick.ex,answered:null};
 }
-function posCard(p){
-  const ex=p.items.slice(0,3).map(function(v){return "<li>"+v.en+" <span class='bn'>("+v.bn+")</span> — "+v.ex+"</li>";}).join("");
-  return "<b>"+p.name+"</b> <span class='bn'>("+p.bn+")</span><br>"+p.def+" <span class='bn'>"+p.defbn+"</span>"+
-    "<ul class='coach-list'>"+ex+"</ul>";
-}
-function wordCard(w){
-  return "<b>"+w.en+"</b> <span class='bn'>= "+(w.bn||"—")+"</span>"+(w.ex?"<br><b>Example:</b> "+w.ex:"")+
-    "<br><span class='lchat-tip'>Tap 🔊 in <b>Words</b> to hear it, or add it to review.</span>";
-}
-function articleAns(){
-  return "<b>a / an / the</b> <span class='bn'>(article — বাংলায় নেই, তাই সহজে ভুল হয়)</span><br>"+
-    "• <b>a / an</b> = one, not specific → <i>a book, an hour</i>.<br>"+
-    "• Use <b>an</b> before a vowel <i>sound</i> → <i>an apple, an MP</i>.<br>"+
-    "• <b>the</b> = specific / already known → <i>the sun, the book you gave me</i>.<br>"+
-    "• No article for general plurals / uncountables → <i>I like rice</i>.";
-}
-function sinceForAns(){
-  return "<b>since vs for</b><br>"+
-    "• <b>for</b> + a length of time → <i>for 3 years, for two hours</i>.<br>"+
-    "• <b>since</b> + a starting point → <i>since 2021, since Monday</i>.<br>"+
-    "So say <i>“I have lived here for 3 years”</i> — not <i>“since 3 years”</i>.";
-}
-function staticAns(){
-  return "<b>Stative verbs</b> (have, know, like, want, understand) don't take <b>-ing</b>.<br>"+
-    "✅ <i>I have a car.</i> &nbsp; ❌ <i>I am having a car.</i><br>"+
-    "✅ <i>I understand.</i> &nbsp; ❌ <i>I am understanding.</i>";
-}
-function helpAns(){
-  return "I can help with:<ul class='coach-list'>"+
-    "<li>Any of the <b>12 tenses</b> — try “present perfect”.</li>"+
-    "<li><b>Parts of speech</b> — “what is an adjective?”</li>"+
-    "<li>Tricky points — “a or an?”, “since vs for”, “am having”.</li>"+
-    "<li><b>Word meanings</b> — “meaning of achievement”.</li>"+
-    "<li><b>Fixing sentences</b> — “check: I am having two brothers”.</li></ul>";
-}
-function fallbackAns(raw){
-  // try to find a known word inside the message
-  const words=raw.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/);
-  const wb=chatWords();
-  for(const w of words){ if(w.length>2 && wb[w]) return "Did you mean the word <b>"+wb[w].en+"</b>?<br>"+wordCard(wb[w]); }
-  return "I'm a focused tutor, so I answer from this course's content. Try:<br>"+
-    "<span class='lchat-tip'>“present perfect” · “what is a verb?” · “a or an?” · “meaning of courage” · “check: I go school everyday”</span><br>"+
-    "For more, open <b>Learn</b> or the hub's <b>Resources</b> page.";
+function aiQuizForWord(word){ const v=aiRich(word)||aiVocab(word); if(!v) return aiBuildQuiz();
+  const wrong=aiShuffle(RICHV.filter(x=>x.en!==v.en).map(x=>x.bn)).slice(0,3); const opts=aiShuffle([v.bn,...wrong]);
+  return {q:"What does <b>"+v.en+"</b> mean?",options:opts,a:opts.indexOf(v.bn),ex:"‘"+v.en+"’ = "+v.bn+(v.ex?". Example: "+v.ex:"")+".",answered:null}; }
+
+/* ---- study plan ---- */
+function aiPlan(){
+  const lvl=aiLevel(); const streak=(typeof S!=='undefined')?(S.streak||0):0;
+  let weak='vocabulary';
+  try{ let wv=Infinity; Object.entries(SKILLS).forEach(([k,m])=>{const v=S.skills[k]||0; if(v<wv){wv=v;weak=m.name;}}); }catch(e){}
+  const due=(typeof S!=='undefined'&&S.review)?S.review.length:0;
+  const steps=[
+    {t:"Warm up (2 min)",d:"Review "+(due>0?due+" due word"+(due>1?"s":""):"5 old words")+" to wake up your memory."},
+    {t:"Grammar focus (5 min)",d:lvl==='Beginner'?"Practise ‘First Sentences’ and the present tenses.":lvl==='Intermediate'?"Master past & future tenses and articles.":"Polish prepositions, tag questions and comparatives."},
+    {t:"Build "+weak+" (5 min)",d:"Your lightest skill — one focused lesson here balances you out."},
+    {t:"Speak out loud (3 min)",d:"Shadow 3 phrases in the Pronunciation studio and beat 80%."},
+    {t:"Quick quiz (2 min)",d:"End with a 3-question quiz to lock it in."}
+  ];
+  return {level:lvl,streak,steps};
 }
 
-function lanternAnswer(q){
-  const raw=(q||"").trim();
-  if(!raw) return "";
-  const s=' '+raw.toLowerCase()+' ';
-  const sn=' '+raw.toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim()+' ';
-  // 1) sentence check
-  if(/^(check|correct|fix)\b/i.test(raw) || /is this (correct|right|ok)/i.test(raw)){
-    let sent=raw.replace(/^(check|correct|fix)[:\-\s]*/i,'').replace(/^is this (correct|right|ok)[:\-\s]*/i,'').trim();
-    sent=sent.replace(/[?]$/,'').trim();
-    if(!sent) return "Type a sentence after ‘check:’ — e.g. <i>check: I am having a car</i>.";
-    const iss=chatGrammar(sent);
-    if(!iss.length) return "✅ <b>“"+esc(sent)+"”</b> looks correct and natural. Nice! <span class='bn'>(সুন্দর!)</span>";
-    return "For <b>“"+esc(sent)+"”</b> — "+iss.length+" fix"+(iss.length>1?"es":"")+":<ul class='coach-list'>"+iss.map(function(i){return "<li>"+i+"</li>";}).join("")+"</ul>";
+/* ---- translate ---- */
+const AI_TR=[
+ {bn:"আমি প্রতিদিন ইংরেজি শিখি",en:"I learn English every day.",note:"‘every day’ (two words) is the time phrase; present simple for habits."},
+ {bn:"আমার একটা প্রশ্ন আছে",en:"I have a question.",note:"‘have’ shows possession — no -ing."},
+ {bn:"আমি ভালো আছি",en:"I'm fine / I'm doing well.",note:"Natural reply to ‘How are you?’."},
+ {bn:"আমি ইংরেজিতে ভালো হতে চাই",en:"I want to get better at English.",note:"‘get better at’ sounds more natural than ‘be good in’."},
+ {bn:"দয়া করে আরেকবার বলুন",en:"Could you say that again, please?",note:"Polite request form."}
+];
+function aiTranslate(text){
+  const bnMode=aiHasBn(text);
+  const clean=text.replace(/^translate[:\-\s]*/i,'').trim();
+  if(bnMode){
+    const hit=AI_TR.find(x=>clean.indexOf(x.bn)>=0)|| AI_TR.find(x=>x.bn.indexOf(clean)>=0);
+    if(hit) return {src:clean,out:hit.en,notes:[hit.note],dir:'bn'};
+    // try word-by-word meaning hint
+    return {src:clean,out:"", notes:["I focus on meaning, not word-for-word. Tell me the idea in a short sentence and I'll give the natural English — try one of the examples below."],dir:'bn'};
   }
-  // 2) tenses (specific)
-  for(const t of TENSES){ if(s.indexOf(t.name.toLowerCase())>=0) return tenseCard(t); }
-  // 3) articles
-  if(/\ba or an\b|\ban or a\b|\barticle\b/.test(s) || /(when|how).*(use).*( a | an | the )/.test(s) || /\ba vs an\b/.test(s)) return articleAns();
-  // 4) since / for
-  if(/since.*\bfor\b|\bfor\b.*since|since or for|for or since|since vs for/.test(s)) return sinceForAns();
-  // 5) stative
-  if(/am having|is having|are having|stative/.test(s)) return staticAns();
-  // 6) parts of speech
-  for(const p of POS){ const key=p.name.toLowerCase().replace(/s$/,''); if(sn.indexOf(' '+key+' ')>=0 || sn.indexOf(' '+p.name.toLowerCase()+' ')>=0) return posCard(p); }
-  // 7) common mistakes
-  const CM=[
-    {k:['discuss about'], h:"Say <b>“discuss the topic”</b> — ‘discuss’ takes no ‘about’."},
-    {k:['myself '], h:"Introduce yourself as <b>“I'm Rahul”</b> or <b>“My name is Rahul”</b> — not ‘Myself Rahul’."},
-    {k:['do the needful'], h:"Instead of ‘do the needful’, say the exact action: <b>“Please review and approve it.”</b>"},
-    {k:['revert back','revert '], h:"Use <b>“reply”</b> or <b>“get back to you”</b> — ‘revert back’ isn't standard."},
-    {k:['married with'], h:"It's <b>“married to”</b> someone, not ‘married with’."},
-    {k:['good in','good at'], h:"For a skill use <b>“good at”</b> (good at maths), not ‘good in’."},
-    {k:['prepone'], h:"‘Prepone’ isn't global English — say <b>“move it earlier”</b> or ‘bring it forward’."},
-    {k:['tag question',"isn't it",' na?','tag '], h:"A tag question must match the verb: <i>You live here, <b>don't you</b>?</i> — ‘isn't it?’ isn't a universal tag."},
-    {k:['pass out'], h:"For finishing college say <b>“graduated”</b>; ‘pass out’ means to faint."}
-  ];
-  for(const m of CM){ if(m.k.some(function(x){return s.indexOf(x)>=0;})) return m.h; }
-  // 8) word meaning
-  let word=null;
-  let wm=raw.match(/(?:meaning of|what does|what is|whats|define|meaning for)\s+["'“]?([a-zA-Z][a-zA-Z\-]{1,24})/i);
-  if(wm) word=wm[1];
-  if(!word){ const m2=raw.match(/^([a-zA-Z\-]{2,})\s+mean(s|ing)?\b/i); if(m2) word=m2[1]; }
-  if(word && /^(a|an|the|is|are|to|of|it|this|that|do|does)$/i.test(word)) word=null;
-  if(word){ const w=chatWords()[word.toLowerCase()]; if(w) return wordCard(w); }
-  // 9) greetings / help
-  if(/^(hi|hii|hello|hey|salam|assalam|good morning|good evening|good afternoon)\b/i.test(raw)) return "Hello! 👋 Ask me about grammar, a tense, a word's meaning, or type <b>check: your sentence</b>.";
-  if(/\bthank/.test(s)) return "You're welcome! Keep practising — you've got this. 🌟";
-  if(/help|what can you|what do you|topics/.test(s)) return helpAns();
-  // 10) fallback
-  return fallbackAns(raw);
+  // english → bangla word
+  const w=aiVocab(clean.split(/\s+/)[0]);
+  if(w&&w.bn) return {src:clean,out:w.bn,notes:[w.ex?("Example: "+w.ex):"A single-word meaning; full sentences work best."],dir:'en'};
+  return {src:clean,out:"",notes:["Type a short Bengali sentence and I'll give the natural English (not word-for-word)."],dir:'en'};
 }
 
-function lanternChatRender(){
-  const log=document.getElementById('lanternChatLog');
-  if(!log) return;
-  log.innerHTML=LANTERN_CHAT.map(function(m){
-    return "<div class='lchat-msg "+(m.r==='me'?'me':'bot')+"'>"+m.h+"</div>";
-  }).join("");
-  log.scrollTop=log.scrollHeight;
+/* ============================================================
+   CLASSIFY + RESPOND
+   ============================================================ */
+function aiClassify(q){
+  const raw=q.trim(); const s=' '+raw.toLowerCase()+' ';
+  if(aiHasBn(raw)||/\btranslate\b/i.test(raw)) return {kind:'translate',data:aiTranslate(raw)};
+  if(/^(rewrite|improve|correct|fix|check)\b/i.test(raw)||/is this (correct|right|ok)/i.test(raw)){
+    let sent=raw.replace(/^(rewrite|improve|correct|fix|check)[:\-\s]*/i,'').replace(/^is this (correct|right|ok)[:\-\s]*/i,'').replace(/\?$/,'').trim();
+    if(!sent) return {kind:'text',data:{html:"Type a sentence after the word, e.g. <i>rewrite: I am having a car</i>."}};
+    return {kind:'rewrite',data:aiRewrite(sent)};
+  }
+  if(/\bquiz\b|test me|ask me a question|another question|quiz me/i.test(s)){
+    if(/on this|this word/i.test(s)&&AI.ctx.lastWord) return {kind:'quiz',data:aiQuizForWord(AI.ctx.lastWord)};
+    return {kind:'quiz',data:aiBuildQuiz()};
+  }
+  let pm=raw.match(/(?:pronounce|pronunciation of|how (?:do|to)(?: i)? say|say the word|stress of)\s+["'“]?([a-zA-Z][a-zA-Z\-]{1,20})/i);
+  if(pm||/pronunciation|pronounce it/i.test(s)){ const w=pm?pm[1]:(AI.ctx.lastWord||'comfortable'); return {kind:'pron',data:{word:w,ipa:aiIpa(w)}}; }
+  if(/study plan|make.*plan|plan for me|what should i (learn|study|do)|where do i start/i.test(s)) return {kind:'plan',data:aiPlan()};
+  if(/practice speaking|conversation|role ?play|let'?s (talk|practice)|speaking practice|dialogue/i.test(s)) return {kind:'dialchoose',data:{}};
+  // vocab
+  let wm=raw.match(/(?:meaning of|what does|whats|define|synonyms? (?:of|for)|meaning for)\s+["'“]?([a-zA-Z][a-zA-Z\-]{1,20})/i);
+  let word=wm?wm[1]:null;
+  if(!word){ const m2=raw.match(/^what is (?:a |an |the )?([a-zA-Z\-]{3,})\??$/i); if(m2 && !aiGrammarFor(raw)) word=m2[1]; }
+  if(/word of the day|build (my )?vocab|new word|teach me a word|use it in a sentence/i.test(s)){
+    if(/use it in a sentence/i.test(s)&&AI.ctx.lastWord){ const v=aiVocab(AI.ctx.lastWord); if(v) return {kind:'text',data:{html:"Here's <b>"+v.en+"</b> in a sentence:<br>“"+(v.ex||("I use "+v.en+" often."))+"”<br>Now try making your own — type it as <i>check: your sentence</i>."}}; }
+    const fresh=aiShuffle(RICHV)[0]; return {kind:'vocab',data:fresh};
+  }
+  if(word){ const v=aiVocab(word); if(v) return {kind:'vocab',data:v}; }
+  // grammar
+  const g=aiGrammarFor(raw); if(g||/\bgrammar\b|teach me/i.test(s)){ if(g) return {kind:'grammar',data:g};
+    return {kind:'text',data:{html:"I can explain any of these — just tap one:",follow:["Present perfect","Articles a/an/the","since vs for","Stative verbs","Tag questions","Comparatives"]}}; }
+  // synonyms follow
+  if(/synonym|antonym/i.test(s)&&AI.ctx.lastWord){ const v=aiRich(AI.ctx.lastWord); if(v) return {kind:'text',data:{html:"<b>"+v.en+"</b> — synonyms: "+(v.syn.join(", ")||"—")+"<br>antonyms: "+(v.ant.join(", ")||"—")}}; }
+  if(/^(hi|hii|hello|hey|salam|assalam|good (morning|evening|afternoon))\b/i.test(raw)) return {kind:'text',data:{html:"Hello! 👋 I'm your Lantern tutor. What would you like to work on today — grammar, vocabulary, pronunciation, or a quick quiz?"}};
+  if(/\bthank/i.test(s)) return {kind:'text',data:{html:"You're welcome! Keep going — small daily steps make you fluent. 🌟"}};
+  if(/help|what can you|what do you do|options/i.test(s)) return {kind:'text',data:{html:"I can: explain <b>grammar</b>, build <b>vocabulary</b> (with IPA, synonyms & examples), <b>score your pronunciation</b>, <b>rewrite</b> your sentences, run <b>quizzes</b>, make a <b>study plan</b>, do <b>speaking practice</b>, and <b>translate</b> ideas from বাংলা."}};
+  // fallback: known word?
+  for(const w of raw.toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/)){ if(w.length>3&&aiVocab(w)) return {kind:'vocab',data:aiVocab(w)}; }
+  return {kind:'text',data:{html:"I'm your English tutor, so I answer from real lessons. Try:<br><i>“Teach me the present perfect” · “meaning of achieve” · “how do I say comfortable?” · “quiz me” · “rewrite: I go school everyday”</i>"}};
 }
-function lanternAsk(preset){
-  const inp=document.getElementById('lanternChatIn');
-  let q=(preset!=null?preset:(inp?inp.value:"")).trim();
-  if(!q) return;
-  LANTERN_CHAT.push({r:'me', h:esc(q)});
-  const a=lanternAnswer(q);
-  LANTERN_CHAT.push({r:'bot', h:a||"Try asking about a tense, a word, or type ‘check: …’."});
-  if(inp) inp.value="";
-  lanternChatRender();
+
+function aiFollowsFor(kind,data){
+  if(kind==='grammar') return ["Quiz me on this","Give another example","Make a study plan"];
+  if(kind==='vocab') return ["Use it in a sentence","Pronounce it","Quiz me on this word","Synonyms & antonyms"];
+  if(kind==='pron') return ["Another word","Teach me a tense","Quiz me"];
+  if(kind==='quiz') return ["Another question","Teach me grammar","Build vocabulary"];
+  if(kind==='rewrite') return ["Rewrite another","Teach me the mistake","Quiz me"];
+  if(kind==='plan') return ["Start today's lesson","Build vocabulary","Practice speaking"];
+  if(kind==='translate') return ["Translate another","Teach me the grammar","Build vocabulary"];
+  return ["Teach me grammar","Build vocabulary","Practice pronunciation","Quiz me"];
 }
-function lchatSection(){
-  const sugg=["present perfect","a or an?","since vs for","what is a verb?","meaning of courage","check: I am having a car"];
-  let h="<div class='coach-sec-title'>💬 Ask Lantern AI <span class='bn'>(প্রশ্ন করো)</span></div>";
-  h+="<div class='card coach-card lchat-card'>";
-  h+="<div id='lanternChatLog' class='lchat-log'></div>";
-  h+="<div class='lchat-sugg'>"+sugg.map(function(x){return "<button class='lchat-chip' onclick=\"lanternAsk('"+x.replace(/'/g,"\\'")+"')\">"+x+"</button>";}).join("")+"</div>";
-  h+="<div class='lchat-row'><input id='lanternChatIn' class='lchat-in' placeholder='Ask a question…' onkeydown=\"if(event.key==='Enter'){lanternAsk();}\">"+
-     "<button class='coach-btn' onclick='lanternAsk()'>Send</button></div>";
-  h+="</div>";
-  // render log after insert
-  setTimeout(lanternChatRender,0);
+
+/* ============================================================
+   SEND + RENDER
+   ============================================================ */
+function aiGreeting(){ return {id:AI.seq++,role:'ai',kind:'text',data:{html:"Hi! I'm <b>Lantern AI</b> ✨ your personal English tutor. Ask me anything, or pick a quick action below. <span class='bn'>(আমি তোমার ইংরেজি শিক্ষক)</span>"}}; }
+function aiInit(){ if(!AI.msgs.length) AI.msgs=[aiGreeting()]; }
+function aiNew(){ AI.msgs=[aiGreeting()]; AI.ctx={lastWord:null,lastTopic:null,hard:0}; renderCoach(); }
+
+function aiSend(preset){
+  const inp=document.getElementById('aiIn');
+  let q=(preset!=null?preset:(inp?inp.value:'')).trim();
+  if(!q||AI.thinking) return;
+  AI.msgs.push({id:AI.seq++,role:'user',kind:'text',data:{html:aiEsc(q)}});
+  if(inp) inp.value='';
+  const loadId=AI.seq++;
+  AI.msgs.push({id:loadId,role:'ai',kind:'loading',data:{tip:AI_TIPS[(Math.random()*AI_TIPS.length)|0]}});
+  AI.thinking=true; aiRenderLog(); aiRenderFollows();
+  setTimeout(function(){
+    const res=aiClassify(q);
+    if(res.kind==='vocab') AI.ctx.lastWord=res.data.en;
+    if(res.kind==='pron') AI.ctx.lastWord=res.data.word;
+    if(res.kind==='grammar') AI.ctx.lastTopic=res.data;
+    const i=AI.msgs.findIndex(m=>m.id===loadId);
+    const msg={id:loadId,role:'ai',kind:res.kind,data:res.data};
+    if(res.kind==='text') msg.data.stream=true;
+    msg.follow = (res.data&&res.data.follow)?res.data.follow:aiFollowsFor(res.kind,res.data);
+    if(i>=0) AI.msgs[i]=msg;
+    AI.thinking=false; aiRenderLog(); aiRenderFollows();
+  }, 700+((Math.random()*500)|0));
+}
+function aiFollow(t){ aiSend(t); }
+
+function renderCoach(){
+  aiInit();
+  const el=document.getElementById('panel-coach');
+  el.innerHTML=
+   "<div class='ai-wrap'>"+
+     "<div class='ai-head'><div class='ai-title'>✨ Lantern AI <span class='ai-sub'>English tutor · 24/7</span></div>"+
+       "<div class='ai-head-r'><span class='ai-level'>"+aiLevel()+"</span><button class='ai-new' onclick='aiNew()'>＋ New chat</button></div></div>"+
+     "<div id='aiLog' class='ai-log'></div>"+
+     "<div class='ai-foot'><div id='aiFollows' class='ai-follows'></div>"+
+       "<div class='ai-inputrow'><input id='aiIn' class='ai-in' placeholder='Ask your tutor anything…' onkeydown=\"if(event.key==='Enter'){aiSend();}\">"+
+       "<button class='ai-send' onclick='aiSend()' aria-label='Send'>➤</button></div></div>"+
+   "</div>";
+  aiRenderLog(); aiRenderFollows();
+}
+
+function aiLauncher(){
+  const acts=[
+   ["📘","Grammar","Teach me the present perfect"],
+   ["📖","Vocabulary","Build my vocabulary"],
+   ["🗣️","Pronunciation","How do I pronounce comfortable?"],
+   ["🧠","Quiz me","Quiz me"],
+   ["✍️","Fix my writing","Rewrite: I am having a car and i go school everyday"],
+   ["🗺️","Study plan","Make me a study plan"],
+   ["💬","Speaking","Let's practice speaking"],
+   ["🌐","Translate","Translate: আমি প্রতিদিন ইংরেজি শিখি"]
+  ];
+  let h="<div class='ai-launch'><div class='ai-launch-t'>What would you like to do?</div><div class='ai-acts'>";
+  acts.forEach(a=>{ h+="<button class='ai-act' onclick=\"aiSend('"+a[2].replace(/'/g,"\\'")+"')\"><span class='ai-act-ic'>"+a[0]+"</span><span>"+a[1]+"</span></button>"; });
+  h+="</div></div>";
   return h;
+}
+
+function aiRenderLog(){
+  const log=document.getElementById('aiLog'); if(!log) return;
+  let h=AI.msgs.map(aiMsgHTML).join('');
+  if(AI.msgs.length<=1) h+=aiLauncher();
+  log.innerHTML=h;
+  log.scrollTop=log.scrollHeight;
+  // stream last text msg once
+  const last=AI.msgs[AI.msgs.length-1];
+  if(last&&last.role==='ai'&&last.kind==='text'&&last.data.stream&&!last.data.streamed){
+    const c=document.getElementById('aic-'+last.id);
+    if(c){ last.data.streamed=true; aiType(c,last.data.html); }
+  }
+}
+function aiType(el,html){
+  const toks=(html.match(/<[^>]+>|[^<]+/g)||[]); let parts=[];
+  toks.forEach(t=>{ if(t[0]==='<') parts.push(t); else t.split(/(\s+)/).forEach(w=>{if(w)parts.push(w);}); });
+  el.innerHTML=''; let i=0;
+  const tm=setInterval(function(){ el.innerHTML+=parts[i++]; const log=document.getElementById('aiLog'); if(log) log.scrollTop=log.scrollHeight; if(i>=parts.length) clearInterval(tm); },16);
+}
+function aiRenderFollows(){
+  const box=document.getElementById('aiFollows'); if(!box) return;
+  const last=[...AI.msgs].reverse().find(m=>m.role==='ai'&&m.kind!=='loading');
+  if(AI.msgs.length<=1||!last||!last.follow){ box.innerHTML=''; return; }
+  box.innerHTML=last.follow.map(f=>"<button class='ai-chip' onclick=\"aiFollow('"+f.replace(/'/g,"\\'")+"')\">"+f+"</button>").join('');
+}
+
+/* ---- message renderers ---- */
+function aiMsgHTML(m){
+  if(m.role==='user') return "<div class='ai-msg me'>"+m.data.html+"</div>";
+  if(m.kind==='loading') return "<div class='ai-msg bot ai-loading'><span class='ai-dots'><i></i><i></i><i></i></span> <span class='ai-tip'>"+m.data.tip+"</span></div>";
+  let inner='';
+  switch(m.kind){
+    case 'text': inner="<div id='aic-"+m.id+"'>"+m.data.html+"</div>"; break;
+    case 'grammar': inner=aiCardGrammar(m); break;
+    case 'vocab': inner=aiCardVocab(m); break;
+    case 'pron': inner=aiCardPron(m); break;
+    case 'quiz': inner=aiCardQuiz(m); break;
+    case 'rewrite': inner=aiCardRewrite(m); break;
+    case 'plan': inner=aiCardPlan(m); break;
+    case 'translate': inner=aiCardTranslate(m); break;
+    case 'dialchoose': inner=aiCardDialChoose(m); break;
+    case 'dialogue': inner=aiCardDialogue(m); break;
+    default: inner=m.data.html||'';
+  }
+  return "<div class='ai-msg bot'>"+inner+"</div>";
+}
+function aiCard(tag,color,title,body){ return "<div class='aicard' style='--c:"+color+"'><div class='aicard-h'><span class='aicard-tag'>"+tag+"</span><span class='aicard-t'>"+title+"</span></div>"+body+"</div>"; }
+function aiCardGrammar(m){ const g=m.data;
+  let b="<p class='aic-body'>"+g.body+"</p><ul class='aic-list'>"+g.points.map(p=>"<li>"+p+"</li>").join('')+"</ul>";
+  if(g.mistakes&&g.mistakes.length) b+="<div class='aic-mistakes'>"+g.mistakes.map(x=>"<div><span class='x'>✗ "+x[0]+"</span><span class='ok'>✓ "+x[1]+"</span></div>").join('')+"</div>";
+  if(g.practice){ b+=aiPracticeHTML(m.id,g.practice); }
+  return aiCard("GRAMMAR","var(--brand)",g.title+" <span class='bn'>"+g.bn+"</span>",b);
+}
+function aiPracticeHTML(id,p){
+  return "<div class='aic-practice' id='aiprac-"+id+"'><div class='aic-practice-q'>✏️ Try it: "+p.q+"</div>"+
+    p.options.map((o,i)=>"<button class='aic-opt' onclick=\"aiPrac("+id+","+i+","+p.a+")\">"+o+"</button>").join('')+
+    "<div class='aic-fb' id='aifb-"+id+"' data-ex=\""+String(p.ex).replace(/"/g,'&quot;')+"\"></div></div>";
+}
+function aiPrac(id,i,a){
+  const wrap=document.getElementById('aiprac-'+id); if(!wrap) return;
+  const opts=wrap.querySelectorAll('.aic-opt'); opts.forEach(o=>o.disabled=true);
+  opts[i].classList.add(i===a?'right':'wrong'); if(i!==a) opts[a].classList.add('right');
+  const fb=document.getElementById('aifb-'+id); fb.innerHTML=(i===a?"<b class='ok'>Correct! ✅</b> ":"<b class='x'>Not quite. </b>")+fb.getAttribute('data-ex');
+}
+function aiCardVocab(m){ const v=m.data;
+  let b="<div class='aic-word'><span class='aic-w'>"+v.en+"</span>"+(v.ipa?"<span class='aic-ipa'>"+v.ipa+"</span>":"")+(v.pos?"<span class='aic-pos'>"+v.pos+"</span>":"")+
+    "<button class='aic-say' onclick=\"say('"+v.en.replace(/'/g,"\\'")+"')\">🔊</button></div>";
+  b+="<div class='aic-mean'>"+(v.def?v.def+" — ":"")+"<span class='bn'>"+v.bn+"</span></div>";
+  if(v.ex) b+="<div class='aic-ex'>“"+v.ex+"”</div>";
+  const chips=(arr,cls)=>arr&&arr.length?"<div class='aic-chips "+cls+"'>"+arr.map(x=>"<span>"+x+"</span>").join('')+"</div>":"";
+  if(v.syn&&v.syn.length) b+="<div class='aic-lbl'>Synonyms</div>"+chips(v.syn,'syn');
+  if(v.ant&&v.ant.length) b+="<div class='aic-lbl'>Antonyms</div>"+chips(v.ant,'ant');
+  if(v.coll&&v.coll.length) b+="<div class='aic-lbl'>Collocations</div>"+chips(v.coll,'coll');
+  return aiCard("VOCABULARY","var(--green)","Word builder",b);
+}
+function aiCardPron(m){ const d=m.data;
+  let b="<div class='aic-word'><span class='aic-w'>"+d.word+"</span>"+(d.ipa?"<span class='aic-ipa'>"+d.ipa+"</span>":"")+"</div>";
+  b+=d.ipa?"<div class='aic-mean'>The <b>ˈ</b> mark shows the <b>stressed</b> syllable — say it louder and longer.</div>":"<div class='aic-mean'>Listen and repeat to copy the sound and rhythm.</div>";
+  b+="<div class='aic-pron-row'><button class='ai-btn' onclick=\"say('"+d.word.replace(/'/g,"\\'")+"')\">🔊 Hear it</button>"+
+     "<button class='ai-btn' id='aimic-"+m.id+"' onclick=\"aiScore("+m.id+",'"+d.word.replace(/'/g,"\\'")+"')\">🎤 Speak & score</button></div>"+
+     "<div id='aiscore-"+m.id+"'></div>";
+  return aiCard("PRONUNCIATION","var(--coral)","Say it right",b);
+}
+function aiScore(id,word){
+  const out=document.getElementById('aiscore-'+id); const btn=document.getElementById('aimic-'+id);
+  if(typeof SR==='undefined'||!SR){ if(out) out.innerHTML="<div class='aic-note'>Your browser can't use the mic. Tap 🔊 and repeat aloud.</div>"; return; }
+  try{ const rec=new SR(); rec.lang='en-US'; rec.interimResults=false; if(btn) btn.classList.add('rec');
+    if(out) out.innerHTML="<div class='aic-note'>🎙️ Listening…</div>";
+    rec.onresult=function(e){ const said=e.results[0][0].transcript; const pct=Math.round(similarity(said,word)*100);
+      if(btn) btn.classList.remove('rec'); const col=pct>=80?'var(--green)':pct>=55?'var(--gold-deep)':'var(--coral)';
+      out.innerHTML="<div class='aic-scorebar'><i style='width:"+pct+"%;background:"+col+"'></i></div><div class='aic-scoren' style='color:"+col+"'>"+pct+"% · "+(pct>=80?'Excellent!':pct>=55?'Good, almost!':'Keep trying')+"</div><div class='aic-note'>Heard: “"+said+"”</div>"; };
+    rec.onerror=function(){ if(btn) btn.classList.remove('rec'); if(out) out.innerHTML="<div class='aic-note'>No mic access. Tap 🔊 and repeat aloud.</div>"; };
+    rec.start();
+  }catch(e){ if(out) out.innerHTML="<div class='aic-note'>Mic not available right now.</div>"; }
+}
+function aiCardQuiz(m){ const q=m.data;
+  let b="<div class='aic-practice-q'>"+q.q+"</div>"+
+    q.options.map((o,i)=>"<button class='aic-opt "+(q.answered!=null?(i===q.a?'right':(i===q.answered?'wrong':'')):'')+"' "+(q.answered!=null?'disabled':'')+" onclick=\"aiQuizAns("+m.id+","+i+")\">"+o+"</button>").join('');
+  if(q.answered!=null) b+="<div class='aic-fb'>"+(q.answered===q.a?"<b class='ok'>Correct! ✅</b> ":"<b class='x'>Not quite. </b>")+q.ex+"</div>";
+  return aiCard("QUIZ","var(--gold)","Quick check",b);
+}
+function aiQuizAns(id,i){ const m=AI.msgs.find(x=>x.id===id); if(!m||m.data.answered!=null) return; m.data.answered=i; aiRenderLog(); }
+function aiCardRewrite(m){ const d=m.data;
+  let b="<div class='aic-rw'><div class='aic-rw-row'><span class='aic-rw-lbl x'>Your text</span><div class='aic-rw-txt'>"+aiEsc(d.orig)+"</div></div>"+
+    "<div class='aic-rw-row'><span class='aic-rw-lbl ok'>Improved</span><div class='aic-rw-txt good'>"+aiEsc(d.improved)+"</div></div></div>";
+  if(d.changes.length) b+="<div class='aic-lbl'>What changed & why</div><ul class='aic-list'>"+d.changes.map(c=>"<li><b>"+aiEsc(c.to)+"</b> — "+c.why+"</li>").join('')+"</ul>";
+  else b+="<div class='aic-note'>Your sentence already looks good! ✅</div>";
+  return aiCard("REWRITE","var(--violet)","Correction",b);
+}
+function aiCardPlan(m){ const d=m.data;
+  let b="<div class='aic-note'>Level: <b>"+d.level+"</b> · Streak: <b>"+d.streak+" day"+(d.streak===1?"":"s")+"</b>. Here's a ~17-minute plan for today:</div>";
+  b+="<div class='aic-timeline'>"+d.steps.map((s,i)=>"<div class='aic-step'><div class='aic-step-n'>"+(i+1)+"</div><div><b>"+s.t+"</b><span>"+s.d+"</span></div></div>").join('')+"</div>";
+  b+="<button class='ai-btn' onclick=\"go('learn')\">Start now →</button>";
+  return aiCard("STUDY PLAN","var(--sky)","Your plan for today",b);
+}
+function aiCardTranslate(m){ const d=m.data;
+  let b="<div class='aic-tr'><div class='aic-tr-src bn'>"+aiEsc(d.src)+"</div>"+(d.out?"<div class='aic-tr-arrow'>↓</div><div class='aic-tr-out'>“"+aiEsc(d.out)+"”</div>":"")+"</div>";
+  if(d.notes&&d.notes.length) b+="<div class='aic-lbl'>Why (not word-for-word)</div><ul class='aic-list'>"+d.notes.map(n=>"<li>"+n+"</li>").join('')+"</ul>";
+  if(!d.out) b+="<div class='ai-chips-row'>"+AI_TR.slice(0,3).map(x=>"<button class='ai-chip' onclick=\"aiSend('translate: "+x.bn+"')\">"+x.bn+"</button>").join('')+"</div>";
+  return aiCard("TRANSLATE","var(--gold-deep)","Meaning first",b);
+}
+function aiCardDialChoose(m){
+  let b="<div class='aic-note'>Pick a scene and we'll have a short conversation. I'll suggest replies — tap one or speak it aloud.</div><div class='ai-acts'>";
+  Object.entries(DIALOGUES).forEach(([k,v])=>{ b+="<button class='ai-act' onclick=\"aiDialStart('"+k+"')\"><span class='ai-act-ic'>"+ic(v.icon)+"</span><span>"+v.name+"</span></button>"; });
+  b+="</div>";
+  return aiCard("SPEAKING","var(--coral)","Conversation practice",b);
+}
+function aiDialStart(k){ AI.msgs.push({id:AI.seq++,role:'ai',kind:'dialogue',data:{scen:k,step:0}}); aiRenderLog(); aiRenderFollows(); const t=DIALOGUES[k].turns[0]; setTimeout(()=>say(t.ai),200); }
+function aiCardDialogue(m){ const d=m.data; const sc=DIALOGUES[d.scen]; const turn=sc.turns[d.step];
+  let b="<div class='aic-dial'><div class='aic-dial-ai'>"+ic('chat')+" <span>"+turn.ai+"</span> <button class='aic-say' onclick=\"say('"+turn.ai.replace(/'/g,"\\'")+"')\">🔊</button></div>";
+  if(d.step<sc.turns.length-1){ b+="<div class='aic-lbl'>Your reply</div><div class='ai-chips-row'>"+turn.replies.map((r,i)=>"<button class='ai-chip' onclick=\"aiDialReply("+m.id+","+i+")\">"+r+"</button>").join('')+"</div>"; }
+  else b+="<div class='aic-note'>🎉 Great conversation! Well done.</div><button class='ai-btn' onclick=\"aiSend('Let\\'s practice speaking')\">Try another scene</button>";
+  b+="</div>";
+  return aiCard("SPEAKING · "+sc.name,"var(--coral)","Roleplay",b);
+}
+function aiDialReply(id,i){ const m=AI.msgs.find(x=>x.id===id); if(!m) return; const sc=DIALOGUES[m.data.scen]; const turn=sc.turns[m.data.step];
+  AI.msgs.push({id:AI.seq++,role:'user',kind:'text',data:{html:aiEsc(turn.replies[i])}});
+  m.data.step=Math.min(m.data.step+1,sc.turns.length-1);
+  const next={id:AI.seq++,role:'ai',kind:'dialogue',data:{scen:m.data.scen,step:m.data.step}};
+  AI.msgs.push(next); aiRenderLog(); aiRenderFollows();
+  const t=sc.turns[m.data.step]; setTimeout(()=>say(t.ai),250);
 }
 
 function renderTop(){
@@ -1400,7 +1503,7 @@ function renderTop(){
   document.getElementById('xpVal').textContent=S.xp;
   document.getElementById('heartVal').textContent=S.hearts;
 }
-const NAV=[["learn","Learn","compass"],["skills","Skills","spark"],["bank","Words","cards"],["coach","Coach","coach"],["profile","You","user"]];
+const NAV=[["learn","Learn","compass"],["skills","Skills","spark"],["bank","Words","cards"],["coach","AI Tutor","coach"],["profile","You","user"]];
 function buildNav(){
   document.getElementById('nav').innerHTML=NAV.map(([id,label,icn])=>
     `<button data-tab="${id}" class="${id==='learn'?'on':''}" onclick="go('${id}')">${ic(icn)}<span>${label}</span></button>`).join('');
